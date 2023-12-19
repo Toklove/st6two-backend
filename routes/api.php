@@ -1,0 +1,35 @@
+<?php
+
+use App\Http\Controllers\api\Auth;
+use App\Http\Controllers\api\Common;
+use App\Http\Controllers\api\User;
+use Illuminate\Support\Facades\Route;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "api" middleware group. Make something great!
+|
+*/
+
+
+Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
+    Route::post('login', [Auth::class, 'login']);
+    Route::post('logout', [Auth::class, 'logout']);
+    Route::post('refresh', [Auth::class, 'refresh']);
+    Route::get('me', [Auth::class, 'me']);
+    Route::post('send', [Auth::class, 'send']);
+    Route::post('register', [Auth::class, 'register']);
+});
+Route::group(['middleware' => 'api', 'prefix' => 'common'], function () {
+    Route::post('upload', [Common::class, 'upload']);
+});
+
+Route::group(['middleware' => 'api', 'prefix' => 'user'], function () {
+    Route::post('update', [User::class, 'update']);
+    Route::get('getCurrency', [User::class, 'getCurrency']);
+});
