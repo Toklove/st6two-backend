@@ -4,7 +4,7 @@
 -- https://tableplus.com/
 --
 -- Database: st6
--- Generation Time: 2023-12-21 22:07:52.4710
+-- Generation Time: 2023-12-22 00:43:32.5810
 -- -------------------------------------------------------------
 
 
@@ -226,6 +226,8 @@ CREATE TABLE `user_deposit` (
   `member_id` int DEFAULT NULL,
   `txId` varchar(255) DEFAULT NULL,
   `amount` decimal(21,6) DEFAULT NULL,
+  `order_no` varchar(255) DEFAULT NULL,
+  `trade_id` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -240,6 +242,9 @@ CREATE TABLE `user_withdraw` (
   `fee` decimal(21,6) DEFAULT NULL,
   `status` tinyint DEFAULT '0',
   `rate` decimal(21,6) DEFAULT NULL,
+  `channel_status` tinyint DEFAULT '0',
+  `order_no` varchar(255) DEFAULT NULL,
+  `trade_id` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -319,9 +324,6 @@ INSERT INTO `user_crypto_address` (`id`, `member_id`, `currency_id`, `address`, 
 
 INSERT INTO `user_crypto_wallet` (`id`, `member_id`, `currency_id`, `address`, `status`, `created_at`, `updated_at`) VALUES
 (2, 5, 1, '1111', 1, '2023-12-20 03:44:13', '2023-12-20 03:44:13');
-
-INSERT INTO `user_deposit` (`id`, `member_id`, `txId`, `amount`, `created_at`, `updated_at`) VALUES
-(1, 8, '0xc3014d05d010b54e9d2814020856ddf7a435c195de83bb3bf7dfd6463517052f', 100000000.000000, '2023-12-21 14:03:11', '2023-12-21 14:03:11');
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'admin@admin.com', NULL, '$2y$12$yq/eARbyxvWw6QvH5eekVOzJvJEa7gThRa13hur6/ijCWSbSdpzoq', 'S7haf896YPFA8CxAqzYFZoa8WHvgQ7v1af4AzKp6vgho1SaqSWmJuWLPAg6A', '2023-12-17 17:05:12', '2023-12-17 17:05:12');

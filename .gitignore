@@ -17,3 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+
+# Ignore all directories called docker data
+docker/data/**/*
