@@ -18,5 +18,5 @@ yarn-error.log
 /.idea
 /.vscode
 
-# Ignore all directories called docker data
+# Ignore docker data
 docker/data/**/*
