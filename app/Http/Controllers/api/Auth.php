@@ -101,13 +101,17 @@ class Auth extends BaseApi
         } else {
             $parent = null;
         }
-        
+
         $member = new Member();
         $member->email = $post['email'];
         $member->password = $password;
         $member->invite_code = $this->getInviteCode();
         $member->parent_id = $parent ? $parent->id : 0;
+        $member->nickname = $post['email'];
         $member->save();
+
+        //初始化钱包信息 TODO 通过队列异步执行
+        $member->initWallet();
 
         //清除验证码
         Cache::forget($key);

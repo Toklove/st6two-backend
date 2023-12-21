@@ -4,7 +4,7 @@
 -- https://tableplus.com/
 --
 -- Database: st6
--- Generation Time: 2023-12-19 20:41:45.9690
+-- Generation Time: 2023-12-21 14:53:07.2800
 -- -------------------------------------------------------------
 
 
@@ -42,7 +42,7 @@ CREATE TABLE `action_events` (
   KEY `action_events_target_type_target_id_index` (`target_type`,`target_id`),
   KEY `action_events_batch_id_model_type_model_id_index` (`batch_id`,`model_type`,`model_id`),
   KEY `action_events_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
 
 DROP TABLE IF EXISTS `currencies`;
 CREATE TABLE `currencies` (
@@ -53,8 +53,10 @@ CREATE TABLE `currencies` (
   `rate` decimal(15,2) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `main_coin_type` varchar(255) DEFAULT NULL,
+  `coin_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `failed_jobs`;
 CREATE TABLE `failed_jobs` (
@@ -87,7 +89,7 @@ CREATE TABLE `members` (
   `real_name` varchar(255) DEFAULT NULL,
   `nickname` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -170,14 +172,37 @@ CREATE TABLE `user_bank` (
   `member_id` int NOT NULL,
   `account` varchar(255) DEFAULT NULL,
   `account_user` varchar(255) DEFAULT NULL,
-  `account_address` varchar(255) DEFAULT NULL,
-  `account_code` varchar(255) DEFAULT NULL,
-  `account_name` varchar(255) DEFAULT NULL,
+  `bank_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `bank_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `bank_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `status` tinyint DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+
+DROP TABLE IF EXISTS `user_crypto_address`;
+CREATE TABLE `user_crypto_address` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `member_id` int DEFAULT NULL,
+  `currency_id` int DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+
+DROP TABLE IF EXISTS `user_crypto_wallet`;
+CREATE TABLE `user_crypto_wallet` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `member_id` int DEFAULT NULL,
+  `currency_id` int DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '1',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -202,11 +227,17 @@ INSERT INTO `action_events` (`id`, `batch_id`, `user_id`, `name`, `actionable_ty
 (6, '9ae1fc25-b00f-4fa5-ba35-e25d2df4b943', 1, 'Delete', 'App\\Models\\Member', 3, 'App\\Models\\Member', 3, 'App\\Models\\Member', 3, '', 'finished', '', '2023-12-19 02:44:46', '2023-12-19 02:44:46', NULL, NULL),
 (7, '9ae1fe8e-88ca-4aea-8f40-84c58c8bc4bd', 1, 'Delete', 'App\\Models\\Member', 4, 'App\\Models\\Member', 4, 'App\\Models\\Member', 4, '', 'finished', '', '2023-12-19 02:51:30', '2023-12-19 02:51:30', NULL, NULL),
 (8, '9ae24e84-8b5f-4d78-8ed9-44386bea8200', 1, 'Create', 'App\\Models\\Currency', 1, 'App\\Models\\Currency', 1, 'App\\Models\\Currency', 1, '', 'finished', '', '2023-12-19 06:35:05', '2023-12-19 06:35:05', NULL, '{\"name\":\"ETH\",\"rate\":\"1\",\"symbol\":\"eth\",\"code\":\"eth\",\"created_at\":null,\"updated_at\":null,\"id\":1}'),
-(9, '9ae24f3b-27f0-417b-85b8-101566a25651', 1, 'Create', 'App\\Models\\Currency', 2, 'App\\Models\\Currency', 2, 'App\\Models\\Currency', 2, '', 'finished', '', '2023-12-19 06:37:05', '2023-12-19 06:37:05', NULL, '{\"name\":\"USDT-ERC20\",\"rate\":\"1\",\"symbol\":\"usdt-erc20\",\"code\":\"usdt-erc20\",\"updated_at\":\"2023-12-19T06:37:05.000000Z\",\"created_at\":\"2023-12-19T06:37:05.000000Z\",\"id\":2}');
+(9, '9ae24f3b-27f0-417b-85b8-101566a25651', 1, 'Create', 'App\\Models\\Currency', 2, 'App\\Models\\Currency', 2, 'App\\Models\\Currency', 2, '', 'finished', '', '2023-12-19 06:37:05', '2023-12-19 06:37:05', NULL, '{\"name\":\"USDT-ERC20\",\"rate\":\"1\",\"symbol\":\"usdt-erc20\",\"code\":\"usdt-erc20\",\"updated_at\":\"2023-12-19T06:37:05.000000Z\",\"created_at\":\"2023-12-19T06:37:05.000000Z\",\"id\":2}'),
+(10, '9ae44830-8f80-4093-bcef-3a955d0998c7', 1, 'Update', 'App\\Models\\Currency', 1, 'App\\Models\\Currency', 1, 'App\\Models\\Currency', 1, '', 'finished', '', '2023-12-20 06:09:03', '2023-12-20 06:09:03', '{\"main_coin_type\":null}', '{\"main_coin_type\":\"0\"}'),
+(11, '9ae44845-4dd9-42f4-953d-1a9f3c7d3991', 1, 'Update', 'App\\Models\\Currency', 2, 'App\\Models\\Currency', 2, 'App\\Models\\Currency', 2, '', 'finished', '', '2023-12-20 06:09:17', '2023-12-20 06:09:17', '{\"main_coin_type\":null}', '{\"main_coin_type\":\"60\"}'),
+(12, '9ae4485f-135b-4b76-b112-410f36cf0fe1', 1, 'Update', 'App\\Models\\Currency', 3, 'App\\Models\\Currency', 3, 'App\\Models\\Currency', 3, '', 'finished', '', '2023-12-20 06:09:34', '2023-12-20 06:09:34', '{\"main_coin_type\":null}', '{\"main_coin_type\":\"60\"}'),
+(13, '9ae4486d-05f0-42c3-8693-dd8836d2ca75', 1, 'Update', 'App\\Models\\Currency', 4, 'App\\Models\\Currency', 4, 'App\\Models\\Currency', 4, '', 'finished', '', '2023-12-20 06:09:43', '2023-12-20 06:09:43', '{\"main_coin_type\":null}', '{\"main_coin_type\":\"195\"}');
 
-INSERT INTO `currencies` (`id`, `code`, `symbol`, `name`, `rate`, `created_at`, `updated_at`) VALUES
-(1, 'eth', 'eth', 'ETH', 1.00, '2023-12-19 06:37:05', '2023-12-19 06:37:05'),
-(2, 'usdt-erc20', 'usdt-erc20', 'USDT-ERC20', 1.00, '2023-12-19 06:37:05', '2023-12-19 06:37:05');
+INSERT INTO `currencies` (`id`, `code`, `symbol`, `name`, `rate`, `created_at`, `updated_at`, `main_coin_type`, `coin_type`) VALUES
+(1, 'btc', 'btc', 'BTC', 1.00, '2023-12-19 06:37:05', '2023-12-20 06:09:03', '0', '0'),
+(2, 'eth', 'eth', 'ETH', 1.00, '2023-12-19 06:37:05', '2023-12-20 06:09:17', '60', '60'),
+(3, 'usdt-erc20', 'usdt-erc20', 'USDT-ERC20', 1.00, '2023-12-19 06:37:05', '2023-12-20 06:09:34', '60', '0xdac17f958d2ee523a2206206994597c13d831ec7'),
+(4, 'usdt-trc20', 'usdt-trc20', 'USDT-TRC20', 1.00, '2023-12-19 06:37:05', '2023-12-20 06:09:43', '195', 'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t');
 
 INSERT INTO `failed_jobs` (`id`, `uuid`, `connection`, `queue`, `payload`, `exception`, `failed_at`) VALUES
 (1, 'c3d2a6a3-65a6-4d2d-a702-3b24c306ae59', 'redis', 'default', '{\"uuid\":\"c3d2a6a3-65a6-4d2d-a702-3b24c306ae59\",\"displayName\":\"App\\\\Notifications\\\\EmailCheckCodePaid\",\"job\":\"Illuminate\\\\Queue\\\\CallQueuedHandler@call\",\"maxTries\":null,\"maxExceptions\":null,\"failOnTimeout\":false,\"backoff\":null,\"timeout\":null,\"retryUntil\":null,\"data\":{\"commandName\":\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\",\"command\":\"O:48:\\\"Illuminate\\\\Notifications\\\\SendQueuedNotifications\\\":3:{s:11:\\\"notifiables\\\";O:29:\\\"Illuminate\\\\Support\\\\Collection\\\":2:{s:8:\\\"\\u0000*\\u0000items\\\";a:1:{i:0;O:44:\\\"Illuminate\\\\Notifications\\\\AnonymousNotifiable\\\":1:{s:6:\\\"routes\\\";a:1:{s:4:\\\"mail\\\";s:11:\\\"test@qq.com\\\";}}}s:28:\\\"\\u0000*\\u0000escapeWhenCastingToString\\\";b:0;}s:12:\\\"notification\\\";O:36:\\\"App\\\\Notifications\\\\EmailCheckCodePaid\\\":1:{s:2:\\\"id\\\";s:36:\\\"6ac5fee2-4727-4842-8265-b6cf5aebedb4\\\";}s:8:\\\"channels\\\";a:1:{i:0;s:4:\\\"mail\\\";}}\"},\"id\":\"S9915Ghad03DMsemXSrY6Cf7ZUXiPfgc\",\"attempts\":0}', 'Symfony\\Component\\Mailer\\Exception\\TransportException: Connection to \"mail.163.com:25\" has been closed unexpectedly. in /Users/toklove/Documents/code/php/st6-admin/vendor/symfony/mailer/Transport/Smtp/Stream/AbstractStream.php:87\nStack trace:\n#0 /Users/toklove/Documents/code/php/st6-admin/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(346): Symfony\\Component\\Mailer\\Transport\\Smtp\\Stream\\AbstractStream->readLine()\n#1 /Users/toklove/Documents/code/php/st6-admin/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(276): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->getFullResponse()\n#2 /Users/toklove/Documents/code/php/st6-admin/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(213): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->start()\n#3 /Users/toklove/Documents/code/php/st6-admin/vendor/symfony/mailer/Transport/AbstractTransport.php(69): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->doSend(Object(Symfony\\Component\\Mailer\\SentMessage))\n#4 /Users/toklove/Documents/code/php/st6-admin/vendor/symfony/mailer/Transport/Smtp/SmtpTransport.php(137): Symfony\\Component\\Mailer\\Transport\\AbstractTransport->send(Object(Symfony\\Component\\Mime\\Email), Object(Symfony\\Component\\Mailer\\DelayedEnvelope))\n#5 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(573): Symfony\\Component\\Mailer\\Transport\\Smtp\\SmtpTransport->send(Object(Symfony\\Component\\Mime\\Email), Object(Symfony\\Component\\Mailer\\DelayedEnvelope))\n#6 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Mail/Mailer.php(335): Illuminate\\Mail\\Mailer->sendSymfonyMessage(Object(Symfony\\Component\\Mime\\Email))\n#7 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Notifications/Channels/MailChannel.php(69): Illuminate\\Mail\\Mailer->send(Object(Closure), Array, Object(Closure))\n#8 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Notifications/NotificationSender.php(148): Illuminate\\Notifications\\Channels\\MailChannel->send(Object(Illuminate\\Notifications\\AnonymousNotifiable), Object(App\\Notifications\\EmailCheckCodePaid))\n#9 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Notifications/NotificationSender.php(106): Illuminate\\Notifications\\NotificationSender->sendToNotifiable(Object(Illuminate\\Notifications\\AnonymousNotifiable), \'689471fc-21a1-4...\', Object(App\\Notifications\\EmailCheckCodePaid), \'mail\')\n#10 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Support/Traits/Localizable.php(19): Illuminate\\Notifications\\NotificationSender->Illuminate\\Notifications\\{closure}()\n#11 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Notifications/NotificationSender.php(109): Illuminate\\Notifications\\NotificationSender->withLocale(NULL, Object(Closure))\n#12 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Notifications/ChannelManager.php(54): Illuminate\\Notifications\\NotificationSender->sendNow(Object(Illuminate\\Support\\Collection), Object(App\\Notifications\\EmailCheckCodePaid), Array)\n#13 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Notifications/SendQueuedNotifications.php(119): Illuminate\\Notifications\\ChannelManager->sendNow(Object(Illuminate\\Support\\Collection), Object(App\\Notifications\\EmailCheckCodePaid), Array)\n#14 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): Illuminate\\Notifications\\SendQueuedNotifications->handle(Object(Illuminate\\Notifications\\ChannelManager))\n#15 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Container/Util.php(41): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()\n#16 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))\n#17 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))\n#18 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Container/Container.php(662): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)\n#19 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php(128): Illuminate\\Container\\Container->call(Array)\n#20 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\\Bus\\Dispatcher->Illuminate\\Bus\\{closure}(Object(Illuminate\\Notifications\\SendQueuedNotifications))\n#21 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Notifications\\SendQueuedNotifications))\n#22 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Bus/Dispatcher.php(132): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))\n#23 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Queue/CallQueuedHandler.php(124): Illuminate\\Bus\\Dispatcher->dispatchNow(Object(Illuminate\\Notifications\\SendQueuedNotifications), false)\n#24 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(141): Illuminate\\Queue\\CallQueuedHandler->Illuminate\\Queue\\{closure}(Object(Illuminate\\Notifications\\SendQueuedNotifications))\n#25 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Pipeline/Pipeline.php(116): Illuminate\\Pipeline\\Pipeline->Illuminate\\Pipeline\\{closure}(Object(Illuminate\\Notifications\\SendQueuedNotifications))\n#26 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Queue/CallQueuedHandler.php(126): Illuminate\\Pipeline\\Pipeline->then(Object(Closure))\n#27 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Queue/CallQueuedHandler.php(70): Illuminate\\Queue\\CallQueuedHandler->dispatchThroughMiddleware(Object(Illuminate\\Queue\\Jobs\\RedisJob), Object(Illuminate\\Notifications\\SendQueuedNotifications))\n#28 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Queue/Jobs/Job.php(102): Illuminate\\Queue\\CallQueuedHandler->call(Object(Illuminate\\Queue\\Jobs\\RedisJob), Array)\n#29 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(439): Illuminate\\Queue\\Jobs\\Job->fire()\n#30 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(389): Illuminate\\Queue\\Worker->process(\'redis\', Object(Illuminate\\Queue\\Jobs\\RedisJob), Object(Illuminate\\Queue\\WorkerOptions))\n#31 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Queue/Worker.php(333): Illuminate\\Queue\\Worker->runJob(Object(Illuminate\\Queue\\Jobs\\RedisJob), \'redis\', Object(Illuminate\\Queue\\WorkerOptions))\n#32 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Queue/Console/WorkCommand.php(138): Illuminate\\Queue\\Worker->runNextJob(\'redis\', \'default\', Object(Illuminate\\Queue\\WorkerOptions))\n#33 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Queue/Console/WorkCommand.php(121): Illuminate\\Queue\\Console\\WorkCommand->runWorker(\'redis\', \'default\')\n#34 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(36): Illuminate\\Queue\\Console\\WorkCommand->handle()\n#35 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Container/Util.php(41): Illuminate\\Container\\BoundMethod::Illuminate\\Container\\{closure}()\n#36 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(93): Illuminate\\Container\\Util::unwrapIfClosure(Object(Closure))\n#37 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Container/BoundMethod.php(37): Illuminate\\Container\\BoundMethod::callBoundMethod(Object(Illuminate\\Foundation\\Application), Array, Object(Closure))\n#38 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Container/Container.php(662): Illuminate\\Container\\BoundMethod::call(Object(Illuminate\\Foundation\\Application), Array, Array, NULL)\n#39 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Console/Command.php(211): Illuminate\\Container\\Container->call(Array)\n#40 /Users/toklove/Documents/code/php/st6-admin/vendor/symfony/console/Command/Command.php(326): Illuminate\\Console\\Command->execute(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))\n#41 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Console/Command.php(181): Symfony\\Component\\Console\\Command\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Illuminate\\Console\\OutputStyle))\n#42 /Users/toklove/Documents/code/php/st6-admin/vendor/symfony/console/Application.php(1096): Illuminate\\Console\\Command->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#43 /Users/toklove/Documents/code/php/st6-admin/vendor/symfony/console/Application.php(324): Symfony\\Component\\Console\\Application->doRunCommand(Object(Illuminate\\Queue\\Console\\WorkCommand), Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#44 /Users/toklove/Documents/code/php/st6-admin/vendor/symfony/console/Application.php(175): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#45 /Users/toklove/Documents/code/php/st6-admin/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#46 /Users/toklove/Documents/code/php/st6-admin/artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))\n#47 {main}', '2023-12-18 16:21:17'),
@@ -219,7 +250,8 @@ INSERT INTO `failed_jobs` (`id`, `uuid`, `connection`, `queue`, `payload`, `exce
 INSERT INTO `members` (`id`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `invite_code`, `avatar`, `active`, `parent_id`, `id_card`, `id_card_front`, `id_card_back`, `real_name`, `nickname`) VALUES
 (1, 'test@qq.com', '$2y$12$wyZMN6GfF1BT8Qeaufso0u/1ZdXFt9x8b99aPLzETYDwgqmhLT6TO', NULL, '2023-12-17 17:23:24', '2023-12-17 17:33:49', '233133', 'TLUihOBoX6N3JOIICMjgMP5kyRPP3jXpZz3K1ByH.jpg', '1', NULL, NULL, NULL, NULL, NULL, NULL),
 (2, 'test@123.com', '$2y$12$LqBg.4UDulGj9Q.7WYAmdOjTyuq5HUha1FBzXAjyKjxycouP09osy', NULL, '2023-12-17 17:49:45', '2023-12-17 17:49:45', 'test', '4vdk96l1ar3XoEIGLj21UtzZJkQZwOVnObE1bppF.jpg', '1', 1, NULL, NULL, NULL, NULL, NULL),
-(5, '2586438083@qq.com', '$2y$12$DfZpjQKWWKqHzP82GKzW4.9otXyiTbVgjaREsdfP.0eFUDtAVox9K', NULL, '2023-12-19 02:54:58', '2023-12-19 05:29:25', 'TxNCsx', 'http://127.0.0.1:8000/storage/Fe8nkEdhtRIjrvrC2MR51RMc3GFTOkt5cwAB28Km.jpg', '1', 0, NULL, NULL, NULL, NULL, 'TokLove');
+(5, '2586438083@qq.com', '$2y$12$ER9j210E1hDSrHvx2GUWbuwZSio01BjYFLruoIVzE04zAznVEUGAe', NULL, '2023-12-19 02:54:58', '2023-12-20 05:11:45', 'TxNCsx', 'http://127.0.0.1:8000/storage/Fe8nkEdhtRIjrvrC2MR51RMc3GFTOkt5cwAB28Km.jpg', '1', 0, NULL, NULL, NULL, NULL, 'TokLove'),
+(8, 'xmclouds@qq.com', '$2y$12$4wCes//EhRxbs0FOk.XYfu5mBSEZD8N9ml8p67MwW8U4XvkIGOd/6', NULL, '2023-12-20 06:38:51', '2023-12-20 07:33:38', 'mk0SfJ', 'http://127.0.0.1:8000/storage/D0TP5JXDbycprxO6i6Dm7PG5jh5F86ZfXXPcUhaK.jpg', '1', 0, NULL, NULL, NULL, NULL, 'Jack');
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
@@ -231,6 +263,15 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (7, '2021_08_25_193039_create_nova_notifications_table', 1),
 (8, '2022_04_26_000000_add_fields_to_nova_notifications_table', 1),
 (9, '2022_12_19_000000_create_field_attachments_table', 1);
+
+INSERT INTO `user_crypto_address` (`id`, `member_id`, `currency_id`, `address`, `created_at`, `updated_at`) VALUES
+(1, 8, 1, '161j17TgueSkx4G83hTYpo2NTn8Q4XxbPE', '2023-12-20 06:38:51', '2023-12-20 06:38:51'),
+(2, 8, 2, '0x694c15ce794c9cb4a5dc6e59880200c336140099', '2023-12-20 06:38:51', '2023-12-20 06:38:51'),
+(3, 8, 3, '0x694c15ce794c9cb4a5dc6e59880200c336140099', '2023-12-20 06:38:51', '2023-12-20 06:38:51'),
+(4, 8, 4, 'TRQRXtVX7oaqBXAtDJ1yroraCDxRvak9uK', '2023-12-20 06:38:51', '2023-12-20 06:38:51');
+
+INSERT INTO `user_crypto_wallet` (`id`, `member_id`, `currency_id`, `address`, `status`, `created_at`, `updated_at`) VALUES
+(2, 5, 1, '1111', 1, '2023-12-20 03:44:13', '2023-12-20 03:44:13');
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'admin@admin.com', NULL, '$2y$12$yq/eARbyxvWw6QvH5eekVOzJvJEa7gThRa13hur6/ijCWSbSdpzoq', 'S7haf896YPFA8CxAqzYFZoa8WHvgQ7v1af4AzKp6vgho1SaqSWmJuWLPAg6A', '2023-12-17 17:05:12', '2023-12-17 17:05:12');

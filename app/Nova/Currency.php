@@ -46,6 +46,7 @@ class Currency extends Resource
             Number::make('汇率', 'rate')->sortable(),
             Text::make('货币符号', 'symbol')->sortable(),
             Text::make('货币代码', 'code')->sortable(),
+            Text::make('主币编号', 'main_coin_type')->sortable(),
         ];
     }
 

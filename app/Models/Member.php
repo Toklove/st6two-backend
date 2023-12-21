@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\extends\Udun\uDun;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -77,5 +78,35 @@ class Member extends Authenticatable implements JWTSubject
     function banks()
     {
         return $this->hasMany(UserBank::class, 'member_id', 'id');
+    }
+
+    function initWallet()
+    {
+        $udun = uDun::getInstance();
+        $currencies = Currency::all();
+        $has_add_chain = [];
+        foreach ($currencies as $currency) {
+            if (isset($has_add_chain[$currency->main_coin_type])) {
+                //如果已经存在地址 则直接保存
+                $userCryptoWallet = new UserCryptoAddress();
+                $userCryptoWallet->member_id = $this->id;
+                $userCryptoWallet->currency_id = $currency->id;
+                $userCryptoWallet->address = $has_add_chain[$currency->main_coin_type];
+                $userCryptoWallet->save();
+                continue;
+            }
+            $data = $udun->createAddress($currency->main_coin_type);
+//            $data = json_decode($data, true);
+            if ($data['code'] != 200) {
+                throw new \Exception('创建钱包地址失败');
+            }
+            $address = $data['data']['address'];
+            $has_add_chain[$currency->main_coin_type] = $address;
+            $userCryptoWallet = new UserCryptoAddress();
+            $userCryptoWallet->member_id = $this->id;
+            $userCryptoWallet->currency_id = $currency->id;
+            $userCryptoWallet->address = $address;
+            $userCryptoWallet->save();
+        }
     }
 }

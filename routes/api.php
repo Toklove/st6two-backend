@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\Auth;
 use App\Http\Controllers\api\Common;
 use App\Http\Controllers\api\User;
+use App\Http\Controllers\api\Wallet;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,4 +33,16 @@ Route::group(['middleware' => 'api', 'prefix' => 'common'], function () {
 Route::group(['middleware' => 'api', 'prefix' => 'user'], function () {
     Route::post('update', [User::class, 'update']);
     Route::get('getCurrency', [User::class, 'getCurrency']);
+    Route::post('addWallet', [User::class, 'addWallet']);
+    Route::get('bankList', [User::class, 'bankList']);
+    Route::get('cryptoList', [User::class, 'cryptoList']);
+    Route::post('delBank', [User::class, 'delBank']);
+    Route::post('delCrypto', [User::class, 'delCrypto']);
+    Route::post('addBank', [User::class, 'addBank']);
+    Route::post('changePassword', [User::class, 'changePassword']);
+    Route::get('logout', [User::class, 'logout']);
 });
+
+Route::get('supportCoins', [Wallet::class, 'supportCoins']);
+
+Route::any('/callback', [Wallet::class, 'callback']);
