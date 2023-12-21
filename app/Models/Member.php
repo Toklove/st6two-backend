@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Constant\BillTag;
 use App\extends\Udun\uDun;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
@@ -107,6 +109,37 @@ class Member extends Authenticatable implements JWTSubject
             $userCryptoWallet->currency_id = $currency->id;
             $userCryptoWallet->address = $address;
             $userCryptoWallet->save();
+        }
+    }
+
+
+    /**
+     * 变更会员余额
+     * @param int $money 余额
+     * @param int $user_id 会员ID
+     * @param BillTag $memo 备注
+     */
+    public static function money($money, $user_id, $memo)
+    {
+        DB::beginTransaction();
+        try {
+            $user = self::query()->where('id',$user_id)->first();
+            if ($user && $money != 0) {
+                $before = $user->balance;
+                $after = function_exists('bcadd') ? bcadd($user->balance, $money, 2) : $user->balance + $money;
+                //更新会员信息
+                $user->balance = $after;
+                $user->save();
+
+                $type = $money > 0 ? 1 : 2;
+
+                //写入日志
+                UserBill::create(['member_id' => $user_id,'type' => $type, 'amount' => $money, 'before_balance' => $before, 'after_balance' => $after, 'tag' => $memo->name]);
+            }
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            throw new \Exception($e->getMessage());
         }
     }
 }

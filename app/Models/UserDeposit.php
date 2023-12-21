@@ -1,0 +1,17 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class UserDeposit extends Model
+{
+    use HasFactory;
+    protected $table = 'user_deposit';
+    protected $fillable = [
+        'member_id',
+        'amount',
+        'txId'
+    ];
+}
