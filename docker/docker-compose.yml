@@ -2,39 +2,35 @@ version: "3"
 services:
     mysql:
         image: mysql:latest
+        restart: always
         volumes:
             - ./data/mysql:/var/lib/mysql
-            - ./conf/mysql/my.cnf:/etc/mysql/my.cnf
-            - ../sql/:/docker-entrypoint-initdb.d/
+            - ../sql:/docker-entrypoint-initdb.d/
         networks:
             - mysql
         ports:
             - "3306:3306"
         environment:
             - MYSQL_ROOT_PASSWORD=123456  # change to your password!
+            - MYSQL_DATABASE=smartTrade
         command: --default-authentication-plugin=mysql_native_password
 
     redis:
         image: redis:latest
         volumes:
             - ./data/redis:/data
-#            - ./conf/redis/redis.conf:/etc/redis/redis.conf
         networks:
             - mysql
         ports:
             - "6379:6379"
         sysctls:
             - net.core.somaxconn=1024
-#        command: >
-#            bash -c "echo 'vm.overcommit_memory = 1' >> /etc/sysctl.conf
-#            && redis-server /etc/redis/redis.conf --appendonly yes"
     php-fpm81:
         build:
             context: .
             dockerfile: dockerfiles/php81/Dockerfile
         volumes:
             - ../:/var/www/html
-#            - ./conf/php:/usr/local/etc/php
             - ./conf/supervisor:/etc/supervisor/conf.d
         networks:
             - mysql

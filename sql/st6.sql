@@ -7,6 +7,7 @@
 -- Generation Time: 2023-12-22 00:43:32.5810
 -- -------------------------------------------------------------
 
+CREATE DATABASE IF NOT EXISTS `smartTrade` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -17,6 +18,7 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+USE `smartTrade`;
 
 DROP TABLE IF EXISTS `action_events`;
 CREATE TABLE `action_events` (
