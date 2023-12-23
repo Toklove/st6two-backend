@@ -32,6 +32,10 @@ services:
         volumes:
             - ../:/var/www/html
             - ./conf/supervisor:/etc/supervisor/conf.d
+        environment:
+            - TZ=Asia/Shanghai
+            - DB_HOST=host.docker.internal
+            - REDIS_HOST=host.docker.internal
         networks:
             - mysql
             - nginx
