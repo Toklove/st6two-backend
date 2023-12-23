@@ -24,7 +24,7 @@ class MarketCategory extends Resource
      * @var string
      */
     public static $title = 'name';
-    
+
     /**
      * The columns that should be searched.
      *
