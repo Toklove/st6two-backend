@@ -47,8 +47,9 @@ class Market extends Resource
         return [
             ID::make()->sortable(),
             Text::make('名称', "name"),
-            Text::make('币种标识', 'symbol'),
-            Image::make("图标", "logo")->disk("public")->path("market"),
+            Text::make('交易对标识', 'symbol'),
+            Text::make('历史记录采集标识', 'symbol_history'),
+            Image::make("图标", "logo")->disk('public')->prunable(),
             Timezone::make('时区', 'time_zone')->rules('required', 'string', 'max:255'),
             Time::make('早间开始时间', 'morning_start_time')->rules('required', 'string', 'max:255'),
             Time::make('早间结束时间', 'morning_end_time')->rules('required', 'string', 'max:255'),
