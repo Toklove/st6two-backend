@@ -7,10 +7,12 @@ use App\Http\Controllers\Controller;
 class BaseApi extends Controller
 {
     protected $auth;
+    protected $user;
 
     public function __construct()
     {
         $this->auth = auth('api');
+        $this->user = $this->auth->user();
     }
 
     function success($message = 'success', $data = [], $code = 1)

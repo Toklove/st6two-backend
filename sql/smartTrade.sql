@@ -1,10 +1,10 @@
 -- -------------------------------------------------------------
--- TablePlus 5.6.8(524)
+-- TablePlus 5.6.6(520)
 --
 -- https://tableplus.com/
 --
 -- Database: smartTrade
--- Generation Time: 2023-12-27 16:04:16.9680
+-- Generation Time: 2023-12-28 09:41:51.4250
 -- -------------------------------------------------------------
 
 
@@ -42,7 +42,7 @@ CREATE TABLE `action_events` (
   KEY `action_events_target_type_target_id_index` (`target_type`,`target_id`),
   KEY `action_events_batch_id_model_type_model_id_index` (`batch_id`,`model_type`,`model_id`),
   KEY `action_events_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
 
 DROP TABLE IF EXISTS `currencies`;
 CREATE TABLE `currencies` (
@@ -56,7 +56,7 @@ CREATE TABLE `currencies` (
   `main_coin_type` varchar(255) DEFAULT NULL,
   `coin_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `failed_jobs`;
 CREATE TABLE `failed_jobs` (
@@ -69,7 +69,7 @@ CREATE TABLE `failed_jobs` (
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
 
 DROP TABLE IF EXISTS `market_categories`;
 CREATE TABLE `market_categories` (
@@ -84,7 +84,7 @@ CREATE TABLE `market_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `markets`;
 CREATE TABLE `markets` (
@@ -109,7 +109,7 @@ CREATE TABLE `markets` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `members`;
 CREATE TABLE `members` (
@@ -131,7 +131,7 @@ CREATE TABLE `members` (
   `balance` decimal(21,6) NOT NULL DEFAULT '0.000000',
   `freeze_balance` decimal(21,6) NOT NULL DEFAULT '0.000000',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -139,7 +139,19 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+
+DROP TABLE IF EXISTS `news`;
+CREATE TABLE `news` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `author` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `nova_field_attachments`;
 CREATE TABLE `nova_field_attachments` (
@@ -154,7 +166,7 @@ CREATE TABLE `nova_field_attachments` (
   PRIMARY KEY (`id`),
   KEY `nova_field_attachments_attachable_type_attachable_id_index` (`attachable_type`,`attachable_id`),
   KEY `nova_field_attachments_url_index` (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
 
 DROP TABLE IF EXISTS `nova_notifications`;
 CREATE TABLE `nova_notifications` (
@@ -169,7 +181,7 @@ CREATE TABLE `nova_notifications` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `nova_notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
 
 DROP TABLE IF EXISTS `nova_pending_field_attachments`;
 CREATE TABLE `nova_pending_field_attachments` (
@@ -181,7 +193,7 @@ CREATE TABLE `nova_pending_field_attachments` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `nova_pending_field_attachments_draft_id_index` (`draft_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
 
 DROP TABLE IF EXISTS `password_reset_tokens`;
 CREATE TABLE `password_reset_tokens` (
@@ -189,7 +201,7 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
 
 DROP TABLE IF EXISTS `personal_access_tokens`;
 CREATE TABLE `personal_access_tokens` (
@@ -206,7 +218,7 @@ CREATE TABLE `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
 
 DROP TABLE IF EXISTS `user_bank`;
 CREATE TABLE `user_bank` (
@@ -221,7 +233,7 @@ CREATE TABLE `user_bank` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `user_bill`;
 CREATE TABLE `user_bill` (
@@ -235,7 +247,7 @@ CREATE TABLE `user_bill` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `user_crypto_address`;
 CREATE TABLE `user_crypto_address` (
@@ -246,7 +258,7 @@ CREATE TABLE `user_crypto_address` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `user_crypto_wallet`;
 CREATE TABLE `user_crypto_wallet` (
@@ -258,7 +270,7 @@ CREATE TABLE `user_crypto_wallet` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `user_deposit`;
 CREATE TABLE `user_deposit` (
@@ -271,7 +283,17 @@ CREATE TABLE `user_deposit` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+
+DROP TABLE IF EXISTS `user_like_markets`;
+CREATE TABLE `user_like_markets` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int DEFAULT NULL,
+  `market_id` int DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `user_withdraw`;
 CREATE TABLE `user_withdraw` (
@@ -288,7 +310,7 @@ CREATE TABLE `user_withdraw` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -302,7 +324,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
 
 INSERT INTO `action_events` (`id`, `batch_id`, `user_id`, `name`, `actionable_type`, `actionable_id`, `target_type`, `target_id`, `model_type`, `model_id`, `fields`, `status`, `exception`, `created_at`, `updated_at`, `original`, `changes`) VALUES
 (1, '9adf3066-9860-4c92-8863-5148ccc13d31', 1, 'Create', 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, '', 'finished', '', '2023-12-17 17:23:24', '2023-12-17 17:23:24', NULL, '{\"email\":\"test@qq.com\",\"invite_code\":\"233133\",\"avatar\":\"kxeHeOIZfN9hQpkqoHBDIZWPjgdtEBsdPjpzIW9F.jpg\",\"password\":\"$2y$12$wyZMN6GfF1BT8Qeaufso0u\\/1ZdXFt9x8b99aPLzETYDwgqmhLT6TO\",\"updated_at\":\"2023-12-17T17:23:24.000000Z\",\"created_at\":\"2023-12-17T17:23:24.000000Z\",\"id\":1}'),
@@ -321,7 +343,12 @@ INSERT INTO `action_events` (`id`, `batch_id`, `user_id`, `name`, `actionable_ty
 (14, '9af007fb-9d50-46d2-a84f-3fe43ed97f92', 1, 'Update', 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, '', 'finished', '', '2023-12-26 02:19:27', '2023-12-26 02:19:27', '{\"logo\":null,\"time_zone\":\"\\\"America\\/New_York\\\"\\n\"}', '{\"logo\":\"market\\/TxoJDDh58sc6A5tkppawIqgd4KGuwG7WcKmL7iKc.png\",\"time_zone\":\"America\\/New_York\"}'),
 (15, '9af009b4-8224-4600-a12d-ff8f79d636d9', 1, 'Update', 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, '', 'finished', '', '2023-12-26 02:24:16', '2023-12-26 02:24:16', '{\"logo\":\"market\\/TxoJDDh58sc6A5tkppawIqgd4KGuwG7WcKmL7iKc.png\"}', '{\"logo\":\"mxWvAHHaNwwZBeGQkKGpzEM8ngup159ZBoX4Hc5y.png\"}'),
 (16, '9af009f9-ef1c-4fdc-9920-7cf7932d6f32', 1, 'Update', 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, '', 'finished', '', '2023-12-26 02:25:02', '2023-12-26 02:25:02', '{\"logo\":\"mxWvAHHaNwwZBeGQkKGpzEM8ngup159ZBoX4Hc5y.png\"}', '{\"logo\":\"zOXJocsTlaJMb9ur8L20kp6H5rGfgoPqwiQFYiJc.png\"}'),
-(17, '9af00ad4-a71b-4129-ad07-85e0350b83a8', 1, 'Update', 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, '', 'finished', '', '2023-12-26 02:27:25', '2023-12-26 02:27:25', '{\"symbol_history\":null}', '{\"symbol_history\":\"X:ETHUSD\"}');
+(17, '9af00ad4-a71b-4129-ad07-85e0350b83a8', 1, 'Update', 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, '', 'finished', '', '2023-12-26 02:27:25', '2023-12-26 02:27:25', '{\"symbol_history\":null}', '{\"symbol_history\":\"X:ETHUSD\"}'),
+(18, '9af29347-0203-49dc-8321-78a6b163a14b', 1, 'Create', 'App\\Models\\News', 1, 'App\\Models\\News', 1, 'App\\Models\\News', 1, '', 'finished', '', '2023-12-27 08:40:36', '2023-12-27 08:40:36', NULL, '{\"title\":\"\\u8f1d\\u9054\\u540d\\u52172024\\u5e74\\u83ef\\u723e\\u8857\\u6700\\u770b\\u597d20\\u6a94\\u6a19\\u666e\\u4e94\\u767e\\u6210\\u5206\\u80a1\\u699c\\u9996\",\"image\":\"gDn7MLnYNHwUupIuXcR0YG9JOXQPTcc7ZQBuKB9U.png\",\"url\":\"https:\\/\\/www.moneydj.com\\/kmdj\\/news\\/newsviewer.aspx?a=32286c86-2e27-4e71-a47a-bbbd2acb2562&utm_source=1626579618165796185957966816&utm_medium=RSS\",\"author\":\"AMZN\\/us\",\"updated_at\":\"2023-12-27T08:40:36.000000Z\",\"created_at\":\"2023-12-27T08:40:36.000000Z\",\"id\":1}'),
+(19, '9af2a491-1ec0-4b83-a67c-d7ff59c21084', 1, 'Update', 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, '', 'finished', '', '2023-12-27 09:28:57', '2023-12-27 09:28:57', '{\"logo\":\"zOXJocsTlaJMb9ur8L20kp6H5rGfgoPqwiQFYiJc.png\"}', '{\"logo\":\"FlSANboQKxDo2bCevatLD7szVpZsiidiBbgdZA2t.png\"}'),
+(20, '9af3f557-0140-4c01-bb5c-16eeeac92bf3', 1, 'Update', 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, 'App\\Models\\Market', 1, '', 'finished', '', '2023-12-28 01:10:38', '2023-12-28 01:10:38', '{\"logo\":\"FlSANboQKxDo2bCevatLD7szVpZsiidiBbgdZA2t.png\"}', '{\"logo\":\"IZdgUIjCEmPB2Owd63RTEeSdjLtHD7ITflkkDiVD.png\"}'),
+(21, '9af3f56a-9e87-4101-92ea-d08e0a41df21', 1, 'Update', 'App\\Models\\Market', 2, 'App\\Models\\Market', 2, 'App\\Models\\Market', 2, '', 'finished', '', '2023-12-28 01:10:51', '2023-12-28 01:10:51', '{\"logo\":\"FlSANboQKxDo2bCevatLD7szVpZsiidiBbgdZA2t.png\"}', '{\"logo\":\"mpgUtQqnJDRrXfPaxeiMRyXxS8SorVbaUIze2sHk.png\"}'),
+(22, '9af3f57b-173a-4ab9-9998-5c4539ce79f5', 1, 'Update', 'App\\Models\\Market', 3, 'App\\Models\\Market', 3, 'App\\Models\\Market', 3, '', 'finished', '', '2023-12-28 01:11:02', '2023-12-28 01:11:02', '{\"logo\":\"FlSANboQKxDo2bCevatLD7szVpZsiidiBbgdZA2t.png\"}', '{\"logo\":\"xMjDTIfrn0TAGF2K5vKkZY6ZDaW1QT6nwsoMT7jJ.jpg\"}');
 
 INSERT INTO `currencies` (`id`, `code`, `symbol`, `name`, `rate`, `created_at`, `updated_at`, `main_coin_type`, `coin_type`) VALUES
 (1, 'btc', 'btc', 'BTC', 1.00, '2023-12-19 06:37:05', '2023-12-20 06:09:03', '0', '0'),
@@ -344,13 +371,15 @@ INSERT INTO `market_categories` (`id`, `name`, `time_zone`, `morning_start_time`
 (4, 'Cryptos', 'Asia/Jerusalem', '00:00:00', '12:00:00', '12:00:00', '24:00:00', 3, '2023-02-10 18:32:00', '2023-02-10 18:32:00');
 
 INSERT INTO `markets` (`id`, `name`, `symbol_history`, `symbol`, `logo`, `full_name`, `time_zone`, `morning_start_time`, `morning_end_time`, `afternoon_start_time`, `afternoon_end_time`, `buy_fee`, `sell_fee`, `hand_min`, `hand_max`, `open_status`, `hot`, `category_id`, `created_at`, `updated_at`) VALUES
-(1, 'ETHUSD', 'X:ETHUSD', 'ETH-USD', 'zOXJocsTlaJMb9ur8L20kp6H5rGfgoPqwiQFYiJc.png', 'ETHUSD', 'America/New_York', '00:00:00', '12:00:00', '12:00:00', '24:00:00', 0.00, 0.00, 0.01, 10000.00, 1, 0, 4, '2023-02-10 18:32:00', '2023-12-26 02:27:25');
+(1, 'BTCUSD', 'X:BTCUSD', 'BTC-USD', 'IZdgUIjCEmPB2Owd63RTEeSdjLtHD7ITflkkDiVD.png', 'BTCUSD', 'America/New_York', '00:00:00', '12:00:00', '12:00:00', '24:00:00', 0.00, 0.00, 0.01, 10000.00, 1, 1, 4, '2023-02-10 18:32:00', '2023-12-28 01:10:38'),
+(2, 'ETHUSD', 'X:ETHUSD', 'ETH-USD', 'mpgUtQqnJDRrXfPaxeiMRyXxS8SorVbaUIze2sHk.png', 'ETHUSD', 'America/New_York', '00:00:00', '12:00:00', '12:00:00', '24:00:00', 0.00, 0.00, 0.01, 10000.00, 1, 1, 4, '2023-02-10 18:32:00', '2023-12-28 01:10:51'),
+(3, 'SOLUSD', 'X:SOLUSD', 'SOL-USD', 'xMjDTIfrn0TAGF2K5vKkZY6ZDaW1QT6nwsoMT7jJ.jpg', 'SOLUSD', 'America/New_York', '00:00:00', '12:00:00', '12:00:00', '24:00:00', 0.00, 0.00, 0.01, 10000.00, 1, 1, 4, '2023-02-10 18:32:00', '2023-12-28 01:11:02');
 
 INSERT INTO `members` (`id`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `invite_code`, `avatar`, `active`, `parent_id`, `id_card`, `id_card_front`, `id_card_back`, `real_name`, `nickname`, `balance`, `freeze_balance`) VALUES
 (1, 'test@qq.com', '$2y$12$wyZMN6GfF1BT8Qeaufso0u/1ZdXFt9x8b99aPLzETYDwgqmhLT6TO', NULL, '2023-12-17 17:23:24', '2023-12-17 17:33:49', '233133', 'TLUihOBoX6N3JOIICMjgMP5kyRPP3jXpZz3K1ByH.jpg', '1', NULL, NULL, NULL, NULL, NULL, NULL, 0.000000, 0.000000),
 (2, 'test@123.com', '$2y$12$LqBg.4UDulGj9Q.7WYAmdOjTyuq5HUha1FBzXAjyKjxycouP09osy', NULL, '2023-12-17 17:49:45', '2023-12-17 17:49:45', 'test', '4vdk96l1ar3XoEIGLj21UtzZJkQZwOVnObE1bppF.jpg', '1', 1, NULL, NULL, NULL, NULL, NULL, 0.000000, 0.000000),
 (5, '2586438083@qq.com', '$2y$12$ER9j210E1hDSrHvx2GUWbuwZSio01BjYFLruoIVzE04zAznVEUGAe', NULL, '2023-12-19 02:54:58', '2023-12-20 05:11:45', 'TxNCsx', 'http://127.0.0.1:8000/storage/Fe8nkEdhtRIjrvrC2MR51RMc3GFTOkt5cwAB28Km.jpg', '1', 0, NULL, NULL, NULL, NULL, 'TokLove', 0.000000, 0.000000),
-(8, 'xmclouds@qq.com', '$2y$12$4wCes//EhRxbs0FOk.XYfu5mBSEZD8N9ml8p67MwW8U4XvkIGOd/6', NULL, '2023-12-20 06:38:51', '2023-12-21 14:03:11', 'mk0SfJ', 'http://127.0.0.1:8000/storage/D0TP5JXDbycprxO6i6Dm7PG5jh5F86ZfXXPcUhaK.jpg', '1', 0, NULL, NULL, NULL, NULL, 'Jack', 700000000.000000, 0.000000);
+(8, 'xmclouds@qq.com', '$2y$12$4wCes//EhRxbs0FOk.XYfu5mBSEZD8N9ml8p67MwW8U4XvkIGOd/6', NULL, '2023-12-20 06:38:51', '2023-12-27 15:14:02', 'mk0SfJ', 'http://127.0.0.1:8000/storage/bUAUtrQbGePqq1ABctlAKHxPuz7LLjLOytPhN08j.jpg', '1', 0, NULL, NULL, NULL, NULL, 'JackLove', 700000000.000000, 0.000000);
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
@@ -362,6 +391,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (7, '2021_08_25_193039_create_nova_notifications_table', 1),
 (8, '2022_04_26_000000_add_fields_to_nova_notifications_table', 1),
 (9, '2022_12_19_000000_create_field_attachments_table', 1);
+
+INSERT INTO `news` (`id`, `title`, `url`, `image`, `author`, `created_at`, `updated_at`) VALUES
+(1, '輝達名列2024年華爾街最看好20檔標普五百成分股榜首', 'https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=32286c86-2e27-4e71-a47a-bbbd2acb2562&utm_source=1626579618165796185957966816&utm_medium=RSS', 'gDn7MLnYNHwUupIuXcR0YG9JOXQPTcc7ZQBuKB9U.png', 'AMZN/us', '2023-12-27 08:40:36', '2023-12-27 08:40:36'),
+(2, '輝達名列2024年華爾街最看好20檔標普五百成分股榜首', 'https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=32286c86-2e27-4e71-a47a-bbbd2acb2562&utm_source=1626579618165796185957966816&utm_medium=RSS', 'gDn7MLnYNHwUupIuXcR0YG9JOXQPTcc7ZQBuKB9U.png', 'AMZN/us', '2023-12-27 08:40:36', '2023-12-27 08:40:36'),
+(3, '輝達名列2024年華爾街最看好20檔標普五百成分股榜首', 'https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=32286c86-2e27-4e71-a47a-bbbd2acb2562&utm_source=1626579618165796185957966816&utm_medium=RSS', 'gDn7MLnYNHwUupIuXcR0YG9JOXQPTcc7ZQBuKB9U.png', 'AMZN/us', '2023-12-27 08:40:36', '2023-12-27 08:40:36');
 
 INSERT INTO `user_bill` (`id`, `member_id`, `type`, `tag`, `amount`, `after_balance`, `before_balance`, `created_at`, `updated_at`) VALUES
 (2, 8, 1, 'Deposit', 100000000.000000, 400000000.000000, 300000000.000000, '2023-12-21 13:59:39', '2023-12-21 13:59:39'),

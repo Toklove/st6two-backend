@@ -49,7 +49,7 @@ class Market extends Resource
             Text::make('名称', "name"),
             Text::make('交易对标识', 'symbol'),
             Text::make('历史记录采集标识', 'symbol_history'),
-            Image::make("图标", "logo")->disk('public')->prunable(),
+            Image::make("图标", "logo")->prunable(),
             Timezone::make('时区', 'time_zone')->rules('required', 'string', 'max:255'),
             Time::make('早间开始时间', 'morning_start_time')->rules('required', 'string', 'max:255'),
             Time::make('早间结束时间', 'morning_end_time')->rules('required', 'string', 'max:255'),

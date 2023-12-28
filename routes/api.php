@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\api\Auth;
 use App\Http\Controllers\api\Common;
+use App\Http\Controllers\api\Index;
+use App\Http\Controllers\api\Market;
 use App\Http\Controllers\api\User;
 use App\Http\Controllers\api\Wallet;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +30,16 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 });
 Route::group(['middleware' => 'api', 'prefix' => 'common'], function () {
     Route::post('upload', [Common::class, 'upload']);
+});
+
+Route::group(['middleware' => 'api','prefix' => 'index'],function () {
+    Route::get('news', [Index::class, 'news']);
+    Route::get('market', [Index::class, 'hot_pair']);
+});
+
+Route::group(['middleware' => 'api','prefix' => 'market'],function () {
+    Route::get('info', [Market::class, 'market_info']);
+    Route::post('like',[Market::class, 'like']);
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'user'], function () {
