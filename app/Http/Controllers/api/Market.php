@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\Market as MarketModel;
+use App\Models\MarketCategory;
+use App\Models\UserContractOrder;
 use App\Models\UserLikeMarket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class Market extends BaseApi
 {
@@ -50,6 +53,63 @@ class Market extends BaseApi
             UserLikeMarket::query()->create(['user_id' => $this->user['id'], 'market_id' => $id]);
             $market->is_like = true;
             return $this->success('收藏成功', $market);
+        }
+    }
+
+    function category()
+    {
+        $list = MarketCategory::query()->get();
+        return $this->success('success', $list);
+    }
+
+    function list(Request $request)
+    {
+        $data = $request->validate(['category_id' => 'required|integer']);
+        $list = MarketModel::query()->where('category_id', $data['category_id'])->get();
+        return $this->success('success', $list);
+    }
+
+    function contract_order(Request $request)
+    {
+        $data = $request->validate([
+            'symbol' => 'required|string',
+            'type' => 'required|integer',
+            'quantity' => 'required|integer',
+            'order_price' => 'required|numeric',
+            'stop_surplus' => 'required|numeric',
+            'stop_loss' => 'required|numeric',
+            'lever' => 'required|numeric',
+        ]);
+
+        $symbol = $data['symbol'];
+        $market = MarketModel::query()->where('symbol', $symbol)->first();
+
+        if (!$market) {
+            return $this->error('交易对不存在');
+        }
+
+        $order_num = time() . rand(1000, 9999) . $market['full_name'] . rand(1000, 9999);
+
+        DB::beginTransaction();
+        try {
+            $order = UserContractOrder::query()->create([
+                'member_id' => $this->user['id'],
+                'market_id' => $market['id'],
+                'type' => $data['type'],
+                'quantity' => $data['quantity'],
+                'paid_price' => $data['order_price'],
+                'stop_loss' => $data['stop_loss'],
+                'lever' => $data['lever'],
+                'order_num' => $order_num,
+            ]);
+
+//            Member::money();
+
+            DB::commit();
+            return $this->success('下单成功', $order);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return $this->error("下单失败", $e->getMessage());
         }
     }
 }

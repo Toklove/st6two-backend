@@ -32,14 +32,17 @@ Route::group(['middleware' => 'api', 'prefix' => 'common'], function () {
     Route::post('upload', [Common::class, 'upload']);
 });
 
-Route::group(['middleware' => 'api','prefix' => 'index'],function () {
+Route::group(['middleware' => 'api', 'prefix' => 'index'], function () {
     Route::get('news', [Index::class, 'news']);
     Route::get('market', [Index::class, 'hot_pair']);
 });
 
-Route::group(['middleware' => 'api','prefix' => 'market'],function () {
+Route::group(['middleware' => 'api', 'prefix' => 'market'], function () {
     Route::get('info', [Market::class, 'market_info']);
-    Route::post('like',[Market::class, 'like']);
+    Route::post('like', [Market::class, 'like']);
+    Route::get('category', [Market::class, 'category']);
+    Route::get('list', [Market::class, 'list']);
+    Route::post('contract_order', [Market::class, 'contract_order']);
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'user'], function () {
