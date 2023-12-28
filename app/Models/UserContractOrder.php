@@ -28,4 +28,9 @@ class UserContractOrder extends Model
         "force_close_status"
     ];
 
+    function market()
+    {
+        return $this->belongsTo(Market::class, 'market_id', 'id');
+    }
+
 }

@@ -1,10 +1,10 @@
 -- -------------------------------------------------------------
--- TablePlus 5.6.6(520)
+-- TablePlus 5.6.8(524)
 --
 -- https://tableplus.com/
 --
 -- Database: smartTrade
--- Generation Time: 2023-12-28 09:41:51.4250
+-- Generation Time: 2023-12-28 22:35:46.8220
 -- -------------------------------------------------------------
 
 
@@ -42,7 +42,7 @@ CREATE TABLE `action_events` (
   KEY `action_events_target_type_target_id_index` (`target_type`,`target_id`),
   KEY `action_events_batch_id_model_type_model_id_index` (`batch_id`,`model_type`,`model_id`),
   KEY `action_events_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `currencies`;
 CREATE TABLE `currencies` (
@@ -56,7 +56,7 @@ CREATE TABLE `currencies` (
   `main_coin_type` varchar(255) DEFAULT NULL,
   `coin_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `failed_jobs`;
 CREATE TABLE `failed_jobs` (
@@ -69,7 +69,7 @@ CREATE TABLE `failed_jobs` (
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `market_categories`;
 CREATE TABLE `market_categories` (
@@ -84,7 +84,7 @@ CREATE TABLE `market_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `markets`;
 CREATE TABLE `markets` (
@@ -109,7 +109,7 @@ CREATE TABLE `markets` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `members`;
 CREATE TABLE `members` (
@@ -131,7 +131,7 @@ CREATE TABLE `members` (
   `balance` decimal(21,6) NOT NULL DEFAULT '0.000000',
   `freeze_balance` decimal(21,6) NOT NULL DEFAULT '0.000000',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -139,7 +139,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news` (
@@ -151,7 +151,7 @@ CREATE TABLE `news` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `nova_field_attachments`;
 CREATE TABLE `nova_field_attachments` (
@@ -166,7 +166,7 @@ CREATE TABLE `nova_field_attachments` (
   PRIMARY KEY (`id`),
   KEY `nova_field_attachments_attachable_type_attachable_id_index` (`attachable_type`,`attachable_id`),
   KEY `nova_field_attachments_url_index` (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `nova_notifications`;
 CREATE TABLE `nova_notifications` (
@@ -181,7 +181,7 @@ CREATE TABLE `nova_notifications` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `nova_notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `nova_pending_field_attachments`;
 CREATE TABLE `nova_pending_field_attachments` (
@@ -193,7 +193,7 @@ CREATE TABLE `nova_pending_field_attachments` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `nova_pending_field_attachments_draft_id_index` (`draft_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `password_reset_tokens`;
 CREATE TABLE `password_reset_tokens` (
@@ -201,7 +201,7 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `personal_access_tokens`;
 CREATE TABLE `personal_access_tokens` (
@@ -218,7 +218,7 @@ CREATE TABLE `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `user_bank`;
 CREATE TABLE `user_bank` (
@@ -233,7 +233,7 @@ CREATE TABLE `user_bank` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_bill`;
 CREATE TABLE `user_bill` (
@@ -247,7 +247,32 @@ CREATE TABLE `user_bill` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `user_contract_order`;
+CREATE TABLE `user_contract_order` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `member_id` int NOT NULL COMMENT '用户ID',
+  `market_id` int NOT NULL COMMENT '交易对ID',
+  `stop_surplus` decimal(21,6) DEFAULT '0.000000' COMMENT '止盈金额',
+  `stop_loss` decimal(21,6) DEFAULT '0.000000' COMMENT '止损金额',
+  `order_num` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '订单号',
+  `lever` int NOT NULL COMMENT '倍率',
+  `quantity` decimal(21,6) NOT NULL COMMENT '购买手数',
+  `type` tinyint NOT NULL DEFAULT '0' COMMENT '类型:0=买,1=卖',
+  `paid_price` decimal(21,6) NOT NULL COMMENT '挂单金额',
+  `buy_fee` decimal(21,6) NOT NULL DEFAULT '0.000000' COMMENT '购买手续费',
+  `buy_fee_rate` decimal(21,6) NOT NULL DEFAULT '0.000000' COMMENT '购买手续费费率',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `status` tinyint NOT NULL DEFAULT '0' COMMENT '状态:0=待成单,1=已成单,2=已平仓',
+  `assure` decimal(21,6) NOT NULL DEFAULT '0.000000' COMMENT '保证金',
+  `force_close_status` tinyint NOT NULL DEFAULT '0' COMMENT '强平状态',
+  `sell_fee` decimal(21,6) NOT NULL DEFAULT '0.000000' COMMENT '卖出手续费',
+  `sell_fee_rate` decimal(21,6) NOT NULL DEFAULT '0.000000' COMMENT '卖出手续费费率',
+  `money` decimal(21,6) NOT NULL DEFAULT '0.000000' COMMENT '盈亏',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_crypto_address`;
 CREATE TABLE `user_crypto_address` (
@@ -258,7 +283,7 @@ CREATE TABLE `user_crypto_address` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_crypto_wallet`;
 CREATE TABLE `user_crypto_wallet` (
@@ -270,7 +295,7 @@ CREATE TABLE `user_crypto_wallet` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_deposit`;
 CREATE TABLE `user_deposit` (
@@ -283,7 +308,7 @@ CREATE TABLE `user_deposit` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_like_markets`;
 CREATE TABLE `user_like_markets` (
@@ -293,7 +318,7 @@ CREATE TABLE `user_like_markets` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_withdraw`;
 CREATE TABLE `user_withdraw` (
@@ -310,7 +335,7 @@ CREATE TABLE `user_withdraw` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -324,7 +349,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `action_events` (`id`, `batch_id`, `user_id`, `name`, `actionable_type`, `actionable_id`, `target_type`, `target_id`, `model_type`, `model_id`, `fields`, `status`, `exception`, `created_at`, `updated_at`, `original`, `changes`) VALUES
 (1, '9adf3066-9860-4c92-8863-5148ccc13d31', 1, 'Create', 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, '', 'finished', '', '2023-12-17 17:23:24', '2023-12-17 17:23:24', NULL, '{\"email\":\"test@qq.com\",\"invite_code\":\"233133\",\"avatar\":\"kxeHeOIZfN9hQpkqoHBDIZWPjgdtEBsdPjpzIW9F.jpg\",\"password\":\"$2y$12$wyZMN6GfF1BT8Qeaufso0u\\/1ZdXFt9x8b99aPLzETYDwgqmhLT6TO\",\"updated_at\":\"2023-12-17T17:23:24.000000Z\",\"created_at\":\"2023-12-17T17:23:24.000000Z\",\"id\":1}'),
@@ -379,7 +404,9 @@ INSERT INTO `members` (`id`, `email`, `password`, `remember_token`, `created_at`
 (1, 'test@qq.com', '$2y$12$wyZMN6GfF1BT8Qeaufso0u/1ZdXFt9x8b99aPLzETYDwgqmhLT6TO', NULL, '2023-12-17 17:23:24', '2023-12-17 17:33:49', '233133', 'TLUihOBoX6N3JOIICMjgMP5kyRPP3jXpZz3K1ByH.jpg', '1', NULL, NULL, NULL, NULL, NULL, NULL, 0.000000, 0.000000),
 (2, 'test@123.com', '$2y$12$LqBg.4UDulGj9Q.7WYAmdOjTyuq5HUha1FBzXAjyKjxycouP09osy', NULL, '2023-12-17 17:49:45', '2023-12-17 17:49:45', 'test', '4vdk96l1ar3XoEIGLj21UtzZJkQZwOVnObE1bppF.jpg', '1', 1, NULL, NULL, NULL, NULL, NULL, 0.000000, 0.000000),
 (5, '2586438083@qq.com', '$2y$12$ER9j210E1hDSrHvx2GUWbuwZSio01BjYFLruoIVzE04zAznVEUGAe', NULL, '2023-12-19 02:54:58', '2023-12-20 05:11:45', 'TxNCsx', 'http://127.0.0.1:8000/storage/Fe8nkEdhtRIjrvrC2MR51RMc3GFTOkt5cwAB28Km.jpg', '1', 0, NULL, NULL, NULL, NULL, 'TokLove', 0.000000, 0.000000),
-(8, 'xmclouds@qq.com', '$2y$12$4wCes//EhRxbs0FOk.XYfu5mBSEZD8N9ml8p67MwW8U4XvkIGOd/6', NULL, '2023-12-20 06:38:51', '2023-12-27 15:14:02', 'mk0SfJ', 'http://127.0.0.1:8000/storage/bUAUtrQbGePqq1ABctlAKHxPuz7LLjLOytPhN08j.jpg', '1', 0, NULL, NULL, NULL, NULL, 'JackLove', 700000000.000000, 0.000000);
+(8, 'xmclouds@qq.com', '$2y$12$4wCes//EhRxbs0FOk.XYfu5mBSEZD8N9ml8p67MwW8U4XvkIGOd/6', NULL, '2023-12-20 06:38:51', '2023-12-27 15:14:02', 'mk0SfJ', 'http://127.0.0.1:8000/storage/bUAUtrQbGePqq1ABctlAKHxPuz7LLjLOytPhN08j.jpg', '1', 0, NULL, NULL, NULL, NULL, 'JackLove', 700000000.000000, 0.000000),
+(9, '2793210460@qq.com', '$2y$12$nr8lxg.dbOOU2IkKpskPNObBBVzcn8PtgIeQXnEZoZ3C2xt30QWH.', NULL, '2023-12-28 10:23:51', '2023-12-28 10:29:24', 'ukrryQ', 'http://192.168.1.251:8000/storage/vm0YOC7TWHMpMZHqpjryhMztUQYwsxOf6MyJyn7J.png', '1', 0, NULL, NULL, NULL, NULL, '2793210460@qq.com', 0.000000, 0.000000),
+(10, '2117862524@qq.com', '$2y$12$dDkQy3mU.Fr0uH/nVZSXaOzO7tFMgnp4YmtY.cypWf1JTlMRp7A0.', NULL, '2023-12-28 10:26:27', '2023-12-28 10:31:42', '6DrjWy', 'http://192.168.1.251:8000/storage/7sId3qaiw0PpLsRNnaYqATfxbz0Vu65c0jKPsTyQ.jpg', '1', 0, NULL, NULL, NULL, NULL, '2117862524', 0.000000, 0.000000);
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
@@ -403,14 +430,33 @@ INSERT INTO `user_bill` (`id`, `member_id`, `type`, `tag`, `amount`, `after_bala
 (4, 8, 1, 'Deposit', 100000000.000000, 600000000.000000, 500000000.000000, '2023-12-21 14:02:50', '2023-12-21 14:02:50'),
 (5, 8, 1, 'Deposit', 100000000.000000, 700000000.000000, 600000000.000000, '2023-12-21 14:03:11', '2023-12-21 14:03:11');
 
+INSERT INTO `user_contract_order` (`id`, `member_id`, `market_id`, `stop_surplus`, `stop_loss`, `order_num`, `lever`, `quantity`, `type`, `paid_price`, `buy_fee`, `buy_fee_rate`, `created_at`, `updated_at`, `status`, `assure`, `force_close_status`, `sell_fee`, `sell_fee_rate`, `money`) VALUES
+(1, 8, 1, 0.000000, 0.000000, '17037602924811BTCUSD9182', 100, 1.000000, 0, 1.000000, 0.000000, 0.000000, '2023-12-28 10:44:52', '2023-12-28 10:44:52', 2, 0.000000, 0, 0.000000, 0.000000, 0.000000),
+(2, 8, 3, 0.000000, 0.000000, '17037691866150SOLUSD8629', 100, 1.000000, 0, 1.000000, 0.000000, 0.000000, '2023-12-28 13:13:06', '2023-12-28 13:13:06', 2, 0.000000, 0, 0.000000, 0.000000, 0.000000);
+
 INSERT INTO `user_crypto_address` (`id`, `member_id`, `currency_id`, `address`, `created_at`, `updated_at`) VALUES
 (1, 8, 1, '161j17TgueSkx4G83hTYpo2NTn8Q4XxbPE', '2023-12-20 06:38:51', '2023-12-20 06:38:51'),
 (2, 8, 2, '0x694c15ce794c9cb4a5dc6e59880200c336140099', '2023-12-20 06:38:51', '2023-12-20 06:38:51'),
 (3, 8, 3, '0x694c15ce794c9cb4a5dc6e59880200c336140099', '2023-12-20 06:38:51', '2023-12-20 06:38:51'),
-(4, 8, 4, 'TRQRXtVX7oaqBXAtDJ1yroraCDxRvak9uK', '2023-12-20 06:38:51', '2023-12-20 06:38:51');
+(4, 8, 4, 'TRQRXtVX7oaqBXAtDJ1yroraCDxRvak9uK', '2023-12-20 06:38:51', '2023-12-20 06:38:51'),
+(5, 9, 1, '1KuSqMcC9KJ86sV1cqumvXihQQUZCCjyWT', '2023-12-28 10:23:53', '2023-12-28 10:23:53'),
+(6, 9, 2, '0x68b86a593acb0a6a1d855ec02c454ff56ed4c322', '2023-12-28 10:23:53', '2023-12-28 10:23:53'),
+(7, 9, 3, '0x68b86a593acb0a6a1d855ec02c454ff56ed4c322', '2023-12-28 10:23:53', '2023-12-28 10:23:53'),
+(8, 9, 4, 'THtPqryPb5NkkcMM4fmL36eRPc1CFjqowT', '2023-12-28 10:23:53', '2023-12-28 10:23:53'),
+(9, 10, 1, '1CRbgpTtb5rMxuAUgnUxcpSiQ9JygVmxBw', '2023-12-28 10:26:28', '2023-12-28 10:26:28'),
+(10, 10, 2, '0x3b0eb048d6a57d7c931fd9175df6c53cc776eb9a', '2023-12-28 10:26:29', '2023-12-28 10:26:29'),
+(11, 10, 3, '0x3b0eb048d6a57d7c931fd9175df6c53cc776eb9a', '2023-12-28 10:26:29', '2023-12-28 10:26:29'),
+(12, 10, 4, 'TJk3Lts3D6ucgFDFUqPSceUF4hfFG1SJfh', '2023-12-28 10:26:29', '2023-12-28 10:26:29');
 
 INSERT INTO `user_crypto_wallet` (`id`, `member_id`, `currency_id`, `address`, `status`, `created_at`, `updated_at`) VALUES
 (2, 5, 1, '1111', 1, '2023-12-20 03:44:13', '2023-12-20 03:44:13');
+
+INSERT INTO `user_like_markets` (`id`, `user_id`, `market_id`, `created_at`, `updated_at`) VALUES
+(4, 8, 1, '2023-12-28 02:49:13', '2023-12-28 02:49:13'),
+(5, 8, 3, '2023-12-28 06:10:02', '2023-12-28 06:10:02'),
+(6, 8, 2, '2023-12-28 07:28:43', '2023-12-28 07:28:43'),
+(7, 9, 1, '2023-12-28 10:30:56', '2023-12-28 10:30:56'),
+(8, 10, 1, '2023-12-28 10:36:20', '2023-12-28 10:36:20');
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'admin@admin.com', NULL, '$2y$12$yq/eARbyxvWw6QvH5eekVOzJvJEa7gThRa13hur6/ijCWSbSdpzoq', 'S7haf896YPFA8CxAqzYFZoa8WHvgQ7v1af4AzKp6vgho1SaqSWmJuWLPAg6A', '2023-12-17 17:05:12', '2023-12-17 17:05:12');

@@ -71,15 +71,21 @@ class Market extends BaseApi
 
     function contract_order(Request $request)
     {
-        $data = $request->validate([
-            'symbol' => 'required|string',
-            'type' => 'required|integer',
-            'quantity' => 'required|integer',
-            'order_price' => 'required|numeric',
-            'stop_surplus' => 'required|numeric',
-            'stop_loss' => 'required|numeric',
-            'lever' => 'required|numeric',
-        ]);
+
+        try {
+            $data = $request->validate([
+                'symbol' => 'required|string',
+                'order_type' => 'required|integer',
+                'quantity' => 'required|integer',
+                'order_price' => 'required|numeric',
+                'stop_surplus' => 'numeric',
+                'stop_loss' => 'numeric',
+                'lever' => 'required|numeric',
+            ]);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
+
 
         $symbol = $data['symbol'];
         $market = MarketModel::query()->where('symbol', $symbol)->first();
@@ -90,12 +96,13 @@ class Market extends BaseApi
 
         $order_num = time() . rand(1000, 9999) . $market['full_name'] . rand(1000, 9999);
 
+
         DB::beginTransaction();
         try {
             $order = UserContractOrder::query()->create([
                 'member_id' => $this->user['id'],
                 'market_id' => $market['id'],
-                'type' => $data['type'],
+                'type' => $data['order_type'],
                 'quantity' => $data['quantity'],
                 'paid_price' => $data['order_price'],
                 'stop_loss' => $data['stop_loss'],
@@ -103,6 +110,7 @@ class Market extends BaseApi
                 'order_num' => $order_num,
             ]);
 
+            //TODO 扣除余额
 //            Member::money();
 
             DB::commit();
@@ -111,5 +119,11 @@ class Market extends BaseApi
             DB::rollBack();
             return $this->error("下单失败", $e->getMessage());
         }
+    }
+
+    function contract_order_history()
+    {
+        $list = UserContractOrder::query()->with('market')->where(['member_id' => $this->user['id'], "status" => 2])->paginate(15);
+        return $this->success('success', $list);
     }
 }
