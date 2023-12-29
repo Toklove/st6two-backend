@@ -73,7 +73,7 @@ class Wallet extends BaseApi
 
                     UserDeposit::query()->create(['member_id' => $member_id, 'amount' => $amount, 'txId' => $body['txId'], 'trade_id' => $body['tradeId'], 'order_no' => $order_no]);
                 } catch (\Exception $e) {
-                    return response()->json(['code' => -1, 'msg' => __("api.wallet.recharge_failed"), 'err' => $e->getMessage()]);
+                    return response()->json(['code' => -1, 'msg' => __("wallet.recharge_failed"), 'err' => $e->getMessage()]);
                 }
             }
             //无论业务方处理成功与否（success,failed），回调都认为成功

@@ -26,7 +26,7 @@ class Market extends BaseApi
 
         try {
             $data = $request->validate(['symbol' => 'required|string'], [
-                'symbol.required' => __('api.market.symbol_required'),
+                'symbol.required' => __('market.symbol_required'),
             ]);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
@@ -36,7 +36,7 @@ class Market extends BaseApi
         $market = MarketModel::query()->where('symbol', $symbol)->first();
 
         if (!$market) {
-            return $this->error(__('api.market.symbol_required'));
+            return $this->error(__('market.symbol_required'));
         }
 
         $like = UserLikeMarket::query()->where(['user_id' => $this->user['id'], 'market_id' => $market['id']])->first();
@@ -53,24 +53,24 @@ class Market extends BaseApi
     {
         try {
             $data = $request->validate(['id' => 'required|integer'],
-                ['id.required' => __('api.market.symbol_required')]);
+                ['id.required' => __('market.symbol_required')]);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
         $id = $data['id'];
         $market = MarketModel::query()->find($id);
         if (!$market) {
-            return $this->error(__('api.market.symbol_required'));
+            return $this->error(__('market.symbol_required'));
         }
         $like = UserLikeMarket::query()->where(['user_id' => $this->user['id'], 'market_id' => $id])->first();
         if ($like) {
             $like->delete();
             $market->is_like = false;
-            return $this->success(__('api.market.collection_successfully'), $market);
+            return $this->success(__('market.collection_successfully'), $market);
         } else {
             UserLikeMarket::query()->create(['user_id' => $this->user['id'], 'market_id' => $id]);
             $market->is_like = true;
-            return $this->success(__('api.market.collection successful'), $market);
+            return $this->success(__('market.collection successful'), $market);
         }
     }
 
@@ -84,7 +84,7 @@ class Market extends BaseApi
     {
         try {
             $data = $request->validate(['category_id' => 'required|integer'],
-                ["category_id_required" => __('api.market.category_id_required')]);
+                ["category_id_required" => __('market.category_id_required')]);
 
         } catch (Exception $e) {
             return $this->error($e->getMessage());
@@ -123,7 +123,7 @@ class Market extends BaseApi
         $market = MarketModel::query()->where('symbol', $symbol)->first();
 
         if (!$market) {
-            return $this->error(__('api.market.symbol_required'));
+            return $this->error(__('market.symbol_required'));
         }
 
         $unit_amount = $market->unit_amount; // 合约单价
@@ -161,10 +161,10 @@ class Market extends BaseApi
             PaidContractOrder::dispatch($order->id)->onQueue('contract_order');
 
             DB::commit();
-            return $this->success(__('api.market.order_placed_successful'), $order);
+            return $this->success(__('market.order_placed_successful'), $order);
         } catch (Exception $e) {
             DB::rollBack();
-            return $this->error(__('api.market.order_placed_successfully'), $e->getMessage());
+            return $this->error(__('market.order_placed_successfully'), $e->getMessage());
         }
     }
 
@@ -178,14 +178,14 @@ class Market extends BaseApi
     {
         //手动平仓
         try {
-            $data = $request->validate(['id' => 'required|integer'], ['id.required' => __('api.market.id_required')]);
+            $data = $request->validate(['id' => 'required|integer'], ['id.required' => __('market.id_required')]);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
 
         $order = UserContractOrder::query()->with('market')->where(['id' => $data['id'], 'member_id' => $this->user['id']])->first();
         if (!$order) {
-            return $this->error(__('api.market.order_does_not_exist'));
+            return $this->error(__('market.order_does_not_exist'));
         }
 
         $market = $order->market;
@@ -199,9 +199,9 @@ class Market extends BaseApi
         $result = exitContractTrade(3, $order['id'], $close);
 
         if ($result) {
-            return $this->success(__('api.market.order_placed_successfully'));
+            return $this->success(__('market.order_placed_successfully'));
         } else {
-            return $this->error(__('api.market.order_placed_successfully'));
+            return $this->error(__('market.order_placed_successfully'));
         }
     }
 }

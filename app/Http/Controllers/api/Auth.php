@@ -77,23 +77,23 @@ class Auth extends BaseApi
             'code' => 'required',
             'password' => 'required|min:8|confirmed',
         ], [
-            "email.required" => __("api.auth.email_required"),
-            "email.unique" => __("api.auth.email_unique"),
-            "email.email" => __("api.auth.email_email"),
-            "code.required" => __("api.auth.code_required"),
-            "password.required" => __("api.auth.password_required"),
-            "password.min" => __("api.auth.password_min"),
-            "password.confirmed" => __("api.auth.password_confirmed"),
+            "email.required" => __("auth.email_required"),
+            "email.unique" => __("auth.email_unique"),
+            "email.email" => __("auth.email_email"),
+            "code.required" => __("auth.code_required"),
+            "password.required" => __("auth.password_required"),
+            "password.min" => __("auth.password_min"),
+            "password.confirmed" => __("auth.password_confirmed"),
         ]);
 
         //验证邮箱验证码
         $key = 'check_' . $post['email'];
         $code = Cache::get($key);
         if (!$code) {
-            return $this->error(__("api.auth.code_expired"));
+            return $this->error(__("auth.code_expired"));
         }
         if ($code != $post['code']) {
-            return $this->error(__("api.auth.code_error"));
+            return $this->error(__("auth.code_error"));
         }
 
 
@@ -104,7 +104,7 @@ class Auth extends BaseApi
         if ($invite_code) {
             $parent = Member::query()->where('invite_code', $invite_code)->first();
             if (!$parent) {
-                return $this->error(__("api.auth.invite_code_error"));
+                return $this->error(__("auth.invite_code_error"));
             }
         } else {
             $parent = null;

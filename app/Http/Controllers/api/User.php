@@ -28,11 +28,11 @@ class User extends BaseApi
                 'bank_address' => 'required',
                 'bank_code' => 'required',
             ], [
-                "bank_name.required" => __("api.user.bank_name_required"),
-                "account.required" => __("api.user.account_required"),
-                "account_user.required" => __("api.user.account_user_required"),
-                "bank_address.required" => __("api.user.bank_address_required"),
-                "bank_code.required" => __("api.user.bank_code_required"),
+                "bank_name.required" => __("user.bank_name_required"),
+                "account.required" => __("user.account_required"),
+                "account_user.required" => __("user.account_user_required"),
+                "bank_address.required" => __("user.bank_address_required"),
+                "bank_code.required" => __("user.bank_code_required"),
             ]);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
@@ -51,10 +51,10 @@ class User extends BaseApi
             $post = $request->validate(
                 ['currency_id' => 'required|integer|exists:currencies,id', 'address' => 'required'],
                 [
-                    "currency_id.required" => __("api.user.currency_id_required"),
-                    "currency_id.integer" => __("api.user.currency_id_integer"),
-                    "currency_id.exists" => __("api.user.currency_id_exists"),
-                    "address.required" => __("api.user.address_required"),
+                    "currency_id.required" => __("user.currency_id_required"),
+                    "currency_id.integer" => __("user.currency_id_integer"),
+                    "currency_id.exists" => __("user.currency_id_exists"),
+                    "address.required" => __("user.address_required"),
                 ]
             );
         } catch (Exception $e) {
@@ -76,8 +76,8 @@ class User extends BaseApi
                 'nickname' => 'required',
                 'avatar' => 'required',
             ], [
-                "nickname.required" => __("api.user.nickname_required"),
-                "avatar.required" => __("api.user.avatar_required"),
+                "nickname.required" => __("user.nickname_required"),
+                "avatar.required" => __("user.avatar_required"),
             ]);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
@@ -118,9 +118,9 @@ class User extends BaseApi
     {
         try {
             $id = request()->validate(['id' => 'required|integer|exists:user_crypto_wallet,id'], [
-                "id.required" => __("api.user.id_required"),
-                "id.integer" => __("api.user.id_integer"),
-                "id.exists" => __("api.user.id_exists"),
+                "id.required" => __("user.id_required"),
+                "id.integer" => __("user.id_integer"),
+                "id.exists" => __("user.id_exists"),
             ]);
 
         } catch (Exception $e) {
@@ -139,9 +139,9 @@ class User extends BaseApi
         try {
             $id = request()->validate(['id' => 'required|integer|exists:user_bank,id'],
                 [
-                    "id.required" => __("api.user.id_required"),
-                    "id.integer" => __("api.user.id_integer"),
-                    "id.exists" => __("api.user.id_exists"),
+                    "id.required" => __("user.id_required"),
+                    "id.integer" => __("user.id_integer"),
+                    "id.exists" => __("user.id_exists"),
                 ]);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
@@ -161,9 +161,9 @@ class User extends BaseApi
                 'old_password' => 'required',
                 'password' => 'required|confirmed',
             ], [
-                "old_password.required" => __("api.user.old_password_error"),
-                "password.required" => __("api.user.password_required"),
-                "password.confirmed" => __("api.user.password_confirmed"),
+                "old_password.required" => __("user.old_password_error"),
+                "password.required" => __("user.password_required"),
+                "password.confirmed" => __("user.password_confirmed"),
             ]);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
