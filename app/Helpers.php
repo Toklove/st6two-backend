@@ -1,5 +1,12 @@
 <?php
 
+use App\Constant\BillTag;
+use App\extends\TokLove\ContractTool;
+use App\Models\Member;
+use App\Models\UserContractOrder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+
 if (!function_exists('PriceCalculate')) {
     /**
      * PHP精确计算  主要用于货币的计算用法
@@ -100,8 +107,11 @@ if (!function_exists('get_now_price')) {
         if (!$symbol) return false;
         $symbol = str_replace("-", "", $symbol);
         $symbol = strtolower($symbol) . 't';
+
         $coinApi = "https://api.huobi.pro/market/history/kline?period=1day&size=1&symbol=" . $symbol;
         $result = get_market_api($coinApi);
+
+        Log::info($result);
 
         $price_arr = $result['data'][0];
         $close = $price_arr['close']; //现价
@@ -117,7 +127,11 @@ if (!function_exists("get_market_api")) {
         curl_setopt($ch, CURLOPT_URL, $api);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-        $result = json_decode(curl_exec($ch), true);
+        $result = curl_exec($ch);
+
+        Log::info($result);
+
+        $result = json_decode($result, true);
         return $result;
     }
 }
@@ -127,5 +141,56 @@ if (!function_exists("randFloat")) {
     function randFloat($min = 0, $max = 1)
     {
         return round($min + mt_rand() / mt_getrandmax() * ($max - $min), 2);
+    }
+}
+
+
+if (!function_exists("exitContractTrade")) {
+    //处理合约交易 1.止损止盈  2.爆仓 3.手动平仓
+    function exitContractTrade($type, $order_id, $close_price = null)
+    {
+        $order = UserContractOrder::query()->with("market")->with('market')->where(['id' => $order_id])->first();
+
+        if (!$order) return false;
+        $order->status = 2;
+        $order->close_price = $close_price;
+
+        $market = $order->market;
+
+        DB::beginTransaction();
+        try {
+            if ($type == 2) {
+                $order->force_close_status = 1;
+
+
+            } else {
+                $unRealProfit = ContractTool::unRealProfit($order, $close_price);
+
+                $unit_fee = PriceCalculate($market->unit_amount, '*', $market['sell_fee'], 5); // 单张合约手续费
+                // 计算出所需保证金
+                $sell_fee = PriceCalculate($order['quantity'], '*', $unit_fee, 5);
+
+                //结算手续费
+                Member::money($sell_fee, $order->member_id, BillTag::ContractPendingOrderHandlingFee);
+
+                //结算合约金额
+                Member::money($unRealProfit, $order->member_id, BillTag::ContractPositionAmount);
+            }
+            $order->save();
+            DB::commit();
+
+            return true;
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            DB::rollBack();
+            return false;
+        }
+    }
+}
+
+if (!function_exists('custom_number_format')) {
+    function custom_number_format($value, $decimals)
+    {
+        return number_format($value, $decimals, '.', '');
     }
 }

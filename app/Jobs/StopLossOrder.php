@@ -49,7 +49,7 @@ class StopLossOrder implements ShouldQueue
 
         if ($order['stop_loss'] <= $close || $order['stop_surplus'] >= $close) {
             //触发止损止盈
-            
+            exitContractTrade(1, $order['id'], $close);
         }
 
     }

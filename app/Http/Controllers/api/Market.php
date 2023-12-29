@@ -9,6 +9,7 @@ use App\Models\MarketCategory;
 use App\Models\Member;
 use App\Models\UserContractOrder;
 use App\Models\UserLikeMarket;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -27,7 +28,7 @@ class Market extends BaseApi
             $data = $request->validate(['symbol' => 'required|string'], [
                 'symbol.required' => __('api.market.symbol_required'),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
         $symbol = $data['symbol'];
@@ -52,7 +53,7 @@ class Market extends BaseApi
         try {
             $data = $request->validate(['id' => 'required|integer'],
                 ['id.required' => __('api.market.symbol_required')]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
         $id = $data['id'];
@@ -84,7 +85,7 @@ class Market extends BaseApi
             $data = $request->validate(['category_id' => 'required|integer'],
                 ["category_id_required" => __('api.market.category_id_required')]);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
         $list = MarketModel::query()->where('category_id', $data['category_id'])->get();
@@ -113,7 +114,7 @@ class Market extends BaseApi
                 'stop_loss.numeric' => __('market.stop_loss_numeric'),
                 'lever.required' => __('market.lever_required'),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
 
@@ -124,8 +125,7 @@ class Market extends BaseApi
             return $this->error(__('api.market.symbol_required'));
         }
 
-        //TODO 从mongodb中获取合约单价
-        $unit_amount = 1; // 合约单价
+        $unit_amount = $market->unit_amount; // 合约单价
 
         $unit_fee = PriceCalculate($unit_amount, '*', $market['buy_fee'], 5); // 单张合约手续费
         // 计算出所需保证金
@@ -144,7 +144,7 @@ class Market extends BaseApi
             'lever' => $data['lever'],
             'order_num' => $order_num,
             'buy_fee' => $freeze_fee,
-            'assure' => $freeze_balance
+            'assure' => $freeze_balance,
         ];
 
         DB::beginTransaction();
@@ -152,8 +152,8 @@ class Market extends BaseApi
             $order = UserContractOrder::query()->create($orderData);
 
             //扣除保证金余额以及下单手续费
-            Member::money($freeze_balance, $this->user['id'], BillTag::ContractPositionAmount);
-            Member::money($freeze_fee, $this->user['id'], BillTag::ContractPositionOpeningFee);
+            Member::money(-$freeze_balance, $this->user['id'], BillTag::ContractPositionAmount);
+            Member::money(-$freeze_fee, $this->user['id'], BillTag::ContractPositionOpeningFee);
 
             //加入处理队列 TODO 测试期间不区分队列
             PaidContractOrder::dispatch($order->id)//                ->onQueue('contract_order')
@@ -161,7 +161,7 @@ class Market extends BaseApi
 
             DB::commit();
             return $this->success(__('api.market.order_placed_successful'), $order);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             DB::rollBack();
             return $this->error(__('api.market.order_placed_successfully'), $e->getMessage());
         }
@@ -169,7 +169,38 @@ class Market extends BaseApi
 
     function contract_order_history()
     {
-        $list = UserContractOrder::query()->with('market')->where(['member_id' => $this->user['id'], "status" => 2])->paginate(10);
+        $list = UserContractOrder::query()->with('market')->where(['member_id' => $this->user['id'], "status" => 2])->orderByDesc('id')->paginate(10);
         return $this->success('success', $list);
+    }
+
+    function hand_close_contract(Request $request)
+    {
+        //手动平仓
+        try {
+            $data = $request->validate(['id' => 'required|integer'], ['id.required' => __('api.market.id_required')]);
+        } catch (Exception $e) {
+            return $this->error($e->getMessage());
+        }
+
+        $order = UserContractOrder::query()->with('market')->where(['id' => $data['id'], 'member_id' => $this->user['id']])->first();
+        if (!$order) {
+            return $this->error(__('api.market.order_does_not_exist'));
+        }
+
+        $market = $order->market;
+
+        $symbol = $market['symbol'] . 't';
+
+        $symbol = str_replace("-", "", $symbol);
+
+        $close = get_now_price($symbol . 't');
+
+        $result = exitContractTrade(3, $order['id'], $close);
+
+        if ($result) {
+            return $this->success(__('api.market.order_placed_successfully'));
+        } else {
+            return $this->error(__('api.market.order_placed_successfully'));
+        }
     }
 }

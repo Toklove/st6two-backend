@@ -51,17 +51,17 @@ class PaidContractOrder implements ShouldQueue
         }
 
         $market = $order->market;
-
-        $symbol = $market['symbol'] . 't';
-
-        $symbol = str_replace("-", "", $symbol);
-        $close = get_now_price($symbol);
+//
+//        $symbol = $market['symbol'] . 't';
+//
+//        $symbol = str_replace("-", "", $symbol);
+        $close = get_now_price($market['symbol']);
 
         $paid_price = intval($order['paid_price']);
 
         //如果与订单价格不一致 则重新发布任务
         if ($paid_price != 0 && $close != $paid_price) {
-            $this->release();
+            $this->release(5);
             return;
         } else {
             //市场价成交
@@ -73,6 +73,7 @@ class PaidContractOrder implements ShouldQueue
             if ($order->stop_loss != 0 || $order->stop_surplus != 0) {
                 $this->dispatch(new StopLossOrder($order->id));
             }
+            $this->delete();
         }
     }
 }
