@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api;
 use App\Models\Currency;
 use App\Models\UserCryptoAddress;
 use App\Models\UserCryptoWallet;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,7 +34,7 @@ class User extends BaseApi
                 "bank_address.required" => __("api.user.bank_address_required"),
                 "bank_code.required" => __("api.user.bank_code_required"),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
         $userBank = new \App\Models\UserBank();
@@ -56,7 +57,7 @@ class User extends BaseApi
                     "address.required" => __("api.user.address_required"),
                 ]
             );
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
         $userCryptoWallet = new UserCryptoWallet();
@@ -78,7 +79,7 @@ class User extends BaseApi
                 "nickname.required" => __("api.user.nickname_required"),
                 "avatar.required" => __("api.user.avatar_required"),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
 
@@ -122,7 +123,7 @@ class User extends BaseApi
                 "id.exists" => __("api.user.id_exists"),
             ]);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
         $del = UserCryptoWallet::query()->where(['id' => $id, 'member_id' => $this->auth->id()])->delete();
@@ -142,7 +143,7 @@ class User extends BaseApi
                     "id.integer" => __("api.user.id_integer"),
                     "id.exists" => __("api.user.id_exists"),
                 ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
         $del = \App\Models\UserBank::query()->where(['id' => $id, 'member_id' => $this->auth->id()])->delete();
@@ -164,7 +165,7 @@ class User extends BaseApi
                 "password.required" => __("api.user.password_required"),
                 "password.confirmed" => __("api.user.password_confirmed"),
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
         $post['password'] = Hash::make($post['password']);

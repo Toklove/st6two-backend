@@ -173,8 +173,10 @@ if (!function_exists("exitContractTrade")) {
                 //结算手续费
                 Member::money($sell_fee, $order->member_id, BillTag::ContractPendingOrderHandlingFee);
 
+                $amount = $unRealProfit + $order['assure'];
+
                 //结算合约金额
-                Member::money($unRealProfit, $order->member_id, BillTag::ContractPositionAmount);
+                Member::money($amount, $order->member_id, BillTag::ContractPositionAmount);
             }
             $order->save();
             DB::commit();

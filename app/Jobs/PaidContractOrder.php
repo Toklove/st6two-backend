@@ -51,10 +51,7 @@ class PaidContractOrder implements ShouldQueue
         }
 
         $market = $order->market;
-//
-//        $symbol = $market['symbol'] . 't';
-//
-//        $symbol = str_replace("-", "", $symbol);
+
         $close = get_now_price($market['symbol']);
 
         $paid_price = intval($order['paid_price']);

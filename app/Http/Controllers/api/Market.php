@@ -32,6 +32,7 @@ class Market extends BaseApi
             return $this->error($e->getMessage());
         }
         $symbol = $data['symbol'];
+
         $market = MarketModel::query()->where('symbol', $symbol)->first();
 
         if (!$market) {
@@ -141,6 +142,7 @@ class Market extends BaseApi
             'quantity' => $data['quantity'],
             'paid_price' => $data['order_price'],
             'stop_loss' => $data['stop_loss'],
+            'stop_surplus' => $data['stop_surplus'],
             'lever' => $data['lever'],
             'order_num' => $order_num,
             'buy_fee' => $freeze_fee,
@@ -155,9 +157,8 @@ class Market extends BaseApi
             Member::money(-$freeze_balance, $this->user['id'], BillTag::ContractPositionAmount);
             Member::money(-$freeze_fee, $this->user['id'], BillTag::ContractPositionOpeningFee);
 
-            //加入处理队列 TODO 测试期间不区分队列
-            PaidContractOrder::dispatch($order->id)//                ->onQueue('contract_order')
-            ;
+            //加入处理队列
+            PaidContractOrder::dispatch($order->id)->onQueue('contract_order');
 
             DB::commit();
             return $this->success(__('api.market.order_placed_successful'), $order);

@@ -44,6 +44,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'market'], function () {
     Route::get('list', [Market::class, 'list']);
     Route::post('contract_order', [Market::class, 'contract_order']);
     Route::get('contract_order_history', [Market::class, 'contract_order_history']);
+    Route::post('hand_close_contract', [Market::class, 'hand_close_contract']);
 });
 
 Route::group(['middleware' => 'api', 'prefix' => 'user'], function () {
