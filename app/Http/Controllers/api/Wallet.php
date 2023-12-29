@@ -6,9 +6,9 @@ use App\Constant\BillTag;
 use App\extends\Udun\uDun;
 use App\Models\Currency;
 use App\Models\Member;
-use App\Models\UserWithdraw;
 use App\Models\UserCryptoAddress;
 use App\Models\UserDeposit;
+use App\Models\UserWithdraw;
 
 class Wallet extends BaseApi
 {
@@ -62,25 +62,25 @@ class Wallet extends BaseApi
                 $amount = $body['amount'] * $rate;
 
                 //根据地址获取充值的用户
-                $member_id = UserCryptoAddress::query()->where(['address' => $body['address'],'currency_id' => $currency->id])->value('member_id');
+                $member_id = UserCryptoAddress::query()->where(['address' => $body['address'], 'currency_id' => $currency->id])->value('member_id');
 
                 //跟用户充值余额
                 try {
                     Member::money($amount, $member_id, BillTag::Deposit);
 
                     //随机生成平台流水号
-                    $order_no = date('YmdHis') . rand(100000, 999999).$member_id;
+                    $order_no = date('YmdHis') . rand(100000, 999999) . $member_id;
 
-                    UserDeposit::query()->create(['member_id' => $member_id, 'amount' => $amount, 'txId' => $body['txId'],'trade_id' => $body['tradeId'],'order_no' => $order_no]);
+                    UserDeposit::query()->create(['member_id' => $member_id, 'amount' => $amount, 'txId' => $body['txId'], 'trade_id' => $body['tradeId'], 'order_no' => $order_no]);
                 } catch (\Exception $e) {
-                    return response()->json(['code' => -1, 'msg' => '充值失败','err' => $e->getMessage()]);
+                    return response()->json(['code' => -1, 'msg' => __("api.wallet.recharge_failed"), 'err' => $e->getMessage()]);
                 }
             }
             //无论业务方处理成功与否（success,failed），回调都认为成功
             return response("success");
 
         } elseif ($body['tradeType'] == 2) {
-            $withdrawOrder = UserWithdraw::query()->where('order_no',$body['orderNo']);
+            $withdrawOrder = UserWithdraw::query()->where('order_no', $body['orderNo']);
             //$body->status 0待审核 1审核成功 2审核驳回 3交易成功 4交易失败
             if ($body['status'] == 0) {
                 //业务处理

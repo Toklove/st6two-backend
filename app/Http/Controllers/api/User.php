@@ -19,13 +19,23 @@ class User extends BaseApi
 
     function addBank(Request $request)
     {
-        $post = $request->validate([
-            'bank_name' => 'required',
-            'account' => 'required',
-            'account_user' => 'required',
-            'bank_address' => 'required',
-            'bank_code' => 'required',
-        ]);
+        try {
+            $post = $request->validate([
+                'bank_name' => 'required',
+                'account' => 'required',
+                'account_user' => 'required',
+                'bank_address' => 'required',
+                'bank_code' => 'required',
+            ], [
+                "bank_name.required" => __("api.user.bank_name_required"),
+                "account.required" => __("api.user.account_required"),
+                "account_user.required" => __("api.user.account_user_required"),
+                "bank_address.required" => __("api.user.bank_address_required"),
+                "bank_code.required" => __("api.user.bank_code_required"),
+            ]);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
         $userBank = new \App\Models\UserBank();
         $userBank->member_id = $this->auth->id();
         $userBank->fill($post);
@@ -36,7 +46,19 @@ class User extends BaseApi
 
     function addWallet(Request $request)
     {
-        $post = $request->validate(['currency_id' => 'required|integer|exists:currencies,id', 'address' => 'required']);
+        try {
+            $post = $request->validate(
+                ['currency_id' => 'required|integer|exists:currencies,id', 'address' => 'required'],
+                [
+                    "currency_id.required" => __("api.user.currency_id_required"),
+                    "currency_id.integer" => __("api.user.currency_id_integer"),
+                    "currency_id.exists" => __("api.user.currency_id_exists"),
+                    "address.required" => __("api.user.address_required"),
+                ]
+            );
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
         $userCryptoWallet = new UserCryptoWallet();
         $userCryptoWallet->member_id = $this->auth->id();
         $userCryptoWallet->currency_id = $post['currency_id'];
@@ -48,10 +70,17 @@ class User extends BaseApi
 
     function update(Request $request)
     {
-        $post = $request->validate([
-            'nickname' => 'required',
-            'avatar' => 'required',
-        ]);
+        try {
+            $post = $request->validate([
+                'nickname' => 'required',
+                'avatar' => 'required',
+            ], [
+                "nickname.required" => __("api.user.nickname_required"),
+                "avatar.required" => __("api.user.avatar_required"),
+            ]);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
 
         //更新用户信息
         $user = $this->auth->user();
@@ -86,49 +115,75 @@ class User extends BaseApi
 
     function delCrypto()
     {
-        $id = request()->validate(['id' => 'required|integer|exists:user_crypto_wallet,id']);
+        try {
+            $id = request()->validate(['id' => 'required|integer|exists:user_crypto_wallet,id'], [
+                "id.required" => __("api.user.id_required"),
+                "id.integer" => __("api.user.id_integer"),
+                "id.exists" => __("api.user.id_exists"),
+            ]);
+
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
         $del = UserCryptoWallet::query()->where(['id' => $id, 'member_id' => $this->auth->id()])->delete();
         if ($del) {
-            return $this->success('删除成功');
+            return $this->success(__('api.user.delete_success'));
         } else {
-            return $this->error('删除失败');
+            return $this->error(__('api.user.delete_failed'));
         }
     }
 
     function delBank()
     {
-        $id = request()->validate(['id' => 'required|integer|exists:user_bank,id']);
+        try {
+            $id = request()->validate(['id' => 'required|integer|exists:user_bank,id'],
+                [
+                    "id.required" => __("api.user.id_required"),
+                    "id.integer" => __("api.user.id_integer"),
+                    "id.exists" => __("api.user.id_exists"),
+                ]);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
         $del = \App\Models\UserBank::query()->where(['id' => $id, 'member_id' => $this->auth->id()])->delete();
         if ($del) {
-            return $this->success('删除成功');
+            return $this->success(__('api.user.delete_success'));
         } else {
-            return $this->error('删除失败');
+            return $this->error(__('api.user.delete_failed'));
         }
     }
 
     function changePassword(Request $request)
     {
-        $post = $request->validate([
-            'old_password' => 'required',
-            'password' => 'required|confirmed',
-        ]);
+        try {
+            $post = $request->validate([
+                'old_password' => 'required',
+                'password' => 'required|confirmed',
+            ], [
+                "old_password.required" => __("api.user.old_password_error"),
+                "password.required" => __("api.user.password_required"),
+                "password.confirmed" => __("api.user.password_confirmed"),
+            ]);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
         $post['password'] = Hash::make($post['password']);
 
         //判断旧密码是否正确
         $user = $this->auth->user();
         if (!Hash::check($post['old_password'], $user->password)) {
-            return $this->error('旧密码错误');
+            return $this->error(__('api.user.old_password_error'));
         }
         $user->password = $post['password'];
         $user->save();
 
-        return $this->success('修改成功');
+        return $this->success(__('api.user.change_success'));
     }
 
     function logout()
     {
         //注销登录
         $this->auth->logout();
-        return $this->success('注销成功');
+        return $this->success(__('api.user.logout_success'));
     }
 }

@@ -29,8 +29,9 @@ class Market extends BaseApi
         }
         $symbol = $data['symbol'];
         $market = MarketModel::query()->where('symbol', $symbol)->first();
+
         if (!$market) {
-            return $this->error('交易对不存在');
+            return $this->error(__('api.market.symbol_required'));
         }
 
         $like = UserLikeMarket::query()->where(['user_id' => $this->user['id'], 'market_id' => $market['id']])->first();
@@ -45,21 +46,26 @@ class Market extends BaseApi
 
     function like(Request $request)
     {
-        $data = $request->validate(['id' => 'required|integer']);
+        try {
+            $data = $request->validate(['id' => 'required|integer'],
+                ['id.required' => __('api.market.symbol_required')]);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
         $id = $data['id'];
         $market = MarketModel::query()->find($id);
         if (!$market) {
-            return $this->error('交易对不存在');
+            return $this->error(__('api.market.symbol_required'));
         }
         $like = UserLikeMarket::query()->where(['user_id' => $this->user['id'], 'market_id' => $id])->first();
         if ($like) {
             $like->delete();
             $market->is_like = false;
-            return $this->success('取消收藏成功', $market);
+            return $this->success(__('api.market.collection_successfully'), $market);
         } else {
             UserLikeMarket::query()->create(['user_id' => $this->user['id'], 'market_id' => $id]);
             $market->is_like = true;
-            return $this->success('收藏成功', $market);
+            return $this->success(__('api.market.collection successful'), $market);
         }
     }
 
@@ -71,7 +77,13 @@ class Market extends BaseApi
 
     function list(Request $request)
     {
-        $data = $request->validate(['category_id' => 'required|integer']);
+        try {
+            $data = $request->validate(['category_id' => 'required|integer'],
+                ["category_id_required" => __('api.market.category_id_required')]);
+
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
         $list = MarketModel::query()->where('category_id', $data['category_id'])->get();
         return $this->success('success', $list);
     }
@@ -90,12 +102,12 @@ class Market extends BaseApi
                 'lever' => 'required|numeric',
             ], [
                 'symbol.required' => __('market.symbol_required'),
-                'order_type.required' => '订单类型不能为空',
-                'quantity.required' => '数量不能为空',
-                'order_price.required' => '订单价格不能为空',
-                'stop_surplus.numeric' => '止盈价格必须为数字',
-                'stop_loss.numeric' => '止损价格必须为数字',
-                'lever.required' => '杠杆不能为空',
+                'order_type.required' => __('market.order_type_required'),
+                'quantity.required' => __('market.quantity_required'),
+                'order_price.required' => __('market.order_price_required'),
+                'stop_surplus.numeric' => __('market.stop_surplus_numeric'),
+                'stop_loss.numeric' => __('market.stop_loss_numeric'),
+                'lever.required' => __('market.lever_required'),
             ]);
         } catch (\Exception $e) {
             return $this->error($e->getMessage());
@@ -106,7 +118,7 @@ class Market extends BaseApi
         $market = MarketModel::query()->where('symbol', $symbol)->first();
 
         if (!$market) {
-            return $this->error('交易对不存在');
+            return $this->error(__('api.market.symbol_required'));
         }
 
         $order_num = time() . rand(1000, 9999) . $market['full_name'] . rand(1000, 9999);
@@ -129,10 +141,10 @@ class Market extends BaseApi
 //            Member::money();
 
             DB::commit();
-            return $this->success('下单成功', $order);
+            return $this->success(__('api.market.order_placed_successful'), $order);
         } catch (\Exception $e) {
             DB::rollBack();
-            return $this->error("下单失败", $e->getMessage());
+            return $this->error(__('api.market.order_placed_successfully'), $e->getMessage());
         }
     }
 

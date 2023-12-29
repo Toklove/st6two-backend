@@ -16,20 +16,20 @@ class Common extends BaseApi
         //上传文件
         $file = request()->file('files');
         if (!$file->isValid()) {
-            return $this->error('上传失败');
+            return $this->error(__('api.common.upload_failed'));
         }
 
         //验证文件类型
         $type = $file->getMimeType();
         $allow = ['image/jpeg', 'image/png', 'image/gif'];
         if (!in_array($type, $allow)) {
-            return $this->error('文件类型不允许');
+            return $this->error(__('api.common.file_type_required'));
         }
 
         //验证文件大小
         $size = $file->getSize();
         if ($size > 1024 * 1024 * 2) {
-            return $this->error('文件大小不能超过2M');
+            return $this->error(__('api.common.file_size_required'));
         }
 
         $path = $file->store('public');

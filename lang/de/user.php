@@ -1,0 +1,25 @@
+<?php
+
+return [
+    'delete_success' => 'Erfolgreich gelöscht',
+    'delete_failed' => 'Löschen fehlgeschlagen',
+    'old_password_error' => 'Falsches altes Passwort',
+    'change_success' => 'Erfolgreich geändert',
+    'logout_success' => 'Logout erfolgreich',
+    'bank_name_required' => 'Bankname existiert nicht',
+    'account_required' => 'Konto existiert nicht',
+    'account_user_required' => 'Benutzername existiert nicht',
+    'bank_address_required' => 'Bankkartenadresse existiert nicht',
+    'bank_code_required' => 'Bankkartennummer existiert nicht',
+    'currency_id_required' => 'Währungs-ID existiert nicht',
+    'currency_id_integer' => 'Währungs-ID ist keine ganze Zahl',
+    'currency_id_exists' => 'Währungs-ID existiert nicht',
+    'address_required' => 'Adresse existiert nicht',
+    'nickname_required' => 'Benutzer-Spitzname existiert nicht',
+    'avatar_required' => 'Benutzer-Avatar existiert nicht',
+    'id_required' => 'ID existiert nicht',
+    'id_integer' => 'ID ist keine ganze Zahl',
+    'id_exists' => 'ID nicht gefunden',
+    'password_required' => 'Passwort existiert nicht',
+    'password_confirmed' => 'Passwortbestätigung stimmt nicht überein',
+];

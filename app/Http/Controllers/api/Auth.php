@@ -26,7 +26,7 @@ class Auth extends BaseApi
     {
         $this->auth->logout();
 
-        return $this->success('Successfully logged out');
+        return $this->success(__('api.auth.successfully_logged_out'));
     }
 
     public function refresh()
@@ -51,7 +51,7 @@ class Auth extends BaseApi
         $has = Cache::get($key);
 
         if ($has) {
-            return $this->error('请勿重复发送');
+            return $this->error(__('api.auth.do_not_send_repeatedly'));
         }
 
         $code = rand(100000, 999999);
@@ -76,16 +76,24 @@ class Auth extends BaseApi
             'email' => 'required|email|unique:members,email',
             'code' => 'required',
             'password' => 'required|min:8|confirmed',
+        ], [
+            "email.required" => __("api.auth.email_required"),
+            "email.unique" => __("api.auth.email_unique"),
+            "email.email" => __("api.auth.email_email"),
+            "code.required" => __("api.auth.code_required"),
+            "password.required" => __("api.auth.password_required"),
+            "password.min" => __("api.auth.password_min"),
+            "password.confirmed" => __("api.auth.password_confirmed"),
         ]);
 
         //验证邮箱验证码
         $key = 'check_' . $post['email'];
         $code = Cache::get($key);
         if (!$code) {
-            return $this->error('验证码已过期');
+            return $this->error(__("api.auth.code_expired"));
         }
         if ($code != $post['code']) {
-            return $this->error('验证码错误');
+            return $this->error(__("api.auth.code_error"));
         }
 
 
@@ -96,7 +104,7 @@ class Auth extends BaseApi
         if ($invite_code) {
             $parent = Member::query()->where('invite_code', $invite_code)->first();
             if (!$parent) {
-                return $this->error('邀请码错误');
+                return $this->error(__("api.auth.invite_code_error"));
             }
         } else {
             $parent = null;
@@ -137,7 +145,7 @@ class Auth extends BaseApi
         $remember = request('remember');
 
         if (!$token = $this->auth->attempt($credentials)) {
-            return $this->error("Unauthorized");
+            return $this->error(__('api.auth.unauthorized'));
         }
 
         return $this->respondWithToken($token);
