@@ -19,7 +19,14 @@ class Market extends BaseApi
 
     function market_info(Request $request)
     {
-        $data = $request->validate(['symbol' => 'required|string']);
+
+        try {
+            $data = $request->validate(['symbol' => 'required|string'], [
+                'symbol.required' => __('api.market.symbol_required'),
+            ]);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
         $symbol = $data['symbol'];
         $market = MarketModel::query()->where('symbol', $symbol)->first();
         if (!$market) {
@@ -81,6 +88,14 @@ class Market extends BaseApi
                 'stop_surplus' => 'numeric',
                 'stop_loss' => 'numeric',
                 'lever' => 'required|numeric',
+            ], [
+                'symbol.required' => __('market.symbol_required'),
+                'order_type.required' => '订单类型不能为空',
+                'quantity.required' => '数量不能为空',
+                'order_price.required' => '订单价格不能为空',
+                'stop_surplus.numeric' => '止盈价格必须为数字',
+                'stop_loss.numeric' => '止损价格必须为数字',
+                'lever.required' => '杠杆不能为空',
             ]);
         } catch (\Exception $e) {
             return $this->error($e->getMessage());
