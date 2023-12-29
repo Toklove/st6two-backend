@@ -168,9 +168,11 @@ class Market extends BaseApi
         }
     }
 
-    function contract_order_history()
+    function contract_order_history(Request $request)
     {
-        $list = UserContractOrder::query()->with('market')->where(['member_id' => $this->user['id'], "status" => 2])->orderByDesc('id')->paginate(10);
+        $status = $request->input('status', 2);
+
+        $list = UserContractOrder::query()->with('market')->where(['member_id' => $this->user['id'], "status" => $status])->orderByDesc('id')->paginate(10);
         return $this->success('success', $list);
     }
 
@@ -204,4 +206,5 @@ class Market extends BaseApi
             return $this->error(__('market.order_placed_successfully'));
         }
     }
+
 }

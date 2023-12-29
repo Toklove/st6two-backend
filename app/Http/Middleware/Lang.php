@@ -16,7 +16,7 @@ class Lang
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $lang = $request->lang;
+        $lang = $request->header('lang');
         if (!$lang) {
             $lang = 'en';
         }
