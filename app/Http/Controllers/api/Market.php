@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Constant\BillTag;
+use App\Jobs\PaidContractOrder;
 use App\Models\Market as MarketModel;
 use App\Models\MarketCategory;
+use App\Models\Member;
 use App\Models\UserContractOrder;
 use App\Models\UserLikeMarket;
 use Illuminate\Http\Request;
@@ -95,7 +98,7 @@ class Market extends BaseApi
             $data = $request->validate([
                 'symbol' => 'required|string',
                 'order_type' => 'required|integer',
-                'quantity' => 'required|integer',
+                'quantity' => 'required|numeric',
                 'order_price' => 'required|numeric',
                 'stop_surplus' => 'numeric',
                 'stop_loss' => 'numeric',
@@ -104,6 +107,7 @@ class Market extends BaseApi
                 'symbol.required' => __('market.symbol_required'),
                 'order_type.required' => __('market.order_type_required'),
                 'quantity.required' => __('market.quantity_required'),
+                'quantity.numeric' => __('market.quantity_numeric'),
                 'order_price.required' => __('market.order_price_required'),
                 'stop_surplus.numeric' => __('market.stop_surplus_numeric'),
                 'stop_loss.numeric' => __('market.stop_loss_numeric'),
@@ -113,7 +117,6 @@ class Market extends BaseApi
             return $this->error($e->getMessage());
         }
 
-
         $symbol = $data['symbol'];
         $market = MarketModel::query()->where('symbol', $symbol)->first();
 
@@ -121,24 +124,40 @@ class Market extends BaseApi
             return $this->error(__('api.market.symbol_required'));
         }
 
-        $order_num = time() . rand(1000, 9999) . $market['full_name'] . rand(1000, 9999);
+        //TODO 从mongodb中获取合约单价
+        $unit_amount = 1; // 合约单价
 
+        $unit_fee = PriceCalculate($unit_amount, '*', $market['buy_fee'], 5); // 单张合约手续费
+        // 计算出所需保证金
+        $freeze_balance = PriceCalculate(($data['quantity'] * $unit_amount), '/', $data['lever'], 5);
+        $freeze_fee = PriceCalculate($data['quantity'], '*', $unit_fee, 5);
+
+        $order_num = get_order_sn($market['full_name']);
+
+        $orderData = [
+            'member_id' => $this->user['id'],
+            'market_id' => $market['id'],
+            'type' => $data['order_type'],
+            'quantity' => $data['quantity'],
+            'paid_price' => $data['order_price'],
+            'stop_loss' => $data['stop_loss'],
+            'lever' => $data['lever'],
+            'order_num' => $order_num,
+            'buy_fee' => $freeze_fee,
+            'assure' => $freeze_balance
+        ];
 
         DB::beginTransaction();
         try {
-            $order = UserContractOrder::query()->create([
-                'member_id' => $this->user['id'],
-                'market_id' => $market['id'],
-                'type' => $data['order_type'],
-                'quantity' => $data['quantity'],
-                'paid_price' => $data['order_price'],
-                'stop_loss' => $data['stop_loss'],
-                'lever' => $data['lever'],
-                'order_num' => $order_num,
-            ]);
+            $order = UserContractOrder::query()->create($orderData);
 
-            //TODO 扣除余额
-//            Member::money();
+            //扣除保证金余额以及下单手续费
+            Member::money($freeze_balance, $this->user['id'], BillTag::ContractPositionAmount);
+            Member::money($freeze_fee, $this->user['id'], BillTag::ContractPositionOpeningFee);
+
+            //加入处理队列 TODO 测试期间不区分队列
+            PaidContractOrder::dispatch($order->id)//                ->onQueue('contract_order')
+            ;
 
             DB::commit();
             return $this->success(__('api.market.order_placed_successful'), $order);
@@ -150,7 +169,7 @@ class Market extends BaseApi
 
     function contract_order_history()
     {
-        $list = UserContractOrder::query()->with('market')->where(['member_id' => $this->user['id'], "status" => 2])->paginate(15);
+        $list = UserContractOrder::query()->with('market')->where(['member_id' => $this->user['id'], "status" => 2])->paginate(10);
         return $this->success('success', $list);
     }
 }

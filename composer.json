@@ -16,7 +16,8 @@
         "laravel/tinker": "^2.8",
         "michielfb/laravel-nova-time-field": "^2.0",
         "tymon/jwt-auth": "^2.0",
-        "uduncloud/udun-wallet-sdk": "^1.0"
+        "uduncloud/udun-wallet-sdk": "^1.0",
+        "ext-curl": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
@@ -32,7 +33,10 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
