@@ -16,6 +16,8 @@ class ExitOptionOrder implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
+    private mixed $order_id;
+
     /**
      * Create a new job instance.
      */
@@ -54,6 +56,7 @@ class ExitOptionOrder implements ShouldQueue
 
         $is_win = 0;
         $order->sell_price = $price;
+        $order->sell_time = date('Y-m-d H:i:s');
 
         //判断盈利
         if ($order['type'] == 0 && $order['sell_price'] > $order['buy_price']) {
@@ -80,13 +83,16 @@ class ExitOptionOrder implements ShouldQueue
 
         DB::beginTransaction();
         try {
+            //保存订单
             $order->save();
+            
+            //发放余额
             Member::money($amount, $order->member_id, BillTag::OptionsSettlementAmount);
             DB::commit();
             $this->delete();
         } catch (\Exception $e) {
             DB::rollBack();
-            $this->delete();
+            $this->release();
         }
     }
 }

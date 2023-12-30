@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Constant\BillTag;
 use App\Jobs\ExitOptionOrder;
+use App\Models\Member;
 use App\Models\OptionSetting;
 use App\Models\UserOptionOrder;
 use Illuminate\Http\Request;
@@ -71,20 +73,34 @@ class Option extends BaseApi
                 'time_id' => $time['id'],
                 'quantity' => $quantity,
                 'type' => $type,
-                'price' => $market['last_price'],
-                'status' => 0,
                 'hold_time' => $time['time'],
-                'profit' => $time['profit'],
                 'order_num' => $orderNo,
                 'buy_price' => $buy_price,
+                'rate' => $time['rate'],
+                'lose_rate' => $time['lose_rate'],
             ]);
+
+            //扣除用户余额
+            Member::money(-$quantity, $this->user['id'], BillTag::OptionsPositionAmount);
 
             //发送延迟队列以处理订单
             ExitOptionOrder::dispatch($order['id'])->delay($time['time'])->onQueue('option_order');
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            return $this->error($e->getMessage());
         }
+        return $this->success('success');
+    }
 
+    function option_order_history(Request $request)
+    {
+        $status = $request->input('status', 0);
+
+        $list = UserOptionOrder::query()->with('market')->where(['member_id' => $this->user['id'], "status" => $status])->orderByDesc('id')->paginate(10);
+        foreach ($list as $item) {
+            $item->all_fee = PriceCalculate($item->buy_fee, '+', $item->sell_fee, 6);
+        }
+        return $this->success('success', $list);
     }
 }

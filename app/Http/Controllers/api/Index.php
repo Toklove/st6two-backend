@@ -16,9 +16,7 @@ class Index extends BaseApi
 
     function news()
     {
-        $newsList = Cache::rememberForever('news', function () {
-            return News::orderBy('id', 'desc')->get();
-        });
+        $newsList = News::orderBy('id', 'desc')->get();
         return $this->success('success', $newsList);
     }
 

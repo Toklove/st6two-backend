@@ -11,6 +11,23 @@ class UserOptionOrder extends Model
 
     protected $table = 'user_option_order';
 
+    protected $fillable = [
+        'member_id',
+        'market_id',
+        'time_id',
+        'type',
+        'buy_price',
+        'order_num',
+        'quantity',
+        'hold_time',
+        'rate',
+        'lose_rate',
+    ];
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'sell_time' => 'datetime:Y-m-d H:i:s',
+    ];
+
     function market()
     {
         return $this->belongsTo(Market::class, 'market_id', 'id');

@@ -50,6 +50,7 @@ Route::middleware(Lang::class)->group(function () {
         Route::post('hand_cancel_contract', [Market::class, 'hand_cancel_contract']);
 
         Route::post('option_order', [Option::class, 'option_order']);
+        Route::get('option_order_history', [Option::class, 'option_order_history']);
 
         Route::prefix("/option")->group(function () {
             Route::get("/setting", [Option::class, 'setting']);
