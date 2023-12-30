@@ -17,7 +17,8 @@ class Kernel extends ConsoleKernel
         $schedule->job(new WatchContractOrder())->everySecond(); //合约订单监控
         $schedule->command('horizon')->everyFiveMinutes()->runInBackground(); //horizon监控
         $schedule->command('queue:work --tries=3 --stop-when-empty')->everyMinute()->runInBackground(); //默认队列
-        $schedule->command('queue:work --tries=3 --stop-when-empty --queue=contract_order')->everyMinute()->runInBackground(); //合约队列
+        $schedule->command('queue:work --tries=3 --stop-when-empty --queue=contract_order')->everyMinute()->runInBackground(); //永续合约队列
+        $schedule->command('queue:work --tries=3 --stop-when-empty --queue=option_order')->everyMinute()->runInBackground(); //秒合约队列
 
     }
 
