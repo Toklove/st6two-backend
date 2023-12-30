@@ -150,4 +150,23 @@ class Auth extends BaseApi
 
         return $this->respondWithToken($token);
     }
+
+    function resetPass(Request $request)
+    {
+        try {
+            $data = $request->validate([
+                'email' => 'required|email',
+                'code' => 'required',
+                'password' => 'required|min:8',
+            ], [
+                "email.required" => __("auth.email_required"),
+                "email.email" => __("auth.email_email"),
+                "code.required" => __("auth.code_required"),
+                "password.required" => __("auth.password_required"),
+                "password.min" => __("auth.password_min"),
+            ]);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
+    }
 }

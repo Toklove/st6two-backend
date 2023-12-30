@@ -25,12 +25,17 @@ class UserContractOrder extends Model
         "buy_fee_rate",
         "status",
         "assure",
-        "force_close_status"
+        "force_close_status",
+        "closed_at"
+    ];
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+        'closed_at' => 'datetime:Y-m-d H:i:s',
     ];
 
     function market()
     {
         return $this->belongsTo(Market::class, 'market_id', 'id');
     }
-
 }

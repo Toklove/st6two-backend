@@ -4,6 +4,7 @@ use App\Http\Controllers\api\Auth;
 use App\Http\Controllers\api\Common;
 use App\Http\Controllers\api\Index;
 use App\Http\Controllers\api\Market;
+use App\Http\Controllers\api\Option;
 use App\Http\Controllers\api\User;
 use App\Http\Controllers\api\Wallet;
 use App\Http\Middleware\Lang;
@@ -46,6 +47,13 @@ Route::middleware(Lang::class)->group(function () {
         Route::post('contract_order', [Market::class, 'contract_order']);
         Route::get('contract_order_history', [Market::class, 'contract_order_history']);
         Route::post('hand_close_contract', [Market::class, 'hand_close_contract']);
+        Route::post('hand_cancel_contract', [Market::class, 'hand_cancel_contract']);
+
+        Route::post('option_order', [Option::class, 'option_order']);
+
+        Route::prefix("/option")->group(function () {
+            Route::get("/setting", [Option::class, 'setting']);
+        });
     });
 
     Route::group(['middleware' => 'api', 'prefix' => 'user'], function () {

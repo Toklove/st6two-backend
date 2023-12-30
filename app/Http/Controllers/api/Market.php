@@ -173,6 +173,9 @@ class Market extends BaseApi
         $status = $request->input('status', 2);
 
         $list = UserContractOrder::query()->with('market')->where(['member_id' => $this->user['id'], "status" => $status])->orderByDesc('id')->paginate(10);
+        foreach ($list as $item) {
+            $item->all_fee = PriceCalculate($item->buy_fee, '+', $item->sell_fee, 6);
+        }
         return $this->success('success', $list);
     }
 
@@ -192,11 +195,8 @@ class Market extends BaseApi
 
         $market = $order->market;
 
-        $symbol = $market['symbol'] . 't';
 
-        $symbol = str_replace("-", "", $symbol);
-
-        $close = get_now_price($symbol . 't');
+        $close = get_now_price($market['symbol']);
 
         $result = exitContractTrade(3, $order['id'], $close);
 
@@ -205,6 +205,24 @@ class Market extends BaseApi
         } else {
             return $this->error(__('market.order_placed_successfully'));
         }
+    }
+
+    function hand_cancel_contract(Request $request)
+    {
+        try {
+            $data = $request->validate(['id' => 'required|integer'], ['id.required' => __('market.id_required')]);
+        } catch (Exception $e) {
+            return $this->error($e->getMessage());
+        }
+
+        $order = UserContractOrder::query()->with('market')->where(['id' => $data['id'], 'member_id' => $this->user['id'], 'status' => 0])->first();
+        if (!$order) {
+            return $this->error(__('market.order_does_not_exist'));
+        }
+
+        $order->delete();
+
+        return $this->success(__('market.order_placed_successfully'));
     }
 
 }
