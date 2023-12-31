@@ -48,6 +48,44 @@ class Member extends Authenticatable implements JWTSubject
     ];
 
     /**
+     * 变更会员余额
+     * @param int $money 余额
+     * @param int $user_id 会员ID
+     * @param BillTag $memo 备注
+     * @throws \Exception
+     */
+    public static function money($money, $user_id, $memo)
+    {
+        $user = self::query()->where('id', $user_id)->first();
+        if (!$user) {
+            throw new \Exception('会员不存在');
+        }
+        if ($user->balance + $money < 0) {
+            throw new \Exception('余额不足');
+        }
+
+        DB::beginTransaction();
+        try {
+            if ($user && $money != 0) {
+                $before = $user->balance;
+                $after = function_exists('bcadd') ? bcadd($user->balance, $money, 2) : $user->balance + $money;
+                //更新会员信息
+                $user->balance = $after;
+                $user->save();
+
+                $type = $money > 0 ? 1 : 2;
+
+                //写入日志
+                UserBill::create(['member_id' => $user_id, 'type' => $type, 'amount' => $money, 'before_balance' => $before, 'after_balance' => $after, 'tag' => $memo->name]);
+            }
+            Db::commit();
+        } catch (\Exception $e) {
+            Db::rollback();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
      * @return mixed
@@ -109,37 +147,6 @@ class Member extends Authenticatable implements JWTSubject
             $userCryptoWallet->currency_id = $currency->id;
             $userCryptoWallet->address = $address;
             $userCryptoWallet->save();
-        }
-    }
-
-
-    /**
-     * 变更会员余额
-     * @param int $money 余额
-     * @param int $user_id 会员ID
-     * @param BillTag $memo 备注
-     */
-    public static function money($money, $user_id, $memo)
-    {
-        DB::beginTransaction();
-        try {
-            $user = self::query()->where('id',$user_id)->first();
-            if ($user && $money != 0) {
-                $before = $user->balance;
-                $after = function_exists('bcadd') ? bcadd($user->balance, $money, 2) : $user->balance + $money;
-                //更新会员信息
-                $user->balance = $after;
-                $user->save();
-
-                $type = $money > 0 ? 1 : 2;
-
-                //写入日志
-                UserBill::create(['member_id' => $user_id,'type' => $type, 'amount' => $money, 'before_balance' => $before, 'after_balance' => $after, 'tag' => $memo->name]);
-            }
-            Db::commit();
-        } catch (\Exception $e) {
-            Db::rollback();
-            throw new \Exception($e->getMessage());
         }
     }
 }

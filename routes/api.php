@@ -75,6 +75,7 @@ Route::middleware(Lang::class)->group(function () {
 
     Route::group(['prefix' => 'wallet'], function () {
         Route::get('record', [User::class, 'walletRecord']);
+        Route::post('withdraw', [User::class, 'withdraw']);
     });
 });
 

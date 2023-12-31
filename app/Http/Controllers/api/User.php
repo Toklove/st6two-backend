@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\api;
 
+use App\Constant\BillTag;
 use App\Models\Currency;
+use App\Models\Member;
 use App\Models\UserCryptoAddress;
 use App\Models\UserCryptoWallet;
 use App\Models\UserDeposit;
@@ -229,10 +231,72 @@ class User extends BaseApi
     {
         $type = $request->input('type', 0);
         if ($type == 0) {
-            $list = UserDeposit::query()->with('currency')->where('member_id', $this->auth->id())->paginate(10);
+            $list = UserDeposit::query()->with('currency')->where('member_id', $this->auth->id())->orderByDesc('id')->paginate(10);
         } else {
-            $list = UserWithdraw::query()->with('currency')->where('member_id', $this->auth->id())->paginate(10);
+            $list = UserWithdraw::query()->with('currency')->where('member_id', $this->auth->id())->orderByDesc('id')->paginate(10);
         }
         return $this->success('success', $list);
+    }
+
+    function withdraw(Request $request)
+    {
+
+        try {
+            $post = $request->validate([
+                'id' => 'required|integer',
+                'amount' => 'required|numeric|min:1',
+                'type' => 'required|integer',
+            ], [
+                "id.required" => __("user.id_required"),
+                "id.integer" => __("user.id_integer"),
+                "amount.required" => __("user.amount_required"),
+                "amount.numeric" => __("user.amount_numeric"),
+                "amount.min" => __("user.amount_min"),
+                "type.required" => __("user.type_required"),
+                "type.integer" => __("user.type_integer"),
+            ]);
+        } catch (Exception $e) {
+            return $this->error($e->getMessage());
+        }
+
+        $member_id = $this->auth->id();
+
+        $order_no = date('YmdHis') . rand(100000, 999999) . $member_id;
+
+
+        $data = [
+            'member_id' => $member_id,
+            'amount' => $post['amount'],
+            'order_no' => $order_no,
+        ];
+
+        if ($post['type'] == 0) {
+            $wallet = UserCryptoWallet::query()->with('currency')->where(['member_id' => $member_id, 'id' => $post['id']])->first();
+            if (!$wallet) {
+                return $this->error(__('api.user.wallet_not_exists'));
+            }
+            $data['chain'] = $wallet->currency->name;
+            $data['address'] = $wallet->address;
+        } else {
+            $bank = \App\Models\UserBank::query()->where(['member_id' => $member_id, 'id' => $post['id']])->first();
+            if (!$bank) {
+                return $this->error(__('api.user.bank_not_exists'));
+            }
+            $data['account'] = $bank->account;
+            $data['account_user'] = $bank->account_user;
+            $data['bank_address'] = $bank->bank_address;
+            $data['bank_code'] = $bank->bank_code;
+            $data['bank_name'] = $bank->bank_name;
+        }
+
+        //扣除提现金额
+        try {
+            UserWithdraw::create($data);
+            Member::money(-$data['amount'], $member_id, BillTag::WithdrawMoney);
+        } catch (Exception $e) {
+            return $this->error($e->getMessage());
+        }
+
+        return $this->success(__('api.user.withdraw_success'));
     }
 }

@@ -14,6 +14,19 @@ class UserWithdraw extends Model
         'created_at' => 'datetime:Y-m-d H:i:s',
     ];
 
+    protected $fillable = [
+        'member_id',
+        'amount',
+        'order_no',
+        'chain',
+        'address',
+        'account',
+        'account_user',
+        'bank_address',
+        'bank_code',
+        'bank_name',
+    ];
+
     function currency()
     {
         return $this->belongsTo(Currency::class, 'currency_id', 'id');
