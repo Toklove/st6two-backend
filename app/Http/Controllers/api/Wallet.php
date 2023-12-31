@@ -43,10 +43,10 @@ class Wallet extends BaseApi
 
         //验证签名
         $signCheck = $this->udunDispatch->signature(json_encode($body), $timestamp, $nonce);
-//        if ($sign != $signCheck) {
-//            return response()->json(['code' => -1, 'msg' => '签名错误']);
-//        }
-//        $body = json_decode($body);
+        if ($sign != $signCheck) {
+            return response()->json(['code' => -1, 'msg' => '签名错误']);
+        }
+        $body = json_decode($body);
         Log::info("回调接收内容(tradeType):" . $body->tradeType);
         //$body->tradeType 1充币回调 2提币回调
         if ($body['tradeType'] == 1) {

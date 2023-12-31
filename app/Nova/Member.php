@@ -38,6 +38,11 @@ class Member extends Resource
         'id',
     ];
 
+    public static function label()
+    {
+        return __('会员列表');
+    }
+
     /**
      * Get the fields displayed by the resource.
      *

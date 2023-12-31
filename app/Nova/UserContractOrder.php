@@ -2,20 +2,20 @@
 
 namespace App\Nova;
 
+use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class News extends Resource
+class UserContractOrder extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\News>
+     * @var class-string<\App\Models\UserContractOrder>
      */
-    public static $model = \App\Models\News::class;
+    public static $model = \App\Models\UserContractOrder::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -35,30 +35,43 @@ class News extends Resource
 
     public static function label()
     {
-        return __('新闻列表');
+        return __('长线合约');
     }
 
     /**
      * Get the fields displayed by the resource.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param NovaRequest $request
      * @return array
      */
     public function fields(NovaRequest $request)
     {
         return [
             ID::make()->sortable(),
-            Text::make('标题', 'title'),
-            Image::make('图片', 'image'),
-            URL::make('链接', 'url'),
-            Text::make('作者', 'author'),
+            Email::make('Email', 'member.email')->onlyOnIndex()->sortable(),
+            Text::make('代码', 'market.symbol')->onlyOnIndex()->sortable(),
+            Select::make('类型', 'type')->options([
+                '0' => '买入',
+                '1' => '卖出',
+            ])->displayUsingLabels(),
+            Text::make('买入价', 'paid_price')->sortable(),
+            Text::make('建仓金额', 'quantity')->sortable(),
+            Text::make('杠杆', 'lever')->sortable(),
+            Text::make('止盈', 'stop_surplus')->sortable(),
+            Text::make('止损', 'stop_loss')->sortable(),
+            Select::make('状态', 'status')->options([
+                '0' => '待开仓',
+                '1' => '持仓中',
+                '2' => '已平仓',
+                '3' => '已强平',
+            ])->displayUsingLabels(),
         ];
     }
 
     /**
      * Get the cards available for the request.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param NovaRequest $request
      * @return array
      */
     public function cards(NovaRequest $request)
@@ -69,7 +82,7 @@ class News extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param NovaRequest $request
      * @return array
      */
     public function filters(NovaRequest $request)
@@ -80,7 +93,7 @@ class News extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param NovaRequest $request
      * @return array
      */
     public function lenses(NovaRequest $request)
@@ -91,7 +104,7 @@ class News extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param \Laravel\Nova\Http\Requests\NovaRequest $request
+     * @param NovaRequest $request
      * @return array
      */
     public function actions(NovaRequest $request)

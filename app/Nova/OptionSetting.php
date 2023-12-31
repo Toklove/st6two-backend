@@ -31,6 +31,11 @@ class OptionSetting extends Resource
         'id',
     ];
 
+    public static function label()
+    {
+        return __('短线合约配置');
+    }
+
     /**
      * Get the fields displayed by the resource.
      *

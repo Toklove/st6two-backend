@@ -2,20 +2,20 @@
 
 namespace App\Nova;
 
+use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\ID;
-use Laravel\Nova\Fields\Image;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\URL;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class News extends Resource
+class UserDeposit extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
-     * @var class-string<\App\Models\News>
+     * @var class-string<\App\Models\UserDeposit>
      */
-    public static $model = \App\Models\News::class;
+    public static $model = \App\Models\UserDeposit::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -35,7 +35,7 @@ class News extends Resource
 
     public static function label()
     {
-        return __('新闻列表');
+        return __('入金记录');
     }
 
     /**
@@ -48,10 +48,16 @@ class News extends Resource
     {
         return [
             ID::make()->sortable(),
-            Text::make('标题', 'title'),
-            Image::make('图片', 'image'),
-            URL::make('链接', 'url'),
-            Text::make('作者', 'author'),
+            Email::make('Email', 'member.email')->onlyOnIndex()->sortable(),
+            Text::make('TxId', 'txId')->sortable(),
+            Text::make('金额', 'amount')->sortable(),
+            Text::make("订单号", 'order_no')->sortable(),
+            Text::make("tradeId", 'trade_id')->sortable(),
+            Text::make("币种", 'currency.name')->sortable(),
+            Select::make('状态', 'status')->options([
+                '0' => '未处理',
+                '1' => '已处理',
+            ])->displayUsingLabels(),
         ];
     }
 

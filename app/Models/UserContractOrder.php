@@ -38,4 +38,9 @@ class UserContractOrder extends Model
     {
         return $this->belongsTo(Market::class, 'market_id', 'id');
     }
+
+    function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id', 'id');
+    }
 }

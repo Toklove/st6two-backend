@@ -24,7 +24,6 @@ class MarketCategory extends Resource
      * @var string
      */
     public static $title = 'name';
-
     /**
      * The columns that should be searched.
      *
@@ -33,6 +32,11 @@ class MarketCategory extends Resource
     public static $search = [
         'id',
     ];
+
+    public static function label()
+    {
+        return __('市场分类管理');
+    }
 
     /**
      * Get the fields displayed by the resource.

@@ -37,4 +37,9 @@ class UserOptionOrder extends Model
     {
         return $this->belongsTo(OptionSetting::class, 'time_id', 'id');
     }
+
+    function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id', 'id');
+    }
 }

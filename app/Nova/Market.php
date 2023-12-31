@@ -5,7 +5,7 @@ namespace App\Nova;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Image;
-use Laravel\Nova\Fields\Status;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Timezone;
 use Laravel\Nova\Http\Requests\NovaRequest;
@@ -36,6 +36,11 @@ class Market extends Resource
         'id',
     ];
 
+    public static function label()
+    {
+        return __('市场产品管理');
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
@@ -60,8 +65,14 @@ class Market extends Resource
             \Laravel\Nova\Fields\Currency::make('买单手续费', 'sell_fee'),
             \Laravel\Nova\Fields\Currency::make('最小手数', 'hand_min'),
             \Laravel\Nova\Fields\Currency::make('最大手数', 'hand_max'),
-            Status::make('状态', 'open_status')->failedWhen(['0' => '关闭'])->loadingWhen(['1' => '开启',]),
-            Status::make('是否为热门', 'hot')->failedWhen(['0'])->loadingWhen(['1']),
+            Select::make('状态', 'open_status')->options([
+                '0' => '关闭',
+                '1' => '开启',
+            ])->displayUsingLabels(),
+            Select::make('是否为热门', 'hot')->options([
+                '0' => '否',
+                '1' => '是',
+            ])->displayUsingLabels(),
             BelongsTo::make('分类', 'category', MarketCategory::class)->searchable()
                 ->nullable(),
         ];

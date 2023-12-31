@@ -31,4 +31,9 @@ class UserWithdraw extends Model
     {
         return $this->belongsTo(Currency::class, 'currency_id', 'id');
     }
+
+    function member()
+    {
+        return $this->belongsTo(Member::class, 'member_id', 'id');
+    }
 }

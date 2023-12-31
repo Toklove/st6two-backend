@@ -4,7 +4,7 @@
 -- https://tableplus.com/
 --
 -- Database: smartTrade
--- Generation Time: 2023-12-31 12:23:42.2200
+-- Generation Time: 2024-01-01 03:16:54.3450
 -- -------------------------------------------------------------
 
 

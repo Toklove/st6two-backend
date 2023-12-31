@@ -32,6 +32,11 @@ class Currency extends Resource
         'id',
     ];
 
+    public static function label()
+    {
+        return __('币种管理');
+    }
+
     /**
      * Get the fields displayed by the resource.
      *
