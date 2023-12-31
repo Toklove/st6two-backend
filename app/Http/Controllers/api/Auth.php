@@ -14,7 +14,7 @@ class Auth extends BaseApi
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth:api', ['except' => ['login', 'send', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'send', 'register', 'restPass']]);
     }
 
     public function me()
@@ -151,7 +151,7 @@ class Auth extends BaseApi
         return $this->respondWithToken($token);
     }
 
-    function resetPass(Request $request)
+    function restPass(Request $request)
     {
         try {
             $data = $request->validate([
@@ -168,5 +168,25 @@ class Auth extends BaseApi
         } catch (\Exception $e) {
             return $this->error($e->getMessage());
         }
+
+        //验证邮箱验证码
+        $key = 'check_' . $data['email'];
+        $code = Cache::get($key);
+        if (!$code) {
+            return $this->error(__("auth.code_expired"));
+        }
+        if ($code != $data['code']) {
+            return $this->error(__("auth.code_error"));
+        }
+
+        //修改用户密码
+        $member = Member::query()->where('email', $data['email'])->first();
+        if (!$member) {
+            return $this->error(__('auth.email_not_exist'));
+        }
+        $member->password = Hash::make($data['password']);
+        $member->save();
+
+        return $this->success(__('auth.password_reset_successfully'));
     }
 }

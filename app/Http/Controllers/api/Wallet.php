@@ -9,6 +9,7 @@ use App\Models\Member;
 use App\Models\UserCryptoAddress;
 use App\Models\UserDeposit;
 use App\Models\UserWithdraw;
+use Illuminate\Support\Facades\Log;
 
 class Wallet extends BaseApi
 {
@@ -35,8 +36,8 @@ class Wallet extends BaseApi
         $timestamp = $post['timestamp'];
         $sign = $post['sign'];
         //接收回调参数 用于日志记录
-        //$content = file_get_contents('php://input');
-        //$this->printLog("回调接收内容:".$content);
+        $content = file_get_contents('php://input');
+        Log::info("回调接收内容:" . $content);
 
         $body = $post['body'];
 
@@ -46,7 +47,7 @@ class Wallet extends BaseApi
 //            return response()->json(['code' => -1, 'msg' => '签名错误']);
 //        }
 //        $body = json_decode($body);
-        //$this->printLog("回调接收内容(tradeType):".$body->tradeType);
+        Log::info("回调接收内容(tradeType):" . $body->tradeType);
         //$body->tradeType 1充币回调 2提币回调
         if ($body['tradeType'] == 1) {
 
@@ -64,14 +65,14 @@ class Wallet extends BaseApi
                 //根据地址获取充值的用户
                 $member_id = UserCryptoAddress::query()->where(['address' => $body['address'], 'currency_id' => $currency->id])->value('member_id');
 
+                //随机生成平台流水号
+                $order_no = date('YmdHis') . rand(100000, 999999) . $member_id;
+
                 //跟用户充值余额
                 try {
                     Member::money($amount, $member_id, BillTag::Deposit);
 
-                    //随机生成平台流水号
-                    $order_no = date('YmdHis') . rand(100000, 999999) . $member_id;
-
-                    UserDeposit::query()->create(['member_id' => $member_id, 'amount' => $amount, 'txId' => $body['txId'], 'trade_id' => $body['tradeId'], 'order_no' => $order_no]);
+                    UserDeposit::query()->create(['member_id' => $member_id, 'amount' => $amount, 'txId' => $body['txId'], 'trade_id' => $body['tradeId'], 'order_no' => $order_no, 'currency_id' => $currency->id]);
                 } catch (\Exception $e) {
                     return response()->json(['code' => -1, 'msg' => __("wallet.recharge_failed"), 'err' => $e->getMessage()]);
                 }

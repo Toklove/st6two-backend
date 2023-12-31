@@ -5,6 +5,8 @@ namespace App\Http\Controllers\api;
 use App\Models\Currency;
 use App\Models\UserCryptoAddress;
 use App\Models\UserCryptoWallet;
+use App\Models\UserDeposit;
+use App\Models\UserWithdraw;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -154,6 +156,41 @@ class User extends BaseApi
         }
     }
 
+    function real(Request $request)
+    {
+        try {
+            $data = $request->validate(['real_name' => 'required', 'id_number' => 'required', 'front' => 'required', 'back' => 'required'], [
+                "real_name.required" => __("user.real_name_required"),
+                "id_number.required" => __("user.id_number_required"),
+                "front.required" => __("user.front_required"),
+                "back.required" => __("user.back_required"),
+            ]);
+        } catch (Exception $e) {
+            return $this->error($e->getMessage());
+        }
+
+        $user = $this->user;
+        $user->real_name = $data['real_name'];
+        $user->id_card = $data['id_number'];
+        $user->id_card_front = $data['front'];
+        $user->id_card_back = $data['back'];
+        $user->save();
+
+        return $this->success(__('api.user.real_success'));
+    }
+
+    function real_info()
+    {
+        $data = [
+            'real_name' => $this->user->real_name,
+            'id_number' => $this->user->id_card,
+            'front' => $this->user->id_card_front,
+            'back' => $this->user->id_card_back,
+            'is_certified' => $this->user->is_certified,
+        ];
+        return $this->success('success', $data);
+    }
+
     function changePassword(Request $request)
     {
         try {
@@ -186,5 +223,16 @@ class User extends BaseApi
         //注销登录
         $this->auth->logout();
         return $this->success(__('api.user.logout_success'));
+    }
+
+    function walletRecord(Request $request)
+    {
+        $type = $request->input('type', 0);
+        if ($type == 0) {
+            $list = UserDeposit::query()->with('currency')->where('member_id', $this->auth->id())->paginate(10);
+        } else {
+            $list = UserWithdraw::query()->with('currency')->where('member_id', $this->auth->id())->paginate(10);
+        }
+        return $this->success('success', $list);
     }
 }

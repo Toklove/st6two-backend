@@ -29,6 +29,7 @@ Route::middleware(Lang::class)->group(function () {
         Route::get('me', [Auth::class, 'me']);
         Route::post('send', [Auth::class, 'send']);
         Route::post('register', [Auth::class, 'register']);
+        Route::post('restPass', [Auth::class, 'restPass']);
     });
     Route::group(['middleware' => 'api', 'prefix' => 'common'], function () {
         Route::post('upload', [Common::class, 'upload']);
@@ -68,6 +69,12 @@ Route::middleware(Lang::class)->group(function () {
         Route::post('addBank', [User::class, 'addBank']);
         Route::post('changePassword', [User::class, 'changePassword']);
         Route::get('logout', [User::class, 'logout']);
+        Route::post('/real', [User::class, 'real']);
+        Route::get('/real', [User::class, 'real_info']);
+    });
+
+    Route::group(['prefix' => 'wallet'], function () {
+        Route::get('record', [User::class, 'walletRecord']);
     });
 });
 

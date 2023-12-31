@@ -33,7 +33,7 @@ class Common extends BaseApi
         }
 
         $path = $file->store('public');
-        $url = env('APP_URL') . '/storage/' . substr($path, 7);
+        $url = substr($path, 7);
         return $this->success('success', ['url' => $url]);
     }
 }
