@@ -8,8 +8,8 @@ services:
             - ../sql:/docker-entrypoint-initdb.d/
         networks:
             - mysql
-        ports:
-            - "3306:3306"
+        #        ports:
+        #            - "3306:3306"
         environment:
             - MYSQL_ROOT_PASSWORD=123456  # change to your password!
             - MYSQL_DATABASE=smartTrade
@@ -21,8 +21,8 @@ services:
             - ./data/redis:/data
         networks:
             - mysql
-        ports:
-            - "6379:6379"
+        #        ports:
+        #            - "6379:6379"
         sysctls:
             - net.core.somaxconn=1024
     php-fpm81:
@@ -34,8 +34,8 @@ services:
             - ./conf/supervisor:/etc/supervisor/conf.d
         environment:
             - TZ=Asia/Shanghai
-            - DB_HOST=host.docker.internal
-            - REDIS_HOST=host.docker.internal
+            - DB_HOST=docker-mysql-1
+            - REDIS_HOST=docker-redis-1
         networks:
             - mysql
             - nginx

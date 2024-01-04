@@ -17,6 +17,7 @@
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "michielfb/laravel-nova-time-field": "^2.0",
+        "mongodb/laravel-mongodb": "^4.0",
         "tymon/jwt-auth": "^2.0",
         "uduncloud/udun-wallet-sdk": "^1.0"
     },

@@ -21,6 +21,27 @@ class Market extends BaseApi
         $this->middleware('auth:api', ['except' => []]);
     }
 
+    function kline(Request $request)
+    {
+        try {
+            $data = $request->validate(['symbol' => 'required', 'time' => 'required', 'num' => 'required|integer']);
+        } catch (Exception $e) {
+            return $this->error($e->getMessage());
+        }
+
+        //从mongodb中获取数据
+        $symbol = $data['symbol'];
+        $time = $data['time'];
+        $num = $data['num'];
+
+        $collectionName = $symbol . '_' . $time;
+
+
+        $collection = DB::connection('mongodb')->collection($collectionName);
+
+        return $this->success($collectionName, $collection->limit($num)->get());
+    }
+
     function market_info(Request $request)
     {
 

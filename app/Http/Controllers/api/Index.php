@@ -4,7 +4,6 @@ namespace App\Http\Controllers\api;
 
 use App\Models\Market;
 use App\Models\News;
-use Illuminate\Support\Facades\Cache;
 
 class Index extends BaseApi
 {
@@ -22,9 +21,7 @@ class Index extends BaseApi
 
     function hot_pair()
     {
-        $hotList = Cache::rememberForever('hot_pair', function () {
-            return Market::query()->where('hot', 1)->get();
-        });
+        $hotList = Market::query()->where('hot', 1)->get();
         return $this->success('success', $hotList);
     }
 }

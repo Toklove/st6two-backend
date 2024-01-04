@@ -41,6 +41,7 @@ Route::middleware(Lang::class)->group(function () {
     });
 
     Route::group(['middleware' => 'api', 'prefix' => 'market'], function () {
+        Route::get('kline', [Market::class, 'kline']);
         Route::get('info', [Market::class, 'market_info']);
         Route::post('like', [Market::class, 'like']);
         Route::get('category', [Market::class, 'category']);
