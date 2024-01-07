@@ -25,6 +25,16 @@ services:
         #            - "6379:6379"
         sysctls:
             - net.core.somaxconn=1024
+
+    mongo:
+        image: mongo:latest
+        volumes:
+            - ./data/mongo:/data/db
+        networks:
+            - mysql
+        ports:
+            - "27017:27017"
+
     php-fpm81:
         build:
             context: .
@@ -55,6 +65,16 @@ services:
         ports:
             - "80:80"
             - "443:443"
+    market-data:
+        build:
+            context: .
+            dockerfile: dockerfiles/marketData/Dockerfile
+        networks:
+            - mysql
+        environment:
+            - mongoUri=mongodb://docker-mongo-1:27017
+            - mysqlUri=root:123456@tcp(docker-mysql-1:3306)/smartTrade?charset=utf8mb4&parseTime=True&loc=Local
+
 
 networks:
     mysql:

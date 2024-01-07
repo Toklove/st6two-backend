@@ -19,12 +19,12 @@ RUN apt-get update && apt-get install -y \
 # Install PHP extensions deps
 RUN docker-php-ext-install mysqli pdo pdo_mysql
 
-RUN pecl install redis \
-	&& docker-php-ext-enable redis
-
 #RUN pecl install redis \
-#	&& pecl install mongodb \
-#	&& docker-php-ext-enable redis mongodb
+#	&& docker-php-ext-enable redis
+
+RUN pecl install redis \
+	&& pecl install mongodb \
+	&& docker-php-ext-enable redis mongodb
 
 # Install pcntl
 RUN docker-php-ext-install pcntl;
