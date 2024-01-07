@@ -23,14 +23,6 @@ class Member extends Resource
      * @var class-string<\App\Models\Member>
      */
     public static $model = \App\Models\Member::class;
-
-    /**
-     * The single value that should be used to represent the resource when being displayed.
-     *
-     * @var string
-     */
-    public static $title = 'id';
-
     /**
      * The columns that should be searched.
      *
@@ -43,6 +35,16 @@ class Member extends Resource
     public static function label()
     {
         return __('会员列表');
+    }
+
+    /**
+     * The single value that should be used to represent the resource when being displayed.
+     *
+     * @var string
+     */
+    function title()
+    {
+        return $this->email;
     }
 
     /**
@@ -67,6 +69,7 @@ class Member extends Resource
             Boolean::make('激活', 'active')->sortable()
                 ->trueValue('1')
                 ->falseValue('0'),
+            \Laravel\Nova\Fields\Currency::make('余额', 'balance')->onlyOnIndex()->sortable(),
             Password::make('密码', 'password')
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())

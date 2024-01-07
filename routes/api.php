@@ -24,25 +24,27 @@ use Illuminate\Support\Facades\Route;
 Route::get('/captcha', [Common::class, 'captcha']);
 
 Route::middleware(Lang::class)->group(function () {
-    Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
+    Route::group(['prefix' => 'auth'], function () {
         Route::post('login', [Auth::class, 'login']);
-        Route::post('logout', [Auth::class, 'logout']);
-        Route::post('refresh', [Auth::class, 'refresh']);
-        Route::get('me', [Auth::class, 'me']);
         Route::post('send', [Auth::class, 'send']);
         Route::post('register', [Auth::class, 'register']);
-        Route::post('restPass', [Auth::class, 'restPass']);
+        Route::post('restPass', [User::class, 'restPass']);
     });
-    Route::group(['middleware' => 'api', 'prefix' => 'common'], function () {
+    Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'auth'], function ($router) {
+        Route::get('me', [Auth::class, 'me']);
+        Route::get('logout', [Auth::class, 'logout']);
+        Route::get('user', [User::class, 'info']);
+    });
+    Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'common'], function () {
         Route::post('upload', [Common::class, 'upload']);
     });
 
-    Route::group(['middleware' => 'api', 'prefix' => 'index'], function () {
+    Route::group(['prefix' => 'index'], function () {
         Route::get('news', [Index::class, 'news']);
         Route::get('market', [Index::class, 'hot_pair']);
     });
 
-    Route::group(['middleware' => 'api', 'prefix' => 'market'], function () {
+    Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'market'], function () {
         Route::get('kline', [Market::class, 'kline']);
         Route::get('info', [Market::class, 'market_info']);
         Route::post('like', [Market::class, 'like']);
@@ -61,7 +63,7 @@ Route::middleware(Lang::class)->group(function () {
         });
     });
 
-    Route::group(['middleware' => 'api', 'prefix' => 'user'], function () {
+    Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'user'], function () {
         Route::post('update', [User::class, 'update']);
         Route::get('getCurrency', [User::class, 'getCurrency']);
         Route::post('addWallet', [User::class, 'addWallet']);
@@ -72,8 +74,8 @@ Route::middleware(Lang::class)->group(function () {
         Route::post('addBank', [User::class, 'addBank']);
         Route::post('changePassword', [User::class, 'changePassword']);
         Route::get('logout', [User::class, 'logout']);
-        Route::post('/real', [User::class, 'real']);
-        Route::get('/real', [User::class, 'real_info']);
+        Route::post('real', [User::class, 'real']);
+        Route::get('real', [User::class, 'real_info']);
     });
 
     Route::group(['prefix' => 'wallet'], function () {

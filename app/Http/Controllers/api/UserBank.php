@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\api;
 
+use Illuminate\Http\Request;
+
 class UserBank extends BaseApi
 {
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth:api', ['except' => []]);
     }
 
-    function index()
+    function index(Request $request)
     {
-        $user = $this->auth->user();
+        $user = $request->user();
         $banks = $user->banks;
         return $this->success('success', $banks);
     }

@@ -10,7 +10,6 @@ class Index extends BaseApi
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth:api', ['except' => ['news', 'hot_pair']]);
     }
 
     function news()

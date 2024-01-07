@@ -14,32 +14,18 @@ class Auth extends BaseApi
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth:api', ['except' => ['login', 'send', 'register', 'restPass']]);
     }
 
-    public function me()
+    public function me(Request $request)
     {
-        return $this->success('success', $this->auth->user());
+        return $this->success('success', $request->user());
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        $this->auth->logout();
 
+        $request->user()->currentAccessToken()->delete();
         return $this->success(__('api.auth.successfully_logged_out'));
-    }
-
-    public function refresh()
-    {
-        return $this->respondWithToken($this->auth->refresh());
-    }
-
-    protected function respondWithToken($token)
-    {
-        return $this->success('success', [
-            'access_token' => $token,
-            'token_type' => 'bearer',
-        ]);
     }
 
     function send()
@@ -75,25 +61,22 @@ class Auth extends BaseApi
         $post = $request->validate([
             'email' => 'required|email|unique:members,email',
             'code' => 'required',
+            'captcha' => 'required',
             'password' => 'required|min:8|confirmed',
         ], [
             "email.required" => __("auth.email_required"),
             "email.unique" => __("auth.email_unique"),
             "email.email" => __("auth.email_email"),
             "code.required" => __("auth.code_required"),
+            "captcha.required" => __("auth.captcha_required"),
             "password.required" => __("auth.password_required"),
             "password.min" => __("auth.password_min"),
             "password.confirmed" => __("auth.password_confirmed"),
         ]);
 
-        //验证邮箱验证码
-        $key = 'check_' . $post['email'];
-        $code = Cache::get($key);
-        if (!$code) {
+        //验证图片验证码
+        if (!captcha_api_check($post['code'], $post['captcha'])) {
             return $this->error(__("auth.code_expired"));
-        }
-        if ($code != $post['code']) {
-            return $this->error(__("auth.code_error"));
         }
 
 
@@ -122,11 +105,8 @@ class Auth extends BaseApi
         //初始化钱包信息 TODO 通过队列异步执行
         $member->initWallet();
 
-        //清除验证码
-        Cache::forget($key);
-
         //返回token
-        $token = $this->auth->login($member);
+        $token = $member->createToken('api')->plainTextToken;
         return $this->respondWithToken($token);
     }
 
@@ -140,15 +120,25 @@ class Auth extends BaseApi
         return $code;
     }
 
+    protected function respondWithToken($token)
+    {
+        return $this->success('success', [
+            'access_token' => $token,
+            'token_type' => 'bearer',
+        ]);
+    }
+
     public function login()
     {
         $credentials = request(['email', 'password']);
-        $remember = request('remember');
+//        $remember = request('remember');
 
-        if (!$token = $this->auth->attempt($credentials)) {
+        $member = Member::query()->where(['email' => $credentials['email']])->first();
+
+        if (!$member || !Hash::check($credentials['password'], $member->password)) {
             return $this->error(__('api.auth.unauthorized'));
         }
-
+        $token = $member->createToken('api')->plainTextToken;
         return $this->respondWithToken($token);
     }
 

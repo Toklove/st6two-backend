@@ -18,7 +18,6 @@ class Market extends BaseApi
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth:api', ['except' => []]);
     }
 
     function kline(Request $request)
@@ -60,7 +59,7 @@ class Market extends BaseApi
             return $this->error(__('market.symbol_required'));
         }
 
-        $like = UserLikeMarket::query()->where(['user_id' => $this->user['id'], 'market_id' => $market['id']])->first();
+        $like = UserLikeMarket::query()->where(['user_id' => $request->user()->id, 'market_id' => $market['id']])->first();
         if ($like) {
             $market->is_like = true;
         } else {
@@ -83,13 +82,13 @@ class Market extends BaseApi
         if (!$market) {
             return $this->error(__('market.symbol_required'));
         }
-        $like = UserLikeMarket::query()->where(['user_id' => $this->user['id'], 'market_id' => $id])->first();
+        $like = UserLikeMarket::query()->where(['user_id' => $request->user()->id, 'market_id' => $id])->first();
         if ($like) {
             $like->delete();
             $market->is_like = false;
             return $this->success(__('market.collection_successfully'), $market);
         } else {
-            UserLikeMarket::query()->create(['user_id' => $this->user['id'], 'market_id' => $id]);
+            UserLikeMarket::query()->create(['user_id' => $request->user()->id, 'market_id' => $id]);
             $market->is_like = true;
             return $this->success(__('market.collection successful'), $market);
         }
@@ -157,7 +156,7 @@ class Market extends BaseApi
         $order_num = get_order_sn($market['full_name']);
 
         $orderData = [
-            'member_id' => $this->user['id'],
+            'member_id' => $request->user()->id,
             'market_id' => $market['id'],
             'type' => $data['order_type'],
             'quantity' => $data['quantity'],
@@ -175,8 +174,8 @@ class Market extends BaseApi
             $order = UserContractOrder::query()->create($orderData);
 
             //扣除保证金余额以及下单手续费
-            Member::money(-$freeze_balance, $this->user['id'], BillTag::ContractPositionAmount);
-            Member::money(-$freeze_fee, $this->user['id'], BillTag::ContractPositionOpeningFee);
+            Member::money(-$freeze_balance, $request->user()->id, BillTag::ContractPositionAmount);
+            Member::money(-$freeze_fee, $request->user()->id, BillTag::ContractPositionOpeningFee);
 
             //加入处理队列
             PaidContractOrder::dispatch($order->id)->onQueue('contract_order');
@@ -193,7 +192,7 @@ class Market extends BaseApi
     {
         $status = $request->input('status', 2);
 
-        $list = UserContractOrder::query()->with('market')->where(['member_id' => $this->user['id'], "status" => $status])->orderByDesc('id')->paginate(10);
+        $list = UserContractOrder::query()->with('market')->where(['member_id' => $request->user()->id, "status" => $status])->orderByDesc('id')->paginate(10);
         foreach ($list as $item) {
             $item->all_fee = PriceCalculate($item->buy_fee, '+', $item->sell_fee, 6);
         }
@@ -209,7 +208,7 @@ class Market extends BaseApi
             return $this->error($e->getMessage());
         }
 
-        $order = UserContractOrder::query()->with('market')->where(['id' => $data['id'], 'member_id' => $this->user['id']])->first();
+        $order = UserContractOrder::query()->with('market')->where(['id' => $data['id'], 'member_id' => $request->user()->id])->first();
         if (!$order) {
             return $this->error(__('market.order_does_not_exist'));
         }
@@ -236,7 +235,7 @@ class Market extends BaseApi
             return $this->error($e->getMessage());
         }
 
-        $order = UserContractOrder::query()->with('market')->where(['id' => $data['id'], 'member_id' => $this->user['id'], 'status' => 0])->first();
+        $order = UserContractOrder::query()->with('market')->where(['id' => $data['id'], 'member_id' => $request->user()->id, 'status' => 0])->first();
         if (!$order) {
             return $this->error(__('market.order_does_not_exist'));
         }

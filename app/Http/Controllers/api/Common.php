@@ -10,7 +10,6 @@ class Common extends BaseApi
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth:api', ['except' => ['captcha']]);
     }
 
     function captcha()

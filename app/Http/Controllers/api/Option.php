@@ -15,7 +15,6 @@ class Option extends BaseApi
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth:api', ['except' => []]);
     }
 
     function setting(Request $request)
@@ -68,7 +67,7 @@ class Option extends BaseApi
         try {
 
             $order = UserOptionOrder::query()->create([
-                'member_id' => $this->user['id'],
+                'member_id' => $request->user()->id,
                 'market_id' => $market['id'],
                 'time_id' => $time['id'],
                 'quantity' => $quantity,
@@ -81,7 +80,7 @@ class Option extends BaseApi
             ]);
 
             //扣除用户余额
-            Member::money(-$quantity, $this->user['id'], BillTag::OptionsPositionAmount);
+            Member::money(-$quantity, $request->user()->id, BillTag::OptionsPositionAmount);
 
             //发送延迟队列以处理订单
             ExitOptionOrder::dispatch($order['id'])->delay($time['time'])->onQueue('option_order');
@@ -97,7 +96,7 @@ class Option extends BaseApi
     {
         $status = $request->input('status', 0);
 
-        $list = UserOptionOrder::query()->with('market')->where(['member_id' => $this->user['id'], "status" => $status])->orderByDesc('id')->paginate(10);
+        $list = UserOptionOrder::query()->with('market')->where(['member_id' => $request->user()->id, "status" => $status])->orderByDesc('id')->paginate(10);
         foreach ($list as $item) {
             $item->all_fee = PriceCalculate($item->buy_fee, '+', $item->sell_fee, 6);
         }

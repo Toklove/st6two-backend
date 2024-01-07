@@ -19,7 +19,6 @@ class User extends BaseApi
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth:api', ['except' => []]);
     }
 
     function addBank(Request $request)
@@ -42,7 +41,7 @@ class User extends BaseApi
             return $this->error($e->getMessage());
         }
         $userBank = new \App\Models\UserBank();
-        $userBank->member_id = $this->auth->id();
+        $userBank->member_id = $request->user()->id;
         $userBank->fill($post);
         $userBank->save();
 
@@ -65,7 +64,7 @@ class User extends BaseApi
             return $this->error($e->getMessage());
         }
         $userCryptoWallet = new UserCryptoWallet();
-        $userCryptoWallet->member_id = $this->auth->id();
+        $userCryptoWallet->member_id = $request->user()->id;
         $userCryptoWallet->currency_id = $post['currency_id'];
         $userCryptoWallet->address = $post['address'];
         $userCryptoWallet->save();
@@ -88,7 +87,7 @@ class User extends BaseApi
         }
 
         //更新用户信息
-        $user = $this->auth->user();
+        $user = $request->user();
         $user->nickname = $post['nickname'];
         $user->avatar = $post['avatar'];
         $user->save();
@@ -96,29 +95,29 @@ class User extends BaseApi
         return $this->success('success', $user);
     }
 
-    function getCurrency()
+    function getCurrency(Request $request)
     {
         //获取币种
         $currencies = Currency::all();
         foreach ($currencies as $currency) {
-            $currency['address'] = UserCryptoAddress::query()->where(['member_id' => $this->auth->id(), 'currency_id' => $currency->id])->value('address');
+            $currency['address'] = UserCryptoAddress::query()->where(['member_id' => $request->user()->id, 'currency_id' => $currency->id])->value('address');
         }
         return $this->success('success', $currencies);
     }
 
-    function bankList()
+    function bankList(Request $request)
     {
-        $list = \App\Models\UserBank::query()->where('member_id', $this->auth->id())->get();
+        $list = \App\Models\UserBank::query()->where('member_id', $request->user()->id)->get();
         return $this->success('success', $list);
     }
 
-    function cryptoList()
+    function cryptoList(Request $request)
     {
-        $list = UserCryptoWallet::query()->with('currency')->where('member_id', $this->auth->id())->get();
+        $list = UserCryptoWallet::query()->with('currency')->where('member_id', $request->user()->id)->get();
         return $this->success('success', $list);
     }
 
-    function delCrypto()
+    function delCrypto(Request $request)
     {
         try {
             $id = request()->validate(['id' => 'required|integer|exists:user_crypto_wallet,id'], [
@@ -130,7 +129,7 @@ class User extends BaseApi
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
-        $del = UserCryptoWallet::query()->where(['id' => $id, 'member_id' => $this->auth->id()])->delete();
+        $del = UserCryptoWallet::query()->where(['id' => $id, 'member_id' => $request->user()->id])->delete();
         if ($del) {
             return $this->success(__('api.user.delete_success'));
         } else {
@@ -138,7 +137,7 @@ class User extends BaseApi
         }
     }
 
-    function delBank()
+    function delBank(Request $request)
     {
         try {
             $id = request()->validate(['id' => 'required|integer|exists:user_bank,id'],
@@ -150,7 +149,7 @@ class User extends BaseApi
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
-        $del = \App\Models\UserBank::query()->where(['id' => $id, 'member_id' => $this->auth->id()])->delete();
+        $del = \App\Models\UserBank::query()->where(['id' => $id, 'member_id' => $request->user()->id])->delete();
         if ($del) {
             return $this->success(__('api.user.delete_success'));
         } else {
@@ -171,7 +170,7 @@ class User extends BaseApi
             return $this->error($e->getMessage());
         }
 
-        $user = $this->user;
+        $user = $request->user();
         $user->real_name = $data['real_name'];
         $user->id_card = $data['id_number'];
         $user->id_card_front = $data['front'];
@@ -181,14 +180,14 @@ class User extends BaseApi
         return $this->success(__('api.user.real_success'));
     }
 
-    function real_info()
+    function real_info(Request $request)
     {
         $data = [
-            'real_name' => $this->user->real_name,
-            'id_number' => $this->user->id_card,
-            'front' => $this->user->id_card_front,
-            'back' => $this->user->id_card_back,
-            'is_certified' => $this->user->is_certified,
+            'real_name' => $request->user()->real_name,
+            'id_number' => $request->user()->id_card,
+            'front' => $request->user()->id_card_front,
+            'back' => $request->user()->id_card_back,
+            'is_certified' => $request->user()->is_certified,
         ];
         return $this->success('success', $data);
     }
@@ -210,7 +209,7 @@ class User extends BaseApi
         $post['password'] = Hash::make($post['password']);
 
         //判断旧密码是否正确
-        $user = $this->auth->user();
+        $user = $request->user();
         if (!Hash::check($post['old_password'], $user->password)) {
             return $this->error(__('api.user.old_password_error'));
         }
@@ -220,10 +219,10 @@ class User extends BaseApi
         return $this->success(__('api.user.change_success'));
     }
 
-    function logout()
+    function logout(Request $request)
     {
         //注销登录
-        $this->auth->logout();
+        $request->user()->currentAccessToken()->delete();
         return $this->success(__('api.user.logout_success'));
     }
 
@@ -231,9 +230,9 @@ class User extends BaseApi
     {
         $type = $request->input('type', 0);
         if ($type == 0) {
-            $list = UserDeposit::query()->with('currency')->where('member_id', $this->auth->id())->orderByDesc('id')->paginate(10);
+            $list = UserDeposit::query()->with('currency')->where('member_id', $request->user()->id)->orderByDesc('id')->paginate(10);
         } else {
-            $list = UserWithdraw::query()->with('currency')->where('member_id', $this->auth->id())->orderByDesc('id')->paginate(10);
+            $list = UserWithdraw::query()->with('currency')->where('member_id', $request->user()->id)->orderByDesc('id')->paginate(10);
         }
         return $this->success('success', $list);
     }
@@ -259,7 +258,7 @@ class User extends BaseApi
             return $this->error($e->getMessage());
         }
 
-        $member_id = $this->auth->id();
+        $member_id = $request->user()->id;
 
         $order_no = date('YmdHis') . rand(100000, 999999) . $member_id;
 
@@ -298,5 +297,10 @@ class User extends BaseApi
         }
 
         return $this->success(__('api.user.withdraw_success'));
+    }
+
+    function info(Request $request)
+    {
+        return $this->success('success', $request->user());
     }
 }
