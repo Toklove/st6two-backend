@@ -131,9 +131,9 @@ class User extends BaseApi
         }
         $del = UserCryptoWallet::query()->where(['id' => $id, 'member_id' => $request->user()->id])->delete();
         if ($del) {
-            return $this->success(__('api.user.delete_success'));
+            return $this->success(__('user.delete_success'));
         } else {
-            return $this->error(__('api.user.delete_failed'));
+            return $this->error(__('user.delete_failed'));
         }
     }
 
@@ -151,9 +151,9 @@ class User extends BaseApi
         }
         $del = \App\Models\UserBank::query()->where(['id' => $id, 'member_id' => $request->user()->id])->delete();
         if ($del) {
-            return $this->success(__('api.user.delete_success'));
+            return $this->success(__('user.delete_success'));
         } else {
-            return $this->error(__('api.user.delete_failed'));
+            return $this->error(__('user.delete_failed'));
         }
     }
 
@@ -177,7 +177,7 @@ class User extends BaseApi
         $user->id_card_back = $data['back'];
         $user->save();
 
-        return $this->success(__('api.user.real_success'));
+        return $this->success(__('user.real_success'));
     }
 
     function real_info(Request $request)
@@ -211,19 +211,19 @@ class User extends BaseApi
         //判断旧密码是否正确
         $user = $request->user();
         if (!Hash::check($post['old_password'], $user->password)) {
-            return $this->error(__('api.user.old_password_error'));
+            return $this->error(__('user.old_password_error'));
         }
         $user->password = $post['password'];
         $user->save();
 
-        return $this->success(__('api.user.change_success'));
+        return $this->success(__('user.change_success'));
     }
 
     function logout(Request $request)
     {
         //注销登录
         $request->user()->currentAccessToken()->delete();
-        return $this->success(__('api.user.logout_success'));
+        return $this->success(__('user.logout_success'));
     }
 
     function walletRecord(Request $request)
@@ -272,14 +272,14 @@ class User extends BaseApi
         if ($post['type'] == 0) {
             $wallet = UserCryptoWallet::query()->with('currency')->where(['member_id' => $member_id, 'id' => $post['id']])->first();
             if (!$wallet) {
-                return $this->error(__('api.user.wallet_not_exists'));
+                return $this->error(__('user.wallet_not_exists'));
             }
             $data['chain'] = $wallet->currency->name;
             $data['address'] = $wallet->address;
         } else {
             $bank = \App\Models\UserBank::query()->where(['member_id' => $member_id, 'id' => $post['id']])->first();
             if (!$bank) {
-                return $this->error(__('api.user.bank_not_exists'));
+                return $this->error(__('user.bank_not_exists'));
             }
             $data['account'] = $bank->account;
             $data['account_user'] = $bank->account_user;
@@ -296,7 +296,7 @@ class User extends BaseApi
             return $this->error($e->getMessage());
         }
 
-        return $this->success(__('api.user.withdraw_success'));
+        return $this->success(__('user.withdraw_success'));
     }
 
     function info(Request $request)

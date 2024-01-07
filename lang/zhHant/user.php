@@ -22,5 +22,19 @@ return [
     "id_exists" => "ID不存在",
     "password_required" => "密碼不存在",
     "password_confirmed" => "密碼確認不匹配",
+    "real_name_required"=> "請輸入您的真實姓名",
+    "id_number_required"=> "請輸入身份證號碼",
+    "front_required"=> "請上傳身份證正面",
+    "back_required"=> "請上傳您的身份證背面",
+    "real_success"=> "認證提交成功",
+    "amount_required"=> "請輸入金額",
+    "amount_numeric"=> "金額必須為數位",
+    "amount_min"=> "最低金額為 1",
+    "type_required"=> "請選擇類型",
+    "type_integer"=> "類型錯誤",
+    "wallet_not_exists"=> "錢包不存在",
+    "bank_not_exists"=> "銀行卡不存在",
+    "withdraw_success"=>
+        "提現成功"
 ];
 

@@ -3,7 +3,7 @@
 return [
     'failed' => 'Essas credenciais não correspondem aos nossos registros.',
     'password' => 'A senha fornecida está incorreta.',
-    'throttle' => 'Muitas tentativas de login. Por favor, tente novamente em :seconds segundos.',
+    'throttle' => 'Muitas tentativas de login. Por favor, tente novamente em =>seconds segundos.',
     'successfully_logged_out' => 'Logout realizado com sucesso',
     'do_not_send_repeatedly' => 'Não enviar repetidamente',
     'email_required' => 'O formato do email está incorreto ou não pode estar vazio',
@@ -17,5 +17,8 @@ return [
     'code_error' => 'Erro no código de verificação',
     'invite_code_error' => 'Erro no código de convite',
     'unauthorized' => 'Não autorizado',
+    "captcha_required"=> "Por favor, preencha a chave do código de verificação",
+    "email_not_exist"=> "O e-mail não existe",
+    "password_reset_successfully"=> "Redefinição de senha bem-sucedida"
 ];
 

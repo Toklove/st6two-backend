@@ -51,7 +51,19 @@ services:
             - nginx
         ports:
             - "9000:9000"
-
+    agent:
+        build:
+            context: .
+            dockerfile: dockerfiles/agent/Dockerfile
+        volumes:
+            - ./agent-code:/nuxt3
+            - ./conf/supervisor-nuxt:/etc/supervisor/conf.d
+        environment:
+            - TZ=Asia/Shanghai
+        networks:
+            - mysql
+        ports:
+            - "8989:3000"
     nginx:
         image: nginx:alpine
         volumes:

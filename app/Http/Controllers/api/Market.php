@@ -90,7 +90,7 @@ class Market extends BaseApi
         } else {
             UserLikeMarket::query()->create(['user_id' => $request->user()->id, 'market_id' => $id]);
             $market->is_like = true;
-            return $this->success(__('market.collection successful'), $market);
+            return $this->success(__('market.collection_successful'), $market);
         }
     }
 

@@ -3,7 +3,7 @@
 return [
     'failed' => 'これらの資格情報は当社の記録と一致しません。',
     'password' => '提供されたパスワードが正しくありません。',
-    'throttle' => 'ログイン試行が多すぎます。:seconds 秒後に再試行してください。',
+    'throttle' => 'ログイン試行が多すぎます。=>seconds 秒後に再試行してください。',
     'successfully_logged_out' => '正常にログアウトしました',
     'do_not_send_repeatedly' => '繰り返し送信しないでください',
     'email_required' => 'メールの形式が正しくないか空であってはなりません',
@@ -17,5 +17,8 @@ return [
     'code_error' => '検証コードエラー',
     'invite_code_error' => '招待コードエラー',
     'unauthorized' => '権限がありません',
+    "captcha_required"=> "認証コードキーを入力してください",
+    "email_not_exist"=> "メールが存在しません",
+    "password_reset_successfully"=> "パスワードのリセットに成功しました"
 ];
 

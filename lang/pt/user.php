@@ -22,5 +22,18 @@ return [
     "id_exists" => "ID não encontrado",
     "password_required" => "Senha não existe",
     "password_confirmed" => "Confirmação de senha não corresponde",
+    "real_name_required"=> "Por favor, digite seu nome real",
+    "id_number_required"=> "Introduza o número de identificação",
+    "front_required"=> "Por favor, carregue a frente do seu cartão de identificação",
+    "back_required"=> "Por favor, carregue o verso do seu cartão de identificação",
+    "real_success"=> "Submissão de certificação bem-sucedida",
+    "amount_required"=> "Por favor, insira o valor",
+    "amount_numeric"=> "O valor deve ser um número",
+    "amount_min"=> "O valor mínimo é 1",
+    "type_required"=> "Selecione o tipo",
+    "type_integer"=> "erro no tipo",
+    "wallet_not_exists"=> "Carteira não existe",
+    "bank_not_exists"=> "Cartão bancário não existe",
+    "withdraw_success"=> "Retirada bem-sucedida"
 ];
 

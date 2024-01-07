@@ -3,7 +3,7 @@
 return [
     'failed' => '這些憑據與我們的記錄不符。',
     'password' => '提供的密碼不正確。',
-    'throttle' => '登錄嘗試次數過多。請在 :seconds 秒後再試。',
+    'throttle' => '登錄嘗試次數過多。請在 =>seconds 秒後再試。',
     "successfully_logged_out" => "成功登出",
     "do_not_send_repeatedly" => "請勿重複發送",
     "email_required" => "電子郵件格式不正確或不可為空",
@@ -17,5 +17,8 @@ return [
     "code_error" => "驗證碼錯誤",
     "invite_code_error" => "邀請碼錯誤",
     "unauthorized" => "未授權",
+    "captcha_required"=> "請填寫驗證碼金鑰",
+    "email_not_exist"=> "電子郵件不存在",
+    "password_reset_successfully"=> "密碼重置成功"
 ];
 

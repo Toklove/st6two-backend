@@ -22,5 +22,18 @@ return [
     "id_exists" => "ID introuvable",
     "password_required" => "Mot de passe inexistant",
     "password_confirmed" => "La confirmation du mot de passe ne correspond pas",
+    "real_name_required"=> "S’il vous plaît entrez votre vrai nom",
+    "id_number_required"=> "Veuillez saisir le numéro d’identification",
+    "front_required"=> "Veuillez télécharger le recto de votre carte d’identité",
+    "back_required"=> "Veuillez télécharger le verso de votre carte d’identité",
+    "real_success"=> "Soumission de la certification réussie",
+    "amount_required"=> "S’il vous plaît entrer le montant",
+    "amount_numeric"=> "Le montant doit être un nombre",
+    "amount_min"=> "Le montant minimum est de 1",
+    "type_required"=> "Veuillez sélectionner le type",
+    "type_integer"=> "Erreur de type",
+    "wallet_not_exists"=> "Le portefeuille n’existe pas",
+    "bank_not_exists"=> "La carte bancaire n’existe pas",
+    "withdraw_success"=> "Retrait réussi"
 ];
 

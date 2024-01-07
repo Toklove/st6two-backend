@@ -25,6 +25,9 @@ return [
     "code_expired" => "Der Bestätigungscode ist abgelaufen",
     "code_error" => "Fehler beim Bestätigungscode",
     "invite_code_error" => "Fehler beim Einladungscode",
-    "unauthorized" => "nicht autorisiert"
-
+    "unauthorized" => "nicht autorisiert",
+    "captcha_required"=> "Bitte geben Sie den Schlüssel für den Verifizierungscode ein",
+    "email_not_exist"=> "E-Mail existiert nicht",
+    "password_reset_successfully"=> "Zurücksetzen des Kennworts erfolgreich"
+    
 ];

@@ -13,5 +13,8 @@ return [
     'collection_successful' => "Collection successful",
     'order_placed_successfully' => "Order placed successfully",
     'order_placed_successful' => "Order placed successful",
-    'category_id_required' => "Category does not exist"
+    'category_id_required' => "Category does not exist",
+    //新增
+    "id_required"=>"ID cannot be empty",
+    "order_does_not_exist"=>"Order does not exist"
 ];

@@ -22,4 +22,17 @@ return [
     'id_exists' => 'ID nicht gefunden',
     'password_required' => 'Passwort existiert nicht',
     'password_confirmed' => 'Passwortbestätigung stimmt nicht überein',
+    "real_name_required"=> "Bitte geben Sie Ihren richtigen Namen ein",
+    "id_number_required"=> "Bitte geben Sie die Nummer der ID-Nummer ein",
+    "front_required"=> "Bitte laden Sie die Vorderseite Ihres Personalausweises hoch",
+    "back_required"=> "Bitte laden Sie die Rückseite Ihres Personalausweises hoch",
+    "real_success"=> "Zertifizierungseinreichung erfolgreich",
+    "amount_required"=> "Bitte geben Sie den Betrag ein",
+    "amount_numeric"=> "Der Betrag muss eine Zahl sein",
+    "amount_min"=> "Der Mindestbetrag beträgt 1",
+    "type_required"=> "Bitte wählen Sie den Typ aus",
+    "type_integer"=> "Fehler im Typ",
+    "wallet_not_exists"=> "Wallet existiert nicht",
+    "bank_not_exists"=> "Bankkarte existiert nicht",
+    "withdraw_success"=> "Auszahlung erfolgreich"
 ];

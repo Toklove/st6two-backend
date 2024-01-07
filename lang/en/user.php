@@ -22,4 +22,18 @@ return [
     "id_exists" => "id does not found",
     "password_required" => "Password does not exist",
     "password_confirmed" => "Password confirmation does not match",
+    //新增
+    "real_name_required"=>"Please enter your real name",
+    "id_number_required"=>"Please enter ID number number",
+    "front_required"=>"Please upload the front of your ID card",
+    "back_required"=>"Please upload the back of your ID card",
+    "real_success"=>"Certification submission successful",
+    "amount_required"=>"Please enter the amount",
+    "amount_numeric"=>"The amount must be a number",
+    "amount_min"=>"The minimum amount is 1",
+    "type_required"=>"Please select the type",
+    "type_integer"=>"error in type",
+    "wallet_not_exists"=>"Wallet does not exist",
+    "bank_not_exists"=>"Bank card does not exist",
+    "withdraw_success"=>"Withdrawal successful"
 ];

@@ -13,5 +13,7 @@ return [
     'order_placed_successfully' => 'Ordem colocada com sucesso',
     'order_placed_successful' => 'Ordem colocada com sucesso',
     'category_id_required' => 'A categoria não existe',
+    "id_required"=> "ID não pode estar vazio",
+    "order_does_not_exist"=> "Ordem não existe"
 ];
 

@@ -22,5 +22,18 @@ return [
     "id_exists" => "IDが見つかりません",
     "password_required" => "パスワードが存在しません",
     "password_confirmed" => "パスワードの確認が一致しません",
+    "real_name_required"=> "本名を入力してください",
+    "id_number_required"=> "ID番号番号を入力してください",
+    "front_required"=> "身分証明書の表面をアップロードしてください",
+    "back_required"=> "身分証の裏面をアップロードしてください",
+    "real_success"=> "認定資格の提出に成功しました",
+    "amount_required"=> "金額を入力してください",
+    "amount_numeric"=> "金額は数値である必要があります",
+    "amount_min"=> "最小金額は 1 です",
+    "type_required"=> "種類を選択してください",
+    "type_integer"=> "タイプのエラー",
+    "wallet_not_exists"=> "ウォレットが存在しません",
+    "bank_not_exists"=> "銀行カードが存在しない",
+    "withdraw_success"=> "出金成功"
 ];
 

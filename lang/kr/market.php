@@ -13,5 +13,7 @@ return [
     'order_placed_successfully' => '주문 성공적으로 완료',
     'order_placed_successful' => '주문 성공적으로 완료',
     'category_id_required' => '카테고리가 존재하지 않습니다',
+    "id_required"=> "ID는 비워 둘 수 없습니다.",
+    "order_does_not_exist"=> "주문이 존재하지 않습니다."
 ];
 

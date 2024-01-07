@@ -12,5 +12,7 @@ return [
     'collection_successful' => "Sammlung erfolgreich",
     'order_placed_successfully' => "Bestellung erfolgreich aufgegeben",
     'order_placed_successful' => "Bestellung erfolgreich aufgegeben",
-    'category_id_required' => "Kategorie existiert nicht"
+    'category_id_required' => "Kategorie existiert nicht",
+    "id_required"=> "ID darf nicht leer sein",
+    "order_does_not_exist"=> "Ordnung existiert nicht"
 ];

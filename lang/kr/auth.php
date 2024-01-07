@@ -3,7 +3,7 @@
 return [
     'failed' => '이 자격 증명은 우리의 기록과 일치하지 않습니다.',
     'password' => '제공된 비밀번호가 올바르지 않습니다.',
-    'throttle' => '로그인 시도가 너무 많습니다. :seconds 초 후에 다시 시도하세요.',
+    'throttle' => '로그인 시도가 너무 많습니다. =>seconds 초 후에 다시 시도하세요.',
     'successfully_logged_out' => '로그아웃 성공',
     'do_not_send_repeatedly' => '반복해서 보내지 마십시오',
     'email_required' => '이메일 형식이 올바르지 않거나 비어 있을 수 없습니다.',
@@ -17,5 +17,8 @@ return [
     'code_error' => '인증 코드 오류',
     'invite_code_error' => '초대 코드 오류',
     'unauthorized' => '인가되지 않았습니다.',
+    "captcha_required"=> "인증 코드 키를 입력해 주세요.",
+    "email_not_exist"=> "이메일이 존재하지 않습니다.",
+    "password_reset_successfully"=> "암호 재설정 성공"
 ];
 

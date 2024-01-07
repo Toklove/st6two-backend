@@ -47,13 +47,13 @@ class Option extends BaseApi
         $market = \App\Models\Market::query()->where('symbol', $symbol)->first();
 
         if (!$market) {
-            return $this->error(__('option.symbol_required'));
+            return $this->error(__('option.symbol_required_exists'));
         }
 
         $time = OptionSetting::query()->find($data['time_id']);
 
         if (!$time) {
-            return $this->error(__('option.time_id_required'));
+            return $this->error(__('option.down_order_exists'));
         }
 
         $quantity = $data['quantity'];

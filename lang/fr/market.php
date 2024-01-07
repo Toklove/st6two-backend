@@ -12,6 +12,8 @@ return [
     'collection_successful' => "Collection réussie",
     'order_placed_successfully' => "Ordre placé avec succès",
     'order_placed_successful' => "Ordre placé avec succès",
-    'category_id_required' => "La catégorie n'existe pas"
+    'category_id_required' => "La catégorie n'existe pas",
+    "id_required"=> "L’ID ne peut pas être vide",
+    "order_does_not_exist"=> "L’ordre n’existe pas"
 ];
 

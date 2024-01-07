@@ -25,7 +25,7 @@ class Auth extends BaseApi
     {
 
         $request->user()->currentAccessToken()->delete();
-        return $this->success(__('api.auth.successfully_logged_out'));
+        return $this->success(__('auth.successfully_logged_out'));
     }
 
     function send()
@@ -37,7 +37,7 @@ class Auth extends BaseApi
         $has = Cache::get($key);
 
         if ($has) {
-            return $this->error(__('api.auth.do_not_send_repeatedly'));
+            return $this->error(__('auth.do_not_send_repeatedly'));
         }
 
         $code = rand(100000, 999999);
@@ -136,7 +136,7 @@ class Auth extends BaseApi
         $member = Member::query()->where(['email' => $credentials['email']])->first();
 
         if (!$member || !Hash::check($credentials['password'], $member->password)) {
-            return $this->error(__('api.auth.unauthorized'));
+            return $this->error(__('auth.unauthorized'));
         }
         $token = $member->createToken('api')->plainTextToken;
         return $this->respondWithToken($token);

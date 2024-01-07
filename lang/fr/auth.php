@@ -3,7 +3,7 @@
 return [
     'failed' => 'Ces identifiants ne correspondent pas à nos enregistrements.',
     'password' => 'Le mot de passe fourni est incorrect.',
-    'throttle' => 'Trop de tentatives de connexion. Veuillez réessayer dans :seconds secondes.',
+    'throttle' => 'Trop de tentatives de connexion. Veuillez réessayer dans =>seconds secondes.',
     'successfully_logged_out' => 'Déconnexion réussie',
     'do_not_send_repeatedly' => 'Ne pas envoyer de manière répétée',
     'email_required' => 'Le format de l\'adresse e-mail est incorrect ou ne peut pas être vide',
@@ -17,5 +17,8 @@ return [
     'code_error' => 'Erreur de code de vérification',
     'invite_code_error' => 'Erreur de code d\'invitation',
     'unauthorized' => 'Non autorisé',
+    "captcha_required"=> "Veuillez remplir la clé du code de vérification",
+    "email_not_exist"=> "L’e-mail n’existe pas",
+    "password_reset_successfully"=> "Réinitialisation du mot de passe réussie"
 ];
 

@@ -28,6 +28,10 @@ return [
     "code_expired" => "Verification code has expired",
     "code_error" => "Verification code error",
     "invite_code_error" => "Invitation code error",
-    "unauthorized" => "unauthorized"
+    "unauthorized" => "unauthorized",
+    //新增
+    "captcha_required"=>"Please fill in the verification code key",
+    "email_not_exist"=>"Email does not exist",
+    "password_reset_successfully"=>"Password reset successful"
 
 ];
