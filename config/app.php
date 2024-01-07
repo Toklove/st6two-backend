@@ -171,6 +171,7 @@ return [
         App\Providers\NovaServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         MongoDB\Laravel\MongoDBServiceProvider::class,
+        \Mews\Captcha\CaptchaServiceProvider::class
     ])->toArray(),
 
     /*
@@ -186,6 +187,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
     ])->toArray(),
 
 ];

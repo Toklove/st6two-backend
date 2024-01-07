@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\Member\Deduction;
+use App\Nova\Actions\Member\Recharge;
 use Illuminate\Validation\Rules;
 use Laravel\Nova\Fields\Avatar;
 use Laravel\Nova\Fields\BelongsTo;
@@ -115,6 +117,11 @@ class Member extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new Recharge())->showInline(),
+            (new Deduction())->showInline(),
+            (new Actions\Member\ResetPassword())->showInline(),
+            (new Actions\Member\ActiveAndUnActive())->showInline()->showOnIndex(),
+        ];
     }
 }

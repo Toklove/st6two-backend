@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/captcha', [Common::class, 'captcha']);
+
 Route::middleware(Lang::class)->group(function () {
     Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
         Route::post('login', [Auth::class, 'login']);

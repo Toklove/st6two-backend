@@ -2,13 +2,21 @@
 
 namespace App\Http\Controllers\api;
 
+use Mews\Captcha\Facades\Captcha;
+
 class Common extends BaseApi
 {
     //
     public function __construct()
     {
         parent::__construct();
-        $this->middleware('auth:api', ['except' => []]);
+        $this->middleware('auth:api', ['except' => ['captcha']]);
+    }
+
+    function captcha()
+    {
+        $captcha = Captcha::create('default', true);
+        return $this->success('success', $captcha);
     }
 
     function upload()

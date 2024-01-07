@@ -116,6 +116,7 @@ class Auth extends BaseApi
         $member->invite_code = $this->getInviteCode();
         $member->parent_id = $parent ? $parent->id : 0;
         $member->nickname = $post['email'];
+        $member->avatar = 'avatar.png';
         $member->save();
 
         //初始化钱包信息 TODO 通过队列异步执行
@@ -156,12 +157,14 @@ class Auth extends BaseApi
         try {
             $data = $request->validate([
                 'email' => 'required|email',
+                'captcha' => 'required',
                 'code' => 'required',
                 'password' => 'required|min:8',
             ], [
                 "email.required" => __("auth.email_required"),
                 "email.email" => __("auth.email_email"),
                 "code.required" => __("auth.code_required"),
+                "captcha.required" => __("auth.captcha_required"),
                 "password.required" => __("auth.password_required"),
                 "password.min" => __("auth.password_min"),
             ]);
@@ -169,14 +172,9 @@ class Auth extends BaseApi
             return $this->error($e->getMessage());
         }
 
-        //验证邮箱验证码
-        $key = 'check_' . $data['email'];
-        $code = Cache::get($key);
-        if (!$code) {
+        //验证图片验证码
+        if (!captcha_api_check($data['code'], $data['captcha'])) {
             return $this->error(__("auth.code_expired"));
-        }
-        if ($code != $data['code']) {
-            return $this->error(__("auth.code_error"));
         }
 
         //修改用户密码

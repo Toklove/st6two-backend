@@ -1,7 +1,7 @@
 {
     "name": "laravel/laravel",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "smartTrade Six",
     "keywords": [
         "laravel",
         "framework"
@@ -16,6 +16,7 @@
         "laravel/nova": "*",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
+        "mews/captcha": "^3.3",
         "michielfb/laravel-nova-time-field": "^2.0",
         "mongodb/laravel-mongodb": "^4.0",
         "tymon/jwt-auth": "^2.0",

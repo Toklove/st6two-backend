@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Constant;
 
 enum BillTag
 {
     case Deposit;
+    case AdminDeposit;
+    case AdminDeduction;
     case RefusalOfDeposit;
     case WithdrawMoney;
     case WithdrawalAndRefund;
