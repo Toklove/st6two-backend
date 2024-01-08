@@ -138,6 +138,11 @@ class Auth extends BaseApi
         if (!$member || !Hash::check($credentials['password'], $member->password)) {
             return $this->error(__('auth.unauthorized'));
         }
+
+        if ($member->active == 0) {
+            return $this->error(__('auth.account_disabled'));
+        }
+
         $token = $member->createToken('api')->plainTextToken;
         return $this->respondWithToken($token);
     }

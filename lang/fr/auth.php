@@ -17,8 +17,9 @@ return [
     'code_error' => 'Erreur de code de vérification',
     'invite_code_error' => 'Erreur de code d\'invitation',
     'unauthorized' => 'Non autorisé',
-    "captcha_required"=> "Veuillez remplir la clé du code de vérification",
-    "email_not_exist"=> "L’e-mail n’existe pas",
-    "password_reset_successfully"=> "Réinitialisation du mot de passe réussie"
+    "captcha_required" => "Veuillez remplir la clé du code de vérification",
+    "email_not_exist" => "L’e-mail n’existe pas",
+    "password_reset_successfully" => "Réinitialisation du mot de passe réussie",
+    "account_disabled" => "Compte désactivé",
 ];
 

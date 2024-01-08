@@ -17,8 +17,9 @@ return [
     'code_error' => 'Erro no código de verificação',
     'invite_code_error' => 'Erro no código de convite',
     'unauthorized' => 'Não autorizado',
-    "captcha_required"=> "Por favor, preencha a chave do código de verificação",
-    "email_not_exist"=> "O e-mail não existe",
-    "password_reset_successfully"=> "Redefinição de senha bem-sucedida"
+    "captcha_required" => "Por favor, preencha a chave do código de verificação",
+    "email_not_exist" => "O e-mail não existe",
+    "password_reset_successfully" => "Redefinição de senha bem-sucedida",
+    "account_disabled" => "Conta desativada",
 ];
 

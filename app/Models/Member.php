@@ -65,7 +65,7 @@ class Member extends Authenticatable
 
         DB::beginTransaction();
         try {
-            if ($user && $money != 0) {
+            if ($money != 0) {
                 $before = $user->balance;
                 $after = function_exists('bcadd') ? bcadd($user->balance, $money, 2) : $user->balance + $money;
                 //更新会员信息

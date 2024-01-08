@@ -17,8 +17,9 @@ return [
     'code_error' => 'Errore nel codice di verifica',
     'invite_code_error' => 'Errore nel codice di invito',
     'unauthorized' => 'Non autorizzato',
-    "captcha_required"=> "Compila la chiave del codice di verifica",
-    "email_not_exist"=> "L'e-mail non esiste",
-    "password_reset_successfully"=> "Reimpostazione della password riuscita"
+    "captcha_required" => "Compila la chiave del codice di verifica",
+    "email_not_exist" => "L'e-mail non esiste",
+    "password_reset_successfully" => "Reimpostazione della password riuscita",
+    "account_disabled" => "Account disabilitato",
 ];
 

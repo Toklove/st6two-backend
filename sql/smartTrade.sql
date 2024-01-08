@@ -1,10 +1,10 @@
 -- -------------------------------------------------------------
--- TablePlus 5.6.6(520)
+-- TablePlus 5.8.0(526)
 --
 -- https://tableplus.com/
 --
 -- Database: smartTrade
--- Generation Time: 2024-01-05 07:01:49.0550
+-- Generation Time: 2024-01-08 19:56:47.7320
 -- -------------------------------------------------------------
 
 
@@ -42,7 +42,7 @@ CREATE TABLE `action_events` (
   KEY `action_events_target_type_target_id_index` (`target_type`,`target_id`),
   KEY `action_events_batch_id_model_type_model_id_index` (`batch_id`,`model_type`,`model_id`),
   KEY `action_events_user_id_index` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `currencies`;
 CREATE TABLE `currencies` (
@@ -56,7 +56,7 @@ CREATE TABLE `currencies` (
   `main_coin_type` varchar(255) DEFAULT NULL,
   `coin_type` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `failed_jobs`;
 CREATE TABLE `failed_jobs` (
@@ -69,7 +69,7 @@ CREATE TABLE `failed_jobs` (
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
-) ENGINE=InnoDB AUTO_INCREMENT=492 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=492 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `market_categories`;
 CREATE TABLE `market_categories` (
@@ -84,7 +84,7 @@ CREATE TABLE `market_categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `markets`;
 CREATE TABLE `markets` (
@@ -110,7 +110,7 @@ CREATE TABLE `markets` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `unit_amount` int DEFAULT '1000',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `members`;
 CREATE TABLE `members` (
@@ -133,7 +133,7 @@ CREATE TABLE `members` (
   `freeze_balance` decimal(21,6) NOT NULL DEFAULT '0.000000',
   `is_certified` tinyint NOT NULL DEFAULT '0' COMMENT '是否实名认证',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `migrations`;
 CREATE TABLE `migrations` (
@@ -141,7 +141,7 @@ CREATE TABLE `migrations` (
   `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `news`;
 CREATE TABLE `news` (
@@ -153,7 +153,7 @@ CREATE TABLE `news` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `nova_field_attachments`;
 CREATE TABLE `nova_field_attachments` (
@@ -168,7 +168,7 @@ CREATE TABLE `nova_field_attachments` (
   PRIMARY KEY (`id`),
   KEY `nova_field_attachments_attachable_type_attachable_id_index` (`attachable_type`,`attachable_id`),
   KEY `nova_field_attachments_url_index` (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `nova_notifications`;
 CREATE TABLE `nova_notifications` (
@@ -183,7 +183,7 @@ CREATE TABLE `nova_notifications` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `nova_notifications_notifiable_type_notifiable_id_index` (`notifiable_type`,`notifiable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `nova_pending_field_attachments`;
 CREATE TABLE `nova_pending_field_attachments` (
@@ -195,7 +195,7 @@ CREATE TABLE `nova_pending_field_attachments` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `nova_pending_field_attachments_draft_id_index` (`draft_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `option_settings`;
 CREATE TABLE `option_settings` (
@@ -207,7 +207,7 @@ CREATE TABLE `option_settings` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `password_reset_tokens`;
 CREATE TABLE `password_reset_tokens` (
@@ -215,7 +215,7 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `personal_access_tokens`;
 CREATE TABLE `personal_access_tokens` (
@@ -232,7 +232,7 @@ CREATE TABLE `personal_access_tokens` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
   KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `user_bank`;
 CREATE TABLE `user_bank` (
@@ -247,7 +247,7 @@ CREATE TABLE `user_bank` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_bill`;
 CREATE TABLE `user_bill` (
@@ -261,7 +261,7 @@ CREATE TABLE `user_bill` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_contract_order`;
 CREATE TABLE `user_contract_order` (
@@ -289,7 +289,7 @@ CREATE TABLE `user_contract_order` (
   `unit_amount` decimal(21,6) NOT NULL DEFAULT '0.000000' COMMENT '合约单价',
   `close_price` decimal(21,6) NOT NULL DEFAULT '0.000000' COMMENT '平仓价格',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_crypto_address`;
 CREATE TABLE `user_crypto_address` (
@@ -300,7 +300,7 @@ CREATE TABLE `user_crypto_address` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_crypto_wallet`;
 CREATE TABLE `user_crypto_wallet` (
@@ -312,7 +312,7 @@ CREATE TABLE `user_crypto_wallet` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_deposit`;
 CREATE TABLE `user_deposit` (
@@ -327,7 +327,7 @@ CREATE TABLE `user_deposit` (
   `currency_id` int NOT NULL,
   `status` tinyint NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_like_markets`;
 CREATE TABLE `user_like_markets` (
@@ -337,7 +337,7 @@ CREATE TABLE `user_like_markets` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_option_order`;
 CREATE TABLE `user_option_order` (
@@ -366,7 +366,7 @@ CREATE TABLE `user_option_order` (
   `rate` decimal(21,3) DEFAULT NULL,
   `type` int NOT NULL DEFAULT '0' COMMENT '购买方向',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `user_withdraw`;
 CREATE TABLE `user_withdraw` (
@@ -390,7 +390,7 @@ CREATE TABLE `user_withdraw` (
   `bank_code` varchar(255) DEFAULT NULL,
   `bank_name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -404,7 +404,7 @@ CREATE TABLE `users` (
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `action_events` (`id`, `batch_id`, `user_id`, `name`, `actionable_type`, `actionable_id`, `target_type`, `target_id`, `model_type`, `model_id`, `fields`, `status`, `exception`, `created_at`, `updated_at`, `original`, `changes`) VALUES
 (1, '9adf3066-9860-4c92-8863-5148ccc13d31', 1, 'Create', 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, '', 'finished', '', '2023-12-17 17:23:24', '2023-12-17 17:23:24', NULL, '{\"email\":\"test@qq.com\",\"invite_code\":\"233133\",\"avatar\":\"kxeHeOIZfN9hQpkqoHBDIZWPjgdtEBsdPjpzIW9F.jpg\",\"password\":\"$2y$12$wyZMN6GfF1BT8Qeaufso0u\\/1ZdXFt9x8b99aPLzETYDwgqmhLT6TO\",\"updated_at\":\"2023-12-17T17:23:24.000000Z\",\"created_at\":\"2023-12-17T17:23:24.000000Z\",\"id\":1}'),
@@ -463,7 +463,20 @@ INSERT INTO `action_events` (`id`, `batch_id`, `user_id`, `name`, `actionable_ty
 (54, '9afef4dd-986a-493f-b43f-8aaf413b0020', 1, 'Update', 'App\\Models\\Market', 34, 'App\\Models\\Market', 34, 'App\\Models\\Market', 34, '', 'finished', '', '2024-01-02 12:23:25', '2024-01-02 12:23:25', '{\"logo\":\"mpgUtQqnJDRrXfPaxeiMRyXxS8SorVbaUIze2sHk.png\"}', '{\"logo\":\"BV8xOiH90tuIO5dBZHRYAnEfJVg1G4ScS056l9Is.jpg\"}'),
 (55, '9afef4ff-de80-488d-8760-f7bcf1836a82', 1, 'Update', 'App\\Models\\Market', 35, 'App\\Models\\Market', 35, 'App\\Models\\Market', 35, '', 'finished', '', '2024-01-02 12:23:47', '2024-01-02 12:23:47', '{\"logo\":\"mpgUtQqnJDRrXfPaxeiMRyXxS8SorVbaUIze2sHk.png\"}', '{\"logo\":\"7S3gXec96bPnua2r6oFWJrn7jillZOaqAu0zX3my.jpg\"}'),
 (56, '9afef510-1168-43f5-93d1-c9233b6078e0', 1, 'Update', 'App\\Models\\Market', 36, 'App\\Models\\Market', 36, 'App\\Models\\Market', 36, '', 'finished', '', '2024-01-02 12:23:58', '2024-01-02 12:23:58', '{\"logo\":\"mpgUtQqnJDRrXfPaxeiMRyXxS8SorVbaUIze2sHk.png\"}', '{\"logo\":\"9XMM8YfFNnZXbHmhzYlwajgPOBMM2GwIJtkcHdMK.jpg\"}'),
-(57, '9afef5e3-ccd8-4643-adef-03e03f8de05e', 1, 'Update', 'App\\Models\\Market', 2, 'App\\Models\\Market', 2, 'App\\Models\\Market', 2, '', 'finished', '', '2024-01-02 12:26:17', '2024-01-02 12:26:17', '{\"logo\":\"mpgUtQqnJDRrXfPaxeiMRyXxS8SorVbaUIze2sHk.png\"}', '{\"logo\":\"sN8HqXMyNal1hzjPcH3OT8N8hlXEqL3y2zPjm3zC.png\"}');
+(57, '9afef5e3-ccd8-4643-adef-03e03f8de05e', 1, 'Update', 'App\\Models\\Market', 2, 'App\\Models\\Market', 2, 'App\\Models\\Market', 2, '', 'finished', '', '2024-01-02 12:26:17', '2024-01-02 12:26:17', '{\"logo\":\"mpgUtQqnJDRrXfPaxeiMRyXxS8SorVbaUIze2sHk.png\"}', '{\"logo\":\"sN8HqXMyNal1hzjPcH3OT8N8hlXEqL3y2zPjm3zC.png\"}'),
+(58, '9b09504e-6731-431f-81d4-e7e470a36095', 1, '上分', 'App\\Models\\Member', 8, 'App\\Models\\Member', 8, 'App\\Models\\Member', 8, 'a:1:{s:6:\"number\";s:3:\"100\";}', 'finished', '', '2024-01-07 15:57:23', '2024-01-07 15:57:23', NULL, NULL),
+(59, '9b095067-b441-4b45-8836-9203fb068a4e', 1, '上分', 'App\\Models\\Member', 8, 'App\\Models\\Member', 8, 'App\\Models\\Member', 8, 'a:1:{s:6:\"number\";s:1:\"5\";}', 'finished', '', '2024-01-07 15:57:39', '2024-01-07 15:57:39', NULL, NULL),
+(60, '9b0952d9-e5a5-4120-9a73-3bdff6ea7079', 1, '下分', 'App\\Models\\Member', 8, 'App\\Models\\Member', 8, 'App\\Models\\Member', 8, 'a:1:{s:6:\"number\";s:1:\"1\";}', 'finished', '', '2024-01-07 16:04:30', '2024-01-07 16:04:30', NULL, NULL),
+(61, '9b095510-2dc0-4b65-9ed2-fb78902b770c', 1, '上分', 'App\\Models\\Member', 8, 'App\\Models\\Member', 8, 'App\\Models\\Member', 8, 'a:1:{s:6:\"number\";s:3:\"100\";}', 'finished', '', '2024-01-07 16:10:41', '2024-01-07 16:10:41', NULL, NULL),
+(62, '9b0957fd-3fc2-4aca-a3cf-3cf3c3551a76', 1, 'Reset Password', 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'a:1:{s:8:\"password\";s:60:\"$2y$12$pbuGGPSFb8ND7XlfwHrv0.d1dnbiSuSeS6IgtPrsdhiajlV8sYqua\";}', 'finished', '', '2024-01-07 16:18:52', '2024-01-07 16:18:52', NULL, NULL),
+(63, '9b095876-3fee-49fb-8a17-93db12f484f1', 1, 'Reset Password', 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'a:1:{s:8:\"password\";s:60:\"$2y$12$kJeDWrrEjcbYHqdiuQaYFuTKwxcT.il6/YpOhuM3dnl/rvll8q5.O\";}', 'finished', '', '2024-01-07 16:20:11', '2024-01-07 16:20:11', NULL, NULL),
+(64, '9b0958f3-872d-4fd5-a9f9-38ddabcf7b28', 1, 'Reset Password', 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'a:1:{s:8:\"password\";s:60:\"$2y$12$bbgXIGdHrJxop1H2EHKF4eYNGLpqlu7M8zQbN35kpIICX.B/VeAqK\";}', 'finished', '', '2024-01-07 16:21:33', '2024-01-07 16:21:33', NULL, NULL),
+(65, '9b095b5c-9261-49da-9366-490d690edb38', 1, 'Reset Password', 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'a:1:{s:8:\"password\";s:60:\"$2y$12$ODdHCanWaiMMI4xwHEcAY.3FMdDnEIbOj06jFhYGT25a64bO7KmXe\";}', 'finished', '', '2024-01-07 16:28:18', '2024-01-07 16:28:18', NULL, NULL),
+(70, '9b09605f-80cc-40d4-a211-9ce7a900c51b', 1, 'Acvite And Un Active', 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'App\\Models\\Member', 1, 'a:0:{}', 'finished', '', '2024-01-07 16:42:18', '2024-01-07 16:42:18', NULL, NULL),
+(71, '9b09693f-b902-4215-be1f-e64cee573f40', 1, '激活/禁用', 'App\\Models\\Member', 11, 'App\\Models\\Member', 11, 'App\\Models\\Member', 11, 'a:0:{}', 'finished', '', '2024-01-07 17:07:07', '2024-01-07 17:07:07', NULL, NULL),
+(72, '9b09694b-7bb5-415c-ad00-225a3f4a57d1', 1, '激活/禁用', 'App\\Models\\Member', 11, 'App\\Models\\Member', 11, 'App\\Models\\Member', 11, 'a:0:{}', 'finished', '', '2024-01-07 17:07:15', '2024-01-07 17:07:15', NULL, NULL),
+(73, '9b0a5b00-e807-49cb-a501-bca28148eca4', 1, '重置密码', 'App\\Models\\Member', 11, 'App\\Models\\Member', 11, 'App\\Models\\Member', 11, 'a:1:{s:8:\"password\";s:60:\"$2y$12$h4KAW514jsnXbwS8yXC1n.pEBKJAShaS6BVZ4SFRScP7s9pmlrQmq\";}', 'finished', '', '2024-01-08 04:23:07', '2024-01-08 04:23:07', NULL, NULL),
+(74, '9b0a5b30-fa3c-46a0-ace8-8c1847aa6b4b', 1, '上分', 'App\\Models\\Member', 11, 'App\\Models\\Member', 11, 'App\\Models\\Member', 11, 'a:1:{s:6:\"number\";s:10:\"9999999999\";}', 'finished', '', '2024-01-08 04:23:39', '2024-01-08 04:23:39', NULL, NULL);
 
 INSERT INTO `currencies` (`id`, `code`, `symbol`, `name`, `rate`, `created_at`, `updated_at`, `main_coin_type`, `coin_type`) VALUES
 (1, 'btc', 'btc', 'BTC', 1.00, '2023-12-19 06:37:05', '2023-12-20 06:09:03', '0', '0'),
@@ -1002,13 +1015,13 @@ INSERT INTO `markets` (`id`, `name`, `symbol_history`, `symbol`, `logo`, `full_n
 (36, 'CDTUSD', 'X:CDTUSD', 'DOGE', '9XMM8YfFNnZXbHmhzYlwajgPOBMM2GwIJtkcHdMK.jpg', 'CDTUSD', 'America/New_York', '00:00:00', '12:00:00', '12:00:00', '24:00:00', 0.00, 0.00, 0.01, 10000.00, 1, 0, 4, '2023-02-10 18:32:00', '2024-01-02 12:23:58', 1000);
 
 INSERT INTO `members` (`id`, `email`, `password`, `remember_token`, `created_at`, `updated_at`, `invite_code`, `avatar`, `active`, `parent_id`, `id_card`, `id_card_front`, `id_card_back`, `real_name`, `nickname`, `balance`, `freeze_balance`, `is_certified`) VALUES
-(1, 'test@qq.com', '$2y$12$wyZMN6GfF1BT8Qeaufso0u/1ZdXFt9x8b99aPLzETYDwgqmhLT6TO', NULL, '2023-12-17 17:23:24', '2023-12-17 17:33:49', '233133', 'TLUihOBoX6N3JOIICMjgMP5kyRPP3jXpZz3K1ByH.jpg', '1', NULL, NULL, NULL, NULL, NULL, NULL, 0.000000, 0.000000, 0),
-(2, 'test@123.com', '$2y$12$LqBg.4UDulGj9Q.7WYAmdOjTyuq5HUha1FBzXAjyKjxycouP09osy', NULL, '2023-12-17 17:49:45', '2023-12-17 17:49:45', 'test', '4vdk96l1ar3XoEIGLj21UtzZJkQZwOVnObE1bppF.jpg', '1', 1, NULL, NULL, NULL, NULL, NULL, 0.000000, 0.000000, 0),
-(5, '2586438083@qq.com', '$2y$12$ER9j210E1hDSrHvx2GUWbuwZSio01BjYFLruoIVzE04zAznVEUGAe', NULL, '2023-12-19 02:54:58', '2023-12-20 05:11:45', 'TxNCsx', 'http://127.0.0.1:8000/storage/Fe8nkEdhtRIjrvrC2MR51RMc3GFTOkt5cwAB28Km.jpg', '1', 0, NULL, NULL, NULL, NULL, 'TokLove', 0.000000, 0.000000, 0),
-(8, 'xmclouds@qq.com', '$2y$12$GvpB0civaoJeO6F.3mJoNu4cEa.HylaISk/WzJcQxLNsh1lP7af8a', NULL, '2023-12-20 06:38:51', '2023-12-31 04:23:00', 'mk0SfJ', '', '1', 0, '123', 'http://127.0.0.1:8000/storage/HQXf3tnUZHbUgiuHuZowKg064Scmj8yzZDvbNwpd.png', 'http://127.0.0.1:8000/storage/XcLrt0oFJQLONNWaOUZW7qAixgbzQtaW1Dnsdh56.png', '123', 'JackLove', 999986405.620000, 0.000000, 1),
-(9, '2793210460@qq.com', '$2y$12$nr8lxg.dbOOU2IkKpskPNObBBVzcn8PtgIeQXnEZoZ3C2xt30QWH.', NULL, '2023-12-28 10:23:51', '2023-12-28 10:29:24', 'ukrryQ', 'http://192.168.1.251:8000/storage/vm0YOC7TWHMpMZHqpjryhMztUQYwsxOf6MyJyn7J.png', '1', 0, NULL, NULL, NULL, NULL, '2793210460@qq.com', 0.000000, 0.000000, 0),
-(10, '2117862524@qq.com', '$2y$12$dDkQy3mU.Fr0uH/nVZSXaOzO7tFMgnp4YmtY.cypWf1JTlMRp7A0.', NULL, '2023-12-28 10:26:27', '2023-12-28 10:31:42', '6DrjWy', 'http://192.168.1.251:8000/storage/7sId3qaiw0PpLsRNnaYqATfxbz0Vu65c0jKPsTyQ.jpg', '1', 0, NULL, NULL, NULL, NULL, '2117862524', 0.000000, 0.000000, 0),
-(11, '1990231677@qq.com', '$2y$12$aqFbm0erDXKptW657Py48..HQWX/c.52TSx8lxtjd5PAf0/M2DtPy', NULL, '2023-12-30 10:33:36', '2023-12-30 10:48:12', 'PiZqyR', NULL, '1', 0, NULL, NULL, NULL, NULL, '1990231677@qq.com', 0.000000, 0.000000, 0);
+(1, 'test@qq.com', '$2y$12$ODdHCanWaiMMI4xwHEcAY.3FMdDnEIbOj06jFhYGT25a64bO7KmXe', NULL, '2023-12-17 17:23:24', '2024-01-07 16:42:18', '233133', 'avatar.png', '0', NULL, NULL, NULL, NULL, NULL, NULL, 0.000000, 0.000000, 0),
+(2, 'test@123.com', '$2y$12$LqBg.4UDulGj9Q.7WYAmdOjTyuq5HUha1FBzXAjyKjxycouP09osy', NULL, '2023-12-17 17:49:45', '2023-12-17 17:49:45', 'test', 'avatar.png', '1', 1, NULL, NULL, NULL, NULL, NULL, 0.000000, 0.000000, 0),
+(5, '2586438083@qq.com', '$2y$12$ER9j210E1hDSrHvx2GUWbuwZSio01BjYFLruoIVzE04zAznVEUGAe', NULL, '2023-12-19 02:54:58', '2023-12-20 05:11:45', 'TxNCsx', 'avatar.png', '1', 0, NULL, NULL, NULL, NULL, 'TokLove', 0.000000, 0.000000, 0),
+(8, 'xmclouds@qq.com', '$2y$12$GvpB0civaoJeO6F.3mJoNu4cEa.HylaISk/WzJcQxLNsh1lP7af8a', NULL, '2023-12-20 06:38:51', '2024-01-08 07:02:08', 'mk0SfJ', 'V02ewANFaZkfDrKtdzn8CXf7hxPngbOmAgkMfFjN.jpg', '1', 0, '123', 'http://127.0.0.1:8000/storage/HQXf3tnUZHbUgiuHuZowKg064Scmj8yzZDvbNwpd.png', 'http://127.0.0.1:8000/storage/XcLrt0oFJQLONNWaOUZW7qAixgbzQtaW1Dnsdh56.png', '123', 'JackLove', 999985847.620000, 0.000000, 1),
+(9, '2793210460@qq.com', '$2y$12$nr8lxg.dbOOU2IkKpskPNObBBVzcn8PtgIeQXnEZoZ3C2xt30QWH.', NULL, '2023-12-28 10:23:51', '2023-12-28 10:29:24', 'ukrryQ', 'avatar.png', '1', 0, NULL, NULL, NULL, NULL, '2793210460@qq.com', 0.000000, 0.000000, 0),
+(10, '2117862524@qq.com', '$2y$12$dDkQy3mU.Fr0uH/nVZSXaOzO7tFMgnp4YmtY.cypWf1JTlMRp7A0.', NULL, '2023-12-28 10:26:27', '2023-12-28 10:31:42', '6DrjWy', 'avatar.png', '1', 0, NULL, NULL, NULL, NULL, '2117862524', 0.000000, 0.000000, 0),
+(11, '1990231677@qq.com', '$2y$12$h4KAW514jsnXbwS8yXC1n.pEBKJAShaS6BVZ4SFRScP7s9pmlrQmq', NULL, '2023-12-30 10:33:36', '2024-01-08 04:25:06', 'PiZqyR', 'avatar.png', '1', 0, NULL, NULL, NULL, NULL, '1990231677@qq.com', 9999999989.000000, 0.000000, 0);
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2014_10_12_000000_create_users_table', 1),
@@ -1035,6 +1048,11 @@ INSERT INTO `option_settings` (`id`, `lose_rate`, `min_amount`, `rate`, `time`, 
 (6, 0.450, 0, 0.450, 360, '2023-12-30 04:31:00', '2023-12-30 04:31:00'),
 (7, 0.800, 150000, 0.800, 450, '2023-12-30 04:31:00', '2023-12-30 04:31:00'),
 (8, 0.900, 200000, 0.900, 600, '2023-12-30 04:31:00', '2023-12-30 04:31:00');
+
+INSERT INTO `personal_access_tokens` (`id`, `tokenable_type`, `tokenable_id`, `name`, `token`, `abilities`, `last_used_at`, `expires_at`, `created_at`, `updated_at`) VALUES
+(1, 'App\\Models\\Member', 8, 'api', '3fe4b86aa42491ab4a43d66fd7f4588575675ad71d060ddad3e2294af06a9d6b', '[\"*\"]', '2024-01-07 18:55:11', NULL, '2024-01-07 18:45:15', '2024-01-07 18:55:11'),
+(2, 'App\\Models\\Member', 8, 'api', '7d1bcb88ac3cc76a8b5dfe79fbd8bbc5f1c78fbe4d42e4ca7f7b9f800a7e28b2', '[\"*\"]', '2024-01-08 07:05:05', NULL, '2024-01-07 18:55:21', '2024-01-08 07:05:05'),
+(4, 'App\\Models\\Member', 11, 'api', '7ff72ab486531463a199f667367de308c4b5790cff04e2461a78958cfca889bf', '[\"*\"]', '2024-01-08 04:48:38', NULL, '2024-01-08 04:23:16', '2024-01-08 04:48:38');
 
 INSERT INTO `user_bank` (`id`, `member_id`, `account`, `account_user`, `bank_address`, `bank_code`, `bank_name`, `status`, `created_at`, `updated_at`) VALUES
 (6, 8, '卡号', '姓名', '地址', '代码', '名称', 1, '2023-12-31 03:51:02', '2023-12-31 03:51:02'),
@@ -1082,7 +1100,23 @@ INSERT INTO `user_bill` (`id`, `member_id`, `type`, `tag`, `amount`, `after_bala
 (40, 8, 1, 'Deposit', 100000000.000000, 999986995.630000, 899986995.630000, '2023-12-31 02:56:40', '2023-12-31 02:56:40'),
 (41, 8, 2, 'WithdrawMoney', -100.000000, 999986895.630000, 999986995.630000, '2023-12-31 04:19:40', '2023-12-31 04:19:40'),
 (42, 8, 2, 'WithdrawMoney', -500.000000, 999986395.630000, 999986895.630000, '2023-12-31 04:20:06', '2023-12-31 04:20:06'),
-(43, 8, 1, 'ContractPositionAmount', 9.991441, 999986405.620000, 999986395.630000, '2023-12-31 04:23:00', '2023-12-31 04:23:00');
+(43, 8, 1, 'ContractPositionAmount', 9.991441, 999986405.620000, 999986395.630000, '2023-12-31 04:23:00', '2023-12-31 04:23:00'),
+(44, 8, 2, 'AdminDeduction', -1.000000, 999986509.620000, 999986510.620000, '2024-01-07 16:04:30', '2024-01-07 16:04:30'),
+(45, 8, 1, 'AdminDeposit', 100.000000, 999986609.620000, 999986509.620000, '2024-01-07 16:10:41', '2024-01-07 16:10:41'),
+(46, 8, 2, 'WithdrawMoney', -123.000000, 999986486.620000, 999986609.620000, '2024-01-08 02:25:49', '2024-01-08 02:25:49'),
+(47, 8, 2, 'WithdrawMoney', -123.000000, 999986363.620000, 999986486.620000, '2024-01-08 02:26:03', '2024-01-08 02:26:03'),
+(48, 8, 2, 'ContractPositionAmount', -10.000000, 999986353.620000, 999986363.620000, '2024-01-08 02:31:15', '2024-01-08 02:31:15'),
+(49, 8, 2, 'ContractPositionAmount', -70.000000, 999986283.620000, 999986353.620000, '2024-01-08 02:31:38', '2024-01-08 02:31:38'),
+(50, 8, 2, 'ContractPositionAmount', -10.000000, 999986273.620000, 999986283.620000, '2024-01-08 02:32:38', '2024-01-08 02:32:38'),
+(51, 8, 2, 'ContractPositionAmount', -100.000000, 999986173.620000, 999986273.620000, '2024-01-08 02:33:41', '2024-01-08 02:33:41'),
+(52, 8, 2, 'ContractPositionAmount', -40.000000, 999986133.620000, 999986173.620000, '2024-01-08 03:04:55', '2024-01-08 03:04:55'),
+(53, 8, 2, 'ContractPositionAmount', -10.000000, 999986123.620000, 999986133.620000, '2024-01-08 03:08:45', '2024-01-08 03:08:45'),
+(54, 8, 2, 'ContractPositionAmount', -20.000000, 999986103.620000, 999986123.620000, '2024-01-08 03:09:26', '2024-01-08 03:09:26'),
+(55, 8, 2, 'WithdrawMoney', -123.000000, 999985980.620000, 999986103.620000, '2024-01-08 03:10:24', '2024-01-08 03:10:24'),
+(56, 8, 2, 'WithdrawMoney', -123.000000, 999985857.620000, 999985980.620000, '2024-01-08 03:10:32', '2024-01-08 03:10:32'),
+(57, 8, 2, 'ContractPositionAmount', -10.000000, 999985847.620000, 999985857.620000, '2024-01-08 03:13:24', '2024-01-08 03:13:24'),
+(58, 11, 1, 'AdminDeposit', 9999999999.000000, 9999999999.000000, 0.000000, '2024-01-08 04:23:39', '2024-01-08 04:23:39'),
+(59, 11, 2, 'ContractPositionAmount', -10.000000, 9999999989.000000, 9999999999.000000, '2024-01-08 04:25:06', '2024-01-08 04:25:06');
 
 INSERT INTO `user_contract_order` (`id`, `member_id`, `market_id`, `stop_surplus`, `stop_loss`, `order_num`, `lever`, `quantity`, `type`, `paid_price`, `buy_fee`, `buy_fee_rate`, `closed_at`, `created_at`, `updated_at`, `status`, `assure`, `force_close_status`, `sell_fee`, `sell_fee_rate`, `money`, `unit_amount`, `close_price`) VALUES
 (31, 8, 2, 0.000000, 0.000000, 'ETHUSD1703855570696194', 100, 1.000000, 0, 2360.600000, 0.000000, 0.000000, NULL, '2023-12-29 13:12:50', '2023-12-29 16:17:28', 2, 10.000000, 0, 0.000000, 0.000000, 0.000000, 0.000000, 2315.450000),
@@ -1092,7 +1126,12 @@ INSERT INTO `user_contract_order` (`id`, `member_id`, `market_id`, `stop_surplus
 (35, 8, 3, 0.000000, 0.000000, 'SOLUSD1703871775778654', 100, 1.000000, 0, 105.679600, 0.000000, 0.000000, NULL, '2023-12-29 17:42:55', '2023-12-30 03:41:17', 2, 10.000000, 0, 0.000000, 0.000000, 0.000000, 0.000000, 103.335900),
 (36, 8, 1, 0.000000, 0.000000, 'BTCUSD1703871917892305', 100, 1.000000, 0, 41905.580000, 0.000000, 0.000000, NULL, '2023-12-29 17:45:17', '2023-12-29 18:22:27', 1, 10.000000, 0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000),
 (37, 8, 1, 0.000000, 0.000000, 'BTCUSD1703872074905871', 100, 1.000000, 0, 41905.580000, 0.000000, 0.000000, NULL, '2023-12-29 17:47:54', '2023-12-31 04:23:00', 2, 10.000000, 0, 0.000000, 0.000000, 0.000000, 0.000000, 42264.230000),
-(38, 8, 2, 0.000000, 0.000000, 'ETHUSD1703872144137680', 100, 1.000000, 1, 2303.420000, 0.000000, 0.000000, NULL, '2023-12-29 17:49:04', '2023-12-30 03:40:54', 2, 10.000000, 0, 0.000000, 0.000000, 0.000000, 0.000000, 2294.300000);
+(38, 8, 2, 0.000000, 0.000000, 'ETHUSD1703872144137680', 100, 1.000000, 1, 2303.420000, 0.000000, 0.000000, NULL, '2023-12-29 17:49:04', '2023-12-30 03:40:54', 2, 10.000000, 0, 0.000000, 0.000000, 0.000000, 0.000000, 2294.300000),
+(42, 8, 5, 1.271500, 0.000000, 'GBPUSD1704681075316307', 100, 1.000000, 0, 0.000000, 0.000000, 0.000000, NULL, '2024-01-08 02:31:15', '2024-01-08 02:31:15', 0, 10.000000, 0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000),
+(45, 8, 11, 0.000000, 0.000000, 'EURGBP1704681221615513', 100, 10.000000, 1, 12.000000, 0.000000, 0.000000, NULL, '2024-01-08 02:33:41', '2024-01-08 02:33:41', 0, 100.000000, 0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000),
+(46, 8, 5, 1.270800, 3.270800, 'GBPUSD1704683095011862', 100, 4.000000, 1, 0.000000, 0.000000, 0.000000, NULL, '2024-01-08 03:04:55', '2024-01-08 03:04:55', 0, 40.000000, 0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000),
+(47, 8, 5, 1.271000, 0.000000, 'GBPUSD1704683325720660', 100, 1.000000, 1, 0.000000, 0.000000, 0.000000, NULL, '2024-01-08 03:08:45', '2024-01-08 03:08:45', 0, 10.000000, 0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000),
+(49, 8, 1, 43435.110000, 43435.100000, 'BTCUSD1704683604055495', 100, 1.000000, 0, 0.000000, 0.000000, 0.000000, NULL, '2024-01-08 03:13:24', '2024-01-08 03:13:24', 0, 10.000000, 0, 0.000000, 0.000000, 0.000000, 0.000000, 0.000000);
 
 INSERT INTO `user_crypto_address` (`id`, `member_id`, `currency_id`, `address`, `created_at`, `updated_at`) VALUES
 (1, 8, 1, '161j17TgueSkx4G83hTYpo2NTn8Q4XxbPE', '2023-12-20 06:38:51', '2023-12-20 06:38:51'),
@@ -1114,7 +1153,6 @@ INSERT INTO `user_crypto_address` (`id`, `member_id`, `currency_id`, `address`, 
 
 INSERT INTO `user_crypto_wallet` (`id`, `member_id`, `currency_id`, `address`, `status`, `created_at`, `updated_at`) VALUES
 (2, 5, 1, '1111', 1, '2023-12-20 03:44:13', '2023-12-20 03:44:13'),
-(7, 8, 4, '123456', 1, '2023-12-31 03:25:47', '2023-12-31 03:25:47'),
 (8, 8, 4, '654321', 1, '2023-12-31 03:47:34', '2023-12-31 03:47:34');
 
 INSERT INTO `user_deposit` (`id`, `member_id`, `txId`, `amount`, `order_no`, `trade_id`, `created_at`, `updated_at`, `currency_id`, `status`) VALUES
@@ -1125,7 +1163,8 @@ INSERT INTO `user_like_markets` (`id`, `user_id`, `market_id`, `created_at`, `up
 (6, 8, 2, '2023-12-28 07:28:43', '2023-12-28 07:28:43'),
 (7, 9, 1, '2023-12-28 10:30:56', '2023-12-28 10:30:56'),
 (8, 10, 1, '2023-12-28 10:36:20', '2023-12-28 10:36:20'),
-(9, 8, 3, '2023-12-29 17:37:23', '2023-12-29 17:37:23');
+(9, 8, 3, '2023-12-29 17:37:23', '2023-12-29 17:37:23'),
+(10, 8, 11, '2024-01-08 01:57:37', '2024-01-08 01:57:37');
 
 INSERT INTO `user_option_order` (`id`, `quantity`, `member_id`, `market_id`, `order_num`, `hold_time`, `hold_type`, `time_id`, `status`, `win`, `buy_price`, `buy_fee_rate`, `buy_fee`, `sell_fee_rate`, `sell_fee`, `sell_time`, `sell_price`, `created_at`, `updated_at`, `profit`, `set_price`, `lose_rate`, `rate`, `type`) VALUES
 (4, 10.000000, 8, 3, 'SOLUSD1703915489636327', 30, 1, 1, 0, 0, 104.644300, 0.000000, 0.000000, 0.000000, 0.000000, NULL, NULL, '2023-12-30 05:51:29', '2023-12-30 05:51:29', 0.000000, NULL, 0.150, 0.150, 0),
@@ -1134,7 +1173,11 @@ INSERT INTO `user_option_order` (`id`, `quantity`, `member_id`, `market_id`, `or
 
 INSERT INTO `user_withdraw` (`id`, `member_id`, `txId`, `amount`, `fee`, `status`, `rate`, `channel_status`, `order_no`, `trade_id`, `created_at`, `updated_at`, `chain`, `address`, `account`, `account_user`, `bank_address`, `bank_code`, `bank_name`) VALUES
 (2, 8, NULL, 100.000000, NULL, 0, NULL, 0, '202312310419403162448', NULL, '2023-12-31 04:19:40', '2023-12-31 04:19:40', 'USDT-TRC20', '123456', NULL, NULL, NULL, NULL, NULL),
-(3, 8, NULL, 500.000000, NULL, 0, NULL, 0, '202312310420067690468', NULL, '2023-12-31 04:20:06', '2023-12-31 04:20:06', NULL, NULL, '卡号', '姓名', '地址', '代码', '名称');
+(3, 8, NULL, 500.000000, NULL, 0, NULL, 0, '202312310420067690468', NULL, '2023-12-31 04:20:06', '2023-12-31 04:20:06', NULL, NULL, '卡号', '姓名', '地址', '代码', '名称'),
+(4, 8, NULL, 123.000000, NULL, 0, NULL, 0, '202401080225496010028', NULL, '2024-01-08 02:25:49', '2024-01-08 02:25:49', 'USDT-TRC20', '654321', NULL, NULL, NULL, NULL, NULL),
+(5, 8, NULL, 123.000000, NULL, 0, NULL, 0, '202401080226033991428', NULL, '2024-01-08 02:26:03', '2024-01-08 02:26:03', 'USDT-TRC20', '654321', NULL, NULL, NULL, NULL, NULL),
+(6, 8, NULL, 123.000000, NULL, 0, NULL, 0, '202401080310232662888', NULL, '2024-01-08 03:10:23', '2024-01-08 03:10:23', 'USDT-TRC20', '654321', NULL, NULL, NULL, NULL, NULL),
+(7, 8, NULL, 123.000000, NULL, 0, NULL, 0, '202401080310326562698', NULL, '2024-01-08 03:10:32', '2024-01-08 03:10:32', NULL, NULL, '卡号', '姓名', '地址', '代码', '名称');
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'admin', 'admin@admin.com', NULL, '$2y$12$yq/eARbyxvWw6QvH5eekVOzJvJEa7gThRa13hur6/ijCWSbSdpzoq', 'WEGj7BGRQxDr7xukleyPoN4Ve0ddQykFpIBg9DAnn7oYH84zgWbAxZ9w5aNg', '2023-12-17 17:05:12', '2023-12-17 17:05:12');

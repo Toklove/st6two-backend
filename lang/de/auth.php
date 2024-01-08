@@ -26,8 +26,8 @@ return [
     "code_error" => "Fehler beim Bestätigungscode",
     "invite_code_error" => "Fehler beim Einladungscode",
     "unauthorized" => "nicht autorisiert",
-    "captcha_required"=> "Bitte geben Sie den Schlüssel für den Verifizierungscode ein",
-    "email_not_exist"=> "E-Mail existiert nicht",
-    "password_reset_successfully"=> "Zurücksetzen des Kennworts erfolgreich"
-    
+    "captcha_required" => "Bitte geben Sie den Schlüssel für den Verifizierungscode ein",
+    "email_not_exist" => "E-Mail existiert nicht",
+    "password_reset_successfully" => "Zurücksetzen des Kennworts erfolgreich",
+    "account_disabled" => "Konto deaktiviert",
 ];

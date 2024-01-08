@@ -17,8 +17,9 @@ return [
     'code_error' => '検証コードエラー',
     'invite_code_error' => '招待コードエラー',
     'unauthorized' => '権限がありません',
-    "captcha_required"=> "認証コードキーを入力してください",
-    "email_not_exist"=> "メールが存在しません",
-    "password_reset_successfully"=> "パスワードのリセットに成功しました"
+    "captcha_required" => "認証コードキーを入力してください",
+    "email_not_exist" => "メールが存在しません",
+    "password_reset_successfully" => "パスワードのリセットに成功しました",
+    "account_disabled" => "アカウントが無効になっています",
 ];
 

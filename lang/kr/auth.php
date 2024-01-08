@@ -17,8 +17,9 @@ return [
     'code_error' => '인증 코드 오류',
     'invite_code_error' => '초대 코드 오류',
     'unauthorized' => '인가되지 않았습니다.',
-    "captcha_required"=> "인증 코드 키를 입력해 주세요.",
-    "email_not_exist"=> "이메일이 존재하지 않습니다.",
-    "password_reset_successfully"=> "암호 재설정 성공"
+    "captcha_required" => "인증 코드 키를 입력해 주세요.",
+    "email_not_exist" => "이메일이 존재하지 않습니다.",
+    "password_reset_successfully" => "암호 재설정 성공",
+    "account_disabled" => "계정이 비활성화되었습니다.",
 ];
 
