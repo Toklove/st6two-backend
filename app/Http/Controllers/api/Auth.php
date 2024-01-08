@@ -58,21 +58,25 @@ class Auth extends BaseApi
     function register(Request $request)
     {
         //验证邮件有效性
-        $post = $request->validate([
-            'email' => 'required|email|unique:members,email',
-            'code' => 'required',
-            'captcha' => 'required',
-            'password' => 'required|min:8|confirmed',
-        ], [
-            "email.required" => __("auth.email_required"),
-            "email.unique" => __("auth.email_unique"),
-            "email.email" => __("auth.email_email"),
-            "code.required" => __("auth.code_required"),
-            "captcha.required" => __("auth.captcha_required"),
-            "password.required" => __("auth.password_required"),
-            "password.min" => __("auth.password_min"),
-            "password.confirmed" => __("auth.password_confirmed"),
-        ]);
+        try {
+            $post = $request->validate([
+                'email' => 'required|email|unique:members,email',
+                'code' => 'required|string',
+                'captcha' => 'required|string',
+                'password' => 'required|min:8|confirmed',
+            ], [
+                "email.required" => __("auth.email_required"),
+                "email.unique" => __("auth.email_unique"),
+                "email.email" => __("auth.email_email"),
+                "code.required" => __("auth.code_required"),
+                "captcha.required" => __("auth.captcha_required"),
+                "password.required" => __("auth.password_required"),
+                "password.min" => __("auth.password_min"),
+                "password.confirmed" => __("auth.password_confirmed"),
+            ]);
+        } catch (\Exception $e) {
+            return $this->error($e->getMessage());
+        }
 
         //验证图片验证码
         if (!captcha_api_check($post['code'], $post['captcha'])) {

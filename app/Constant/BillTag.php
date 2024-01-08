@@ -6,6 +6,7 @@ enum BillTag
 {
     case Deposit;
     case AdminDeposit;
+    case WinningsDeposit;
     case AdminDeduction;
     case RefusalOfDeposit;
     case WithdrawMoney;
