@@ -105,17 +105,9 @@ if (!function_exists('get_now_price')) {
     function get_now_price($symbol)
     {
         if (!$symbol) return false;
-        $symbol = str_replace("-", "", $symbol);
-        $symbol = strtolower($symbol) . 't';
-
-        $coinApi = "https://api.huobi.pro/market/history/kline?period=1day&size=1&symbol=" . $symbol;
-        $result = get_market_api($coinApi);
-
-        Log::info($result);
-
-        $price_arr = $result['data'][0];
-        $close = $price_arr['close']; //现价
-        return $close;
+        $collection = DB::connection('mongodb')->collection($symbol)->orderBy('timestamp', 'desc')->first();
+        //现价
+        return $collection['close'];
     }
 }
 

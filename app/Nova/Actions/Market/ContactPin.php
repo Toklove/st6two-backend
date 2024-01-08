@@ -28,15 +28,13 @@ class ContactPin extends Action
     {
         //如果$fields->time小于当前时间，不允许插针
         if ($fields->time < now()) {
-            return Action::danger('插针失败，时间不能小于当前时间');
+            return Action::danger('操作失败，时间不能小于当前时间');
         }
         //
         foreach ($models as $model) {
-//            $model->time = $fields->time;
-//            $model->low = $fields->low;
-//            $model->high = $fields->high;
-//            $model->save();
+            $model->pin($fields->time, $fields->low, $fields->high);
         }
+        return Action::message('操作成功');
     }
 
     /**

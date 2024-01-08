@@ -19,7 +19,8 @@
         "mews/captcha": "^3.3",
         "michielfb/laravel-nova-time-field": "^2.0",
         "mongodb/laravel-mongodb": "^4.0",
-        "uduncloud/udun-wallet-sdk": "^1.0"
+        "uduncloud/udun-wallet-sdk": "^1.0",
+      "ext-bcmath": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
