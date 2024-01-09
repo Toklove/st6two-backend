@@ -27,7 +27,7 @@ class ContactPin extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         //如果$fields->time小于当前时间，不允许插针
-        if ($fields->time < now()) {
+        if (strtotime($fields->time) < time()) {
             return Action::danger('操作失败，时间不能小于当前时间');
         }
         //
@@ -46,7 +46,7 @@ class ContactPin extends Action
     public function fields(NovaRequest $request)
     {
         return [
-            DateTime::make('结束时间', 'time')->rules('required', 'date'),
+            DateTime::make('结束时间', 'time')->rules('required'),
             Number::make('最低价', 'low')->rules('required'),
             Number::make('最高价', 'high')->rules('required'),
         ];
