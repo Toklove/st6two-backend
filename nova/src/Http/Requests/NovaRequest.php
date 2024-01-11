@@ -2,12 +2,13 @@
 
 namespace Laravel\Nova\Http\Requests;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 /**
- * @property-read \Illuminate\Database\Eloquent\Model|string|null $resource
+ * @property-read Model|string|null $resource
  * @property-read mixed|null $resourceId
  * @property-read string|null $relatedResource
  * @property-read mixed|null $relatedResourceId
@@ -21,6 +22,23 @@ class NovaRequest extends FormRequest
     use InteractsWithResources;
     use InteractsWithRelatedResources;
     use InteractsWithResourcesSelection;
+
+    /**
+     * Create an Illuminate request from a Symfony instance.
+     *
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @return static
+     */
+    public static function createFromBase(SymfonyRequest $request)
+    {
+        $newRequest = parent::createFromBase($request);
+
+        if ($request instanceof Request) {
+            $newRequest->setUserResolver($request->getUserResolver());
+        }
+
+        return $newRequest;
+    }
 
     /**
      * Determine if this request is an inline create or attach request.
@@ -44,6 +62,38 @@ class NovaRequest extends FormRequest
     }
 
     /**
+     * Determine if this request is a resource preview request.
+     *
+     * @return bool
+     */
+    public function isResourcePreviewRequest()
+    {
+        return $this instanceof ResourcePreviewRequest;
+    }
+
+    /**
+     * Determine if this request is a resource peeking request.
+     *
+     * @return bool
+     */
+    public function isResourcePeekingRequest()
+    {
+        return $this instanceof ResourcePeekRequest;
+    }
+
+    /**
+     * Determine if this request is either create, attach, update, update-attached or action request.
+     *
+     * @return bool
+     */
+    public function isFormRequest()
+    {
+        return $this->isCreateOrAttachRequest()
+            || $this->isUpdateOrUpdateAttachedRequest()
+            || $this->isActionRequest();
+    }
+
+    /**
      * Determine if this request is an update or update-attached request.
      *
      * @return bool
@@ -52,6 +102,28 @@ class NovaRequest extends FormRequest
     {
         return $this instanceof ResourceUpdateOrUpdateAttachedRequest
             || ($this->editing === 'true' && in_array($this->editMode, ['update', 'update-attached']));
+    }
+
+    /**
+     * Determine if this request is an action request.
+     *
+     * @return bool
+     */
+    public function isActionRequest()
+    {
+        return $this->segment(3) == 'actions';
+    }
+
+    /**
+     * Determine if this request is an index or detail request.
+     *
+     * @return bool
+     */
+    public function isPresentationRequest()
+    {
+        return $this->isResourceIndexRequest()
+            || $this->isResourceDetailRequest()
+            || $this->isLensRequest();
     }
 
     /**
@@ -75,26 +147,6 @@ class NovaRequest extends FormRequest
     }
 
     /**
-     * Determine if this request is a resource preview request.
-     *
-     * @return bool
-     */
-    public function isResourcePreviewRequest()
-    {
-        return $this instanceof ResourcePreviewRequest;
-    }
-
-    /**
-     * Determine if this request is a resource peeking request.
-     *
-     * @return bool
-     */
-    public function isResourcePeekingRequest()
-    {
-        return $this instanceof ResourcePeekRequest;
-    }
-
-    /**
      * Determine if this request is a lens request.
      *
      * @return bool
@@ -102,56 +154,5 @@ class NovaRequest extends FormRequest
     public function isLensRequest()
     {
         return $this instanceof LensRequest;
-    }
-
-    /**
-     * Determine if this request is an action request.
-     *
-     * @return bool
-     */
-    public function isActionRequest()
-    {
-        return $this->segment(3) == 'actions';
-    }
-
-    /**
-     * Determine if this request is either create, attach, update, update-attached or action request.
-     *
-     * @return bool
-     */
-    public function isFormRequest()
-    {
-        return $this->isCreateOrAttachRequest()
-            || $this->isUpdateOrUpdateAttachedRequest()
-            || $this->isActionRequest();
-    }
-
-    /**
-     * Determine if this request is an index or detail request.
-     *
-     * @return bool
-     */
-    public function isPresentationRequest()
-    {
-        return $this->isResourceIndexRequest()
-            || $this->isResourceDetailRequest()
-            || $this->isLensRequest();
-    }
-
-    /**
-     * Create an Illuminate request from a Symfony instance.
-     *
-     * @param  \Symfony\Component\HttpFoundation\Request  $request
-     * @return static
-     */
-    public static function createFromBase(SymfonyRequest $request)
-    {
-        $newRequest = parent::createFromBase($request);
-
-        if ($request instanceof Request) {
-            $newRequest->setUserResolver($request->getUserResolver());
-        }
-
-        return $newRequest;
     }
 }

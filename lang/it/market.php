@@ -13,7 +13,9 @@ return [
     'order_placed_successfully' => "Ordine piazzato con successo",
     'order_placed_successful' => "Ordine piazzato con successo",
     'category_id_required' => "La categoria non esiste",
-    "id_required"=> "L'ID non può essere vuoto",
-    "order_does_not_exist"=> "L'ordine non esiste"
+    "id_required" => "L'ID non può essere vuoto",
+    "order_does_not_exist" => "L'ordine non esiste",
+    "account_exchange_blocked" => "Lo scambio è bloccato",
+    "account_withdraw_blocked" => "Il prelievo è bloccato",
 ];
 

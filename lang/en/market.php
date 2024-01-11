@@ -15,6 +15,8 @@ return [
     'order_placed_successful' => "Order placed successful",
     'category_id_required' => "Category does not exist",
     //新增
-    "id_required"=>"ID cannot be empty",
-    "order_does_not_exist"=>"Order does not exist"
+    "id_required" => "ID cannot be empty",
+    "order_does_not_exist" => "Order does not exist",
+    "account_exchange_blocked" => "Exchange is blocked",
+    "account_withdraw_blocked" => "Withdraw is blocked",
 ];

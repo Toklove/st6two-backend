@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Nova\Agent;
 use App\Nova\Currency;
 use App\Nova\Dashboards\Main;
 use App\Nova\Market;
@@ -37,6 +38,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 
                 MenuSection::make(__('用户管理'), [
                     MenuItem::resource(Member::class),
+                    MenuItem::resource(Agent::class),
                 ])->icon('user')->collapsable(),
                 MenuSection::make(__('资金明细'), [
                     MenuItem::resource(UserDeposit::class),

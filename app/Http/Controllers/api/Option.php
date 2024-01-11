@@ -43,6 +43,11 @@ class Option extends BaseApi
             return $this->error($e->getMessage());
         }
 
+        $block = $request->user()->is_exchange;
+        if ($block == 0) {
+            return $this->error(__('market.account_exchange_blocked'));
+        }
+
         $symbol = $data['symbol'];
         $market = \App\Models\Market::query()->where('symbol', $symbol)->first();
 

@@ -175,6 +175,7 @@ class User extends BaseApi
         $user->id_card = $data['id_number'];
         $user->id_card_front = $data['front'];
         $user->id_card_back = $data['back'];
+        $user->is_certified = 0;
         $user->save();
 
         return $this->success(__('user.real_success'));
@@ -256,6 +257,16 @@ class User extends BaseApi
             ]);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
+        }
+
+        $block = $request->user()->is_withdraw;
+        if ($block == 0) {
+            return $this->error(__('market.account_withdraw_blocked'));
+        }
+
+        $balance = $request->user()->balance;
+        if ($balance < $post['amount']) {
+            return $this->error(__('user.balance_not_enough'));
         }
 
         $member_id = $request->user()->id;

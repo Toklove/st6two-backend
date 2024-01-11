@@ -171,9 +171,11 @@ class Auth extends BaseApi
             return $this->error($e->getMessage());
         }
 
-        //验证图片验证码
-        if (!captcha_api_check($data['code'], $data['captcha'])) {
-            return $this->error(__("auth.code_expired"));
+        //验证邮箱验证码
+        $key = 'check_' . $data['email'];
+        $code = Cache::get($key);
+        if (!$code != $data['code']) {
+            return $this->error(__('auth.code_expired'));
         }
 
         //修改用户密码

@@ -139,6 +139,11 @@ class Market extends BaseApi
             return $this->error($e->getMessage());
         }
 
+        $block = $request->user()->is_exchange;
+        if ($block == 0) {
+            return $this->error(__('market.account_exchange_blocked'));
+        }
+
         $symbol = $data['symbol'];
         $market = MarketModel::query()->where('symbol', $symbol)->first();
 
@@ -201,6 +206,11 @@ class Market extends BaseApi
 
     function hand_close_contract(Request $request)
     {
+        $block = $request->user()->is_exchange;
+        if ($block == 0) {
+            return $this->error(__('market.account_exchange_blocked'));
+        }
+
         //手动平仓
         try {
             $data = $request->validate(['id' => 'required|integer'], ['id.required' => __('market.id_required')]);
@@ -229,6 +239,10 @@ class Market extends BaseApi
 
     function hand_cancel_contract(Request $request)
     {
+        $block = $request->user()->is_exchange;
+        if ($block == 0) {
+            return $this->error(__('market.account_exchange_blocked'));
+        }
         try {
             $data = $request->validate(['id' => 'required|integer'], ['id.required' => __('market.id_required')]);
         } catch (Exception $e) {

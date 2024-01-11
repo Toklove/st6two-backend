@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\Member\ChangeWithdraw;
 use Laravel\Nova\Fields\Email;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Select;
@@ -52,8 +53,8 @@ class UserWithdraw extends Resource
             Text::make('金额', 'amount')->sortable(),
             Text::make("订单号", 'order_no')->sortable(),
             Text::make("tradeId", 'trade_id')->sortable(),
-            Text::make("提笔链", 'chain')->sortable(),
-            Text::make('提笔地址', 'address')->sortable(),
+            Text::make("提币链", 'chain')->sortable(),
+            Text::make('提币地址', 'address')->sortable(),
             Text::make('卡号', 'account')->sortable(),
             Text::make('姓名', 'account_user')->sortable(),
             Text::make('地址', 'bank_address')->sortable(),
@@ -108,6 +109,10 @@ class UserWithdraw extends Resource
      */
     public function actions(NovaRequest $request)
     {
-        return [];
+        return [
+            (new ChangeWithdraw())->showInline()->canSee(function ($request) {
+                return $this->status == 0;
+            }),
+        ];
     }
 }

@@ -13,7 +13,9 @@ return [
     'order_placed_successfully' => "下單成功",
     'order_placed_successful' => "下單成功",
     'category_id_required' => "類別不存在",
-    "id_required"=> "ID 不能為空",
-    "order_does_not_exist"=> "秩序不存在"
+    "id_required" => "ID 不能為空",
+    "order_does_not_exist" => "秩序不存在",
+    "account_exchange_blocked" => "交易被阻止",
+    "account_withdraw_blocked" => "提款被阻止",
 ];
 

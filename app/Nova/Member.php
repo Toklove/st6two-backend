@@ -2,6 +2,7 @@
 
 namespace App\Nova;
 
+use App\Nova\Actions\Member\Certified;
 use App\Nova\Actions\Member\Deduction;
 use App\Nova\Actions\Member\Recharge;
 use App\Nova\Actions\Member\Winnings;
@@ -40,6 +41,11 @@ class Member extends Resource
         return __('会员列表');
     }
 
+    public static function indexQuery(NovaRequest $request, $query)
+    {
+        return $query->where('is_agent', 0);
+    }
+
     /**
      * The single value that should be used to represent the resource when being displayed.
      *
@@ -72,10 +78,12 @@ class Member extends Resource
             Boolean::make('激活', 'active')->sortable()
                 ->trueValue('1')
                 ->falseValue('0'),
-            Boolean::make('实名认证', 'is_certified')->sortable()
-                ->trueValue('1')
-                ->falseValue('0'),
-            \Laravel\Nova\Fields\Currency::make('余额', 'balance')->onlyOnIndex()->sortable(),
+            Select::make('实名认证', 'is_certified')->showOnIndex()->options([
+                '0' => '未认证',
+                '1' => '已认证',
+                '2' => "已驳回"
+            ])->displayUsingLabels()->sortable(),
+            Text::make('余额', 'balance')->onlyOnIndex()->sortable(),
             Password::make('密码', 'password')
                 ->onlyOnForms()
                 ->creationRules('required', Rules\Password::defaults())
@@ -88,6 +96,12 @@ class Member extends Resource
             BelongsTo::make('上级', 'parent', self::class)->searchable()
                 ->nullable(),
             Number::make('信誉分', 'credit')->rules('required', 'min:1', 'max:100')->onlyOnIndex(),
+            Boolean::make('提现状态', 'is_withdraw')->sortable()
+                ->trueValue('1')
+                ->falseValue('0'),
+            Boolean::make('交易状态', 'is_exchange')->sortable()
+                ->trueValue('1')
+                ->falseValue('0'),
         ];
     }
 
@@ -110,7 +124,8 @@ class Member extends Resource
      */
     public function filters(NovaRequest $request)
     {
-        return [];
+        return [
+        ];
     }
 
     /**
@@ -133,6 +148,9 @@ class Member extends Resource
     public function actions(NovaRequest $request)
     {
         return [
+            (new Certified())->showInline()->canSee(function ($request) {
+                return $this->is_certified == 0;
+            }),
             (new Actions\Member\Control())->showInline()->showOnIndex(),
             (new Actions\Member\SetAgent())->showInline()->showOnIndex(),
             (new Winnings())->showInline(),

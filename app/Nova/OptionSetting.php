@@ -4,6 +4,7 @@ namespace App\Nova;
 
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class OptionSetting extends Resource
@@ -46,8 +47,8 @@ class OptionSetting extends Resource
     {
         return [
             ID::make()->sortable(),
-            \Laravel\Nova\Fields\Currency::make('盈利赔率', 'rate'),
-            \Laravel\Nova\Fields\Currency::make('亏损赔率', 'lose_rate'),
+            Text::make('盈利赔率', 'rate'),
+            Text::make('亏损赔率', 'lose_rate'),
             Number::make('最小投注金额', 'min_amount'),
             Number::make('合约时间', 'time'),
         ];

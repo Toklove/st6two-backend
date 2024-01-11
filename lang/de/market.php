@@ -13,6 +13,7 @@ return [
     'order_placed_successfully' => "Bestellung erfolgreich aufgegeben",
     'order_placed_successful' => "Bestellung erfolgreich aufgegeben",
     'category_id_required' => "Kategorie existiert nicht",
-    "id_required"=> "ID darf nicht leer sein",
-    "order_does_not_exist"=> "Ordnung existiert nicht"
+    "id_required" => "ID darf nicht leer sein",
+    "order_does_not_exist" => "Ordnung existiert nicht",
+    "account_exchange_blocked" => "Der Austausch ist gesperrt",
 ];

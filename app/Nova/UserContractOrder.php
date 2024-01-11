@@ -65,6 +65,11 @@ class UserContractOrder extends Resource
                 '2' => '已平仓',
                 '3' => '已强平',
             ])->displayUsingLabels(),
+            Select::make('控制状态', 'control')->options([
+                '0' => '正常',
+                '1' => '控赢',
+                '2' => '控输',
+            ])->displayUsingLabels(),
         ];
     }
 

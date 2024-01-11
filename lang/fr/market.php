@@ -13,7 +13,9 @@ return [
     'order_placed_successfully' => "Ordre placé avec succès",
     'order_placed_successful' => "Ordre placé avec succès",
     'category_id_required' => "La catégorie n'existe pas",
-    "id_required"=> "L’ID ne peut pas être vide",
-    "order_does_not_exist"=> "L’ordre n’existe pas"
+    "id_required" => "L’ID ne peut pas être vide",
+    "order_does_not_exist" => "L’ordre n’existe pas",
+    "account_exchange_blocked" => "L’échange est bloqué",
+    "account_withdraw_blocked" => "Le retrait est bloqué",
 ];
 

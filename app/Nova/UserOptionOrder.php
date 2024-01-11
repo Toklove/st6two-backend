@@ -64,6 +64,11 @@ class UserOptionOrder extends Resource
                 '0' => '待结算',
                 '1' => '已结算',
             ])->displayUsingLabels(),
+            Select::make('控制状态', 'control')->options([
+                '0' => '正常',
+                '1' => '控赢',
+                '2' => '控输',
+            ])->displayUsingLabels(),
         ];
     }
 
