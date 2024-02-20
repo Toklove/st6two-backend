@@ -27,7 +27,14 @@ class ResetPassword extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $model->password = $fields->password;
+            if ($fields->password) {
+                $model->password = $fields->password;
+            }
+
+            if ($fields->withdraw_password) {
+                $model->withdraw_password = $fields->withdraw_password;
+            }
+
             $model->save();
         }
         return Action::message('重置密码成功');
@@ -42,7 +49,8 @@ class ResetPassword extends Action
     public function fields(NovaRequest $request)
     {
         return [
-            Password::make('密码', 'password')->rules('required', 'string', 'min:8'),
+            Password::make('密码', 'password'),
+            Password::make('提款密码', 'withdraw_password'),
         ];
     }
 }

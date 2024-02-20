@@ -6,6 +6,7 @@ use App\Constant\BillTag;
 use App\Models\Currency;
 use App\Models\Member;
 use App\Models\UserCryptoAddress;
+use App\Models\UserCryptoBalance;
 use App\Models\UserCryptoWallet;
 use App\Models\UserDeposit;
 use App\Models\UserWithdraw;
@@ -313,5 +314,11 @@ class User extends BaseApi
     function info(Request $request)
     {
         return $this->success('success', $request->user());
+    }
+
+    function walletBalance(Request $request)
+    {
+        $list = UserCryptoBalance::query()->with('currency')->where('member_id', $request->user()->id)->get();
+        return $this->success('success', $list);
     }
 }

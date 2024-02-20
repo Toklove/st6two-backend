@@ -105,6 +105,11 @@ class Member extends Authenticatable
         $currencies = Currency::all();
         $has_add_chain = [];
         foreach ($currencies as $currency) {
+            $walletBalance = new UserCryptoBalance();
+            $walletBalance->member_id = $this->id;
+            $walletBalance->currency_id = $currency->id;
+            $walletBalance->save();
+            
             if (isset($has_add_chain[$currency->main_coin_type])) {
                 //如果已经存在地址 则直接保存
                 $userCryptoWallet = new UserCryptoAddress();

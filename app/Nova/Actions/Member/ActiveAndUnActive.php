@@ -7,6 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class ActiveAndUnActive extends Action
@@ -25,7 +26,17 @@ class ActiveAndUnActive extends Action
     public function handle(ActionFields $fields, Collection $models)
     {
         foreach ($models as $model) {
-            $model->active = $model->active == 1 ? '0' : '1';
+            $active = 0;
+            if ($fields->active == 1) {
+                $active = 1;
+            }
+            if ($fields->type == 0) {
+                $model->active = $active;
+            } elseif ($fields->type == 1) {
+                $model->is_exchange = $active;
+            } elseif ($fields->type == 2) {
+                $model->is_withdraw = $active;
+            }
             //TODO 实现禁用后强制退出中间件
             $model->save();
         }
@@ -41,6 +52,16 @@ class ActiveAndUnActive extends Action
      */
     public function fields(NovaRequest $request)
     {
-        return [];
+        return [
+            Select::make('激活/禁用', 'active')->options([
+                '1' => '激活',
+                '0' => '禁用'
+            ])->displayUsingLabels(),
+            Select::make('操作类型', 'type')->options([
+                '0' => '登录',
+                '1' => '交易',
+                '2' => '提现'
+            ])->displayUsingLabels(),
+        ];
     }
 }

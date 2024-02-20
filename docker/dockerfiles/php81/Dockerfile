@@ -24,10 +24,7 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql
 
 RUN pecl install redis \
 	&& pecl install mongodb \
-	&& pecl install bcmath \
-	&& pecl install zip \
-	&& pecl install curl \
-	&& docker-php-ext-enable redis mongodb bcmath zip curl
+	&& docker-php-ext-enable redis mongodb
 
 # Install pcntl
 RUN docker-php-ext-install pcntl;

@@ -79,8 +79,11 @@ Route::middleware(Lang::class)->group(function () {
     });
 
     Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'wallet'], function () {
-        Route::get('record', [User::class, 'walletRecord']);
-        Route::post('withdraw', [User::class, 'withdraw']);
+        Route::get('update', [User::class, 'update']);
+    });
+
+    Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'wallet'], function () {
+        Route::get('index', [User::class, 'walletBalance']);
     });
 });
 
