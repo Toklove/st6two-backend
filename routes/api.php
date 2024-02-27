@@ -1,5 +1,6 @@
 <?php
 
+use App\Constant\BillTag;
 use App\Http\Controllers\api\Auth;
 use App\Http\Controllers\api\Common;
 use App\Http\Controllers\api\Index;
@@ -8,6 +9,9 @@ use App\Http\Controllers\api\Option;
 use App\Http\Controllers\api\User;
 use App\Http\Controllers\api\Wallet;
 use App\Http\Middleware\Lang;
+use App\Models\Member;
+use App\Models\UserOptionOrder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -76,10 +80,13 @@ Route::middleware(Lang::class)->group(function () {
         Route::get('logout', [User::class, 'logout']);
         Route::post('real', [User::class, 'real']);
         Route::get('real', [User::class, 'real_info']);
+        Route::post("/depositWallet", [User::class, 'depositWallet']);
     });
 
     Route::group(['middleware' => 'auth:sanctum', 'prefix' => 'wallet'], function () {
-        Route::get('record', [User::class, 'walletRecord']);
+        Route::get('update', [User::class, 'update']);
+        Route::get('index', [User::class, 'walletBalance']);
+        Route::get('record', [User::class, "walletRecord"]);
         Route::post('withdraw', [User::class, 'withdraw']);
     });
 });
@@ -88,3 +95,67 @@ Route::middleware(Lang::class)->group(function () {
 Route::get('supportCoins', [Wallet::class, 'supportCoins']);
 
 Route::any('/callback', [Wallet::class, 'callback']);
+
+
+Route::get('/test', function () {
+    $order = UserOptionOrder::query()->with('market')->find(15);
+    if (!$order) {
+        return;
+    }
+
+    if ($order['status'] != 0) {
+        return;
+    }
+
+    $order->status = 1;
+
+    $market = $order->market;
+
+    if ($order["set_price"]) {
+        $price = $order["set_price"];
+    } else {
+        $price = get_now_price($market['symbol']);
+    }
+
+    $is_win = 0;
+    $order->sell_price = $price;
+    $order->sell_time = date('Y-m-d H:i:s');
+
+    //判断盈利
+    if ($order['type'] == 0 && $order['sell_price'] > $order['buy_price']) {
+        $is_win = 1;
+    } elseif ($order['type'] == 1 && $order['sell_price'] < $order['buy_price']) {
+        $is_win = 1;
+    }
+
+    //结果已知 执行后续操作
+    $num = $order['quantity'];
+    $profit = 0;
+    $amount = 0;
+    if ($is_win == 0) {
+        $profit = $num * $order['lose_rate'];
+        $amount = $num - $profit;
+    } elseif ($is_win == 1) {
+        $profit = $num * $order['rate'];
+        $amount = $num + $profit;
+    }
+
+    $order['win'] = $is_win;
+    $order['status'] = 1;
+    $order['profit'] = $profit;
+
+//    return response()->json(['num' => $num, 'profit' => $profit, 'amount' => $amount, 'rate' => $order['lose_rate'], 'order' => $order, 'is_win' => $is_win]);
+
+    DB::beginTransaction();
+    try {
+        //保存订单
+        $order->save();
+        //发放余额
+        Member::money($amount, $order->member_id, BillTag::OptionsSettlementAmount);
+        DB::commit();
+        return response()->json($order);
+    } catch (\Exception $e) {
+        DB::rollBack();
+        return response()->json($e->getMessage());
+    }
+});

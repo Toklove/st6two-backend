@@ -6,11 +6,13 @@ use App\Constant\BillTag;
 use App\Models\Currency;
 use App\Models\Member;
 use App\Models\UserCryptoAddress;
+use App\Models\UserCryptoBalance;
 use App\Models\UserCryptoWallet;
 use App\Models\UserDeposit;
 use App\Models\UserWithdraw;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class User extends BaseApi
@@ -19,6 +21,51 @@ class User extends BaseApi
     public function __construct()
     {
         parent::__construct();
+    }
+
+    function depositWallet(Request $request)
+    {
+        try {
+            $post = $request->validate([
+                "my_address" => "required",
+                "currency_id" => "required|integer|exists:currencies,id",
+                "my_count" => "required|numeric|min:1",
+                "my_image" => "required",
+            ], [
+                "my_address.required" => __("user.my_address_required"),
+                "currency_id.required" => __("user.currency_id_required"),
+                "currency_id.integer" => __("user.currency_id_integer"),
+                "currency_id.exists" => __("user.currency_id_exists"),
+                "my_count.required" => __("user.my_count_required"),
+                "my_count.numeric" => __("user.my_count_numeric"),
+                "my_count.min" => __("user.my_count_min"),
+                "my_image.required" => __("user.my_image_required"),
+            ]);
+        } catch (Exception $e) {
+            return $this->error($e->getMessage());
+        }
+
+        $data = UserDeposit::query()->where('member_id', $request->user()->id)->where('status', 0)->first();
+        if ($data) {
+            return $this->error(__('user.deposit_wait'));
+        }
+
+        $amount = $post['my_count'];
+        $member_id = $request->user()->id;
+        $order_no = date('YmdHis') . rand(100000, 999999) . $member_id;
+        $currency_id = $post['currency_id'];
+        DB::beginTransaction();
+        try {
+//            Member::money($amount, $member_id, BillTag::Deposit);
+            UserDeposit::query()->create(['member_id' => $member_id, 'amount' => $amount, 'txId' => $order_no, 'trade_id' => $order_no, 'order_no' => $order_no, 'currency_id' => $currency_id, 'status' => 0, 'address' => $post['my_address'], 'image' => $post['my_image']]);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            return $this->error($e->getMessage());
+        }
+
+        return $this->success(__('user.deposit_success'));
+
     }
 
     function addBank(Request $request)
@@ -264,11 +311,6 @@ class User extends BaseApi
             return $this->error(__('market.account_withdraw_blocked'));
         }
 
-        $balance = $request->user()->balance;
-        if ($balance < $post['amount']) {
-            return $this->error(__('user.balance_not_enough'));
-        }
-
         $member_id = $request->user()->id;
 
         $order_no = date('YmdHis') . rand(100000, 999999) . $member_id;
@@ -284,6 +326,14 @@ class User extends BaseApi
             $wallet = UserCryptoWallet::query()->with('currency')->where(['member_id' => $member_id, 'id' => $post['id']])->first();
             if (!$wallet) {
                 return $this->error(__('user.wallet_not_exists'));
+            }
+            $currency_id = $wallet['currency_id'];
+            $balance = UserCryptoBalance::query()->where('member_id', $member_id)->where('currency_id', $currency_id)->first();
+            if (!$balance) {
+                return $this->error(__('user.balance_not_exists'));
+            }
+            if ($balance->balance < $post['amount']) {
+                return $this->error(__('user.balance_not_enough'));
             }
             $data['chain'] = $wallet->currency->name;
             $data['address'] = $wallet->address;
@@ -302,7 +352,7 @@ class User extends BaseApi
         //扣除提现金额
         try {
             UserWithdraw::create($data);
-            Member::money(-$data['amount'], $member_id, BillTag::WithdrawMoney);
+            Member::coinMoney(-$data['amount'], $member_id, $currency_id, BillTag::WithdrawMoney);
         } catch (Exception $e) {
             return $this->error($e->getMessage());
         }
@@ -313,5 +363,11 @@ class User extends BaseApi
     function info(Request $request)
     {
         return $this->success('success', $request->user());
+    }
+
+    function walletBalance(Request $request)
+    {
+        $list = UserCryptoBalance::query()->with('currency')->where('member_id', $request->user()->id)->get();
+        return $this->success('success', $list);
     }
 }

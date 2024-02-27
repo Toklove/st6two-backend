@@ -2,14 +2,15 @@
 
 namespace App\Nova\Actions\Member;
 
-use App\Constant\BillTag;
-use App\Models\Member;
+use App\Models\Currency;
+use App\Models\UserCryptoBalance;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Collection;
 use Laravel\Nova\Actions\Action;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Fields\Number;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Winnings extends Action
@@ -29,7 +30,12 @@ class Winnings extends Action
     {
         //
         foreach ($models as $model) {
-            Member::money($fields->number, $model->id, BillTag::WinningsDeposit);
+            $data = UserCryptoBalance::query()->where(['member_id' => $model->id, 'currency_id' => $fields->currency])->firstOrNew();
+            $data->member_id = $model->id;
+            $data->currency_id = $fields->currency;
+            $data->increment('balance', $fields->number);
+            $data->save();
+//            Member::money($fields->number, $model->id, BillTag::WinningsDeposit);
         }
         return Action::message('赠送成功');
     }
@@ -44,6 +50,7 @@ class Winnings extends Action
     {
         return [
             Number::make('赠送金额', 'number')->rules('required', 'numeric', 'min:1'),
+            Select::make('币别', 'currency')->options(Currency::options())->rules('required'),
         ];
     }
 }
